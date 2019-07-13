@@ -9,6 +9,26 @@
 import Foundation
 import UIKit
 
+extension UIView {
+    
+    public func addShadow() {
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = UIColor.color(for: .shadow).cgColor
+        self.layer.shadowOffset = CGSize(width: -1, height: 1)
+        self.layer.shadowRadius = 4
+        
+        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        self.layer.shouldRasterize = true
+        self.layer.rasterizationScale = UIScreen.main.scale
+    }
+    
+    public func roundCorners(to radius: CGFloat) {
+        self.layer.cornerRadius = radius
+//        self.clipsToBounds = true
+    }
+    
+}
+
 extension UIView: LUIConstraints {
     public func centerX(_ view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false

@@ -25,13 +25,13 @@ open class LUITextField : UITextField {
         }
     }
     
-    required public init(paddingType: LUIPaddingType, fontSize: LUIFontSizeType, textFontStyle: LUIFontStyleType = .regular, placeholderFontStyle: LUIFontStyleType = .regular) {
+    required public init(paddingType: LUIPaddingType = .none, fontSize: LUIFontSizeType = .regular, textFontStyle: LUIFontStyleType = .regular, placeholderFontStyle: LUIFontStyleType = .regular) {
         
         self.paddingType = paddingType
         self.placeholderFontStyleType = placeholderFontStyle
         
         super.init(frame: .zero)
-        
+        self.font = LUIFontManager.shared.universalFont
         self.font = self.font?.withSize(fontSize).withStyle(textFontStyle)
     }
     
@@ -57,11 +57,11 @@ open class LUITextField : UITextField {
 
 open class LUITextView : UITextView {
     
-    required public init(paddingType: LUIPaddingType, fontSize: LUIFontSizeType, textFontStyle: LUIFontStyleType = .regular) {
+    required public init(paddingType: LUIPaddingType = .none, fontSize: LUIFontSizeType = .regular, textFontStyle: LUIFontStyleType = .regular) {
         super.init(frame: .zero, textContainer: nil)
         
         self.textContainerInset = LUIPaddingManager.shared.paddingRect(for: paddingType)
-        
+        self.font = LUIFontManager.shared.universalFont
         self.font = self.font?.withSize(fontSize).withStyle(textFontStyle)
     }
     

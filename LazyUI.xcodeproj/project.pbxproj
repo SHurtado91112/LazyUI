@@ -15,6 +15,7 @@
 		CD04303E22D58C430018D584 /* LUIPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04303D22D58C430018D584 /* LUIPadding.swift */; };
 		CD04304022D98AB10018D584 /* LUIPaddingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04303F22D98AB10018D584 /* LUIPaddingManager.swift */; };
 		CD04304222D98C900018D584 /* LUITextField+LUITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04304122D98C900018D584 /* LUITextField+LUITextView.swift */; };
+		CD04304422D9AC130018D584 /* LUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04304322D9AC130018D584 /* LUIButton.swift */; };
 		CD3A59F122CEE80B009AD5BC /* LazyUI.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3A59EF22CEE80B009AD5BC /* LazyUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD3A59FC22CEE86C009AD5BC /* LUIFontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A59FB22CEE86C009AD5BC /* LUIFontManager.swift */; };
 		CD3A5A3622CFF180009AD5BC /* LUIFontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3522CFF180009AD5BC /* LUIFontSize.swift */; };
@@ -33,6 +34,7 @@
 		CD04303D22D58C430018D584 /* LUIPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPadding.swift; sourceTree = "<group>"; };
 		CD04303F22D98AB10018D584 /* LUIPaddingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPaddingManager.swift; sourceTree = "<group>"; };
 		CD04304122D98C900018D584 /* LUITextField+LUITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LUITextField+LUITextView.swift"; sourceTree = "<group>"; };
+		CD04304322D9AC130018D584 /* LUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIButton.swift; sourceTree = "<group>"; };
 		CD3A59EC22CEE80B009AD5BC /* LazyUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LazyUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD3A59EF22CEE80B009AD5BC /* LazyUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LazyUI.h; sourceTree = "<group>"; };
 		CD3A59F022CEE80B009AD5BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				CD04303122D2947E0018D584 /* LUIView.swift */,
 				CD04303322D294D00018D584 /* LUILabel.swift */,
 				CD04304122D98C900018D584 /* LUITextField+LUITextView.swift */,
+				CD04304322D9AC130018D584 /* LUIButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 				CD04303222D2947E0018D584 /* LUIView.swift in Sources */,
 				CD04304022D98AB10018D584 /* LUIPaddingManager.swift in Sources */,
 				CD3A5A3D22D113E6009AD5BC /* LUIColor.swift in Sources */,
+				CD04304422D9AC130018D584 /* LUIButton.swift in Sources */,
 				CD04303422D294D00018D584 /* LUILabel.swift in Sources */,
 				CD04303722D29AAD0018D584 /* LUIViewController.swift in Sources */,
 				CD04303A22D29D300018D584 /* LUIConstraints.swift in Sources */,
