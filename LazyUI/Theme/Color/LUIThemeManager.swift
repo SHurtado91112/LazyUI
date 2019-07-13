@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 public class LUIThemeManager: NSObject {
+    
     private var themeColors : LUIColor!
     
     private override init() {
@@ -24,32 +25,33 @@ public class LUIThemeManager: NSObject {
     
     public func color(for type: LUIColorType) -> UIColor {
         switch type {
-        case .theme:
-            return themeColors.theme
-        case .border:
-            return themeColors.border
-        case .shadow:
-            return themeColors.shadow
-        case .darkBackground:
-            return themeColors.darkBackground
-        case .lightBackground:
-            return themeColors.lightBackground
-        case .intermidiateBackground:
-            return themeColors.intermediateBackground
-        case .darkText:
-            return themeColors.darkText
-        case .lightText:
-            return themeColors.lightText
-        case .intermidiateText:
-            return themeColors.intermediateText
-        case .affirmation:
-            return themeColors.affirmation
-        case .negation:
-            return themeColors.negation
+            case .theme:
+                return themeColors.theme
+            case .border:
+                return themeColors.border
+            case .shadow:
+                return themeColors.shadow
+            case .darkBackground:
+                return themeColors.darkBackground
+            case .lightBackground:
+                return themeColors.lightBackground
+            case .intermidiateBackground:
+                return themeColors.intermediateBackground
+            case .darkText:
+                return themeColors.darkText
+            case .lightText:
+                return themeColors.lightText
+            case .intermidiateText:
+                return themeColors.intermediateText
+            case .affirmation:
+                return themeColors.affirmation
+            case .negation:
+                return themeColors.negation
         }
     }
     
     private func setTheme() {
-        LUIView.appearance().backgroundColor = themeColors.lightBackground
+        LUIView.appearance().backgroundColor = self.themeColors.lightBackground
+        LUITextField.appearance().textColor = self.themeColors.darkText
     }
 }

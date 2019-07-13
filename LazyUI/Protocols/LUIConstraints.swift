@@ -13,9 +13,9 @@ public protocol LUIConstraints {
     func centerY(_ view: UIView)
     func center(_ view: UIView)
     
-    func top(_ view: UIView, fromTop: Bool, spacing: CGFloat)
-    func bottom(_ view: UIView, fromTop: Bool, spacing: CGFloat)
+    func top(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType)
+    func bottom(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType)
     
-    func left(_ view: UIView, fromLeft: Bool, spacing: CGFloat)
-    func right(_ view: UIView, fromLeft: Bool, spacing: CGFloat)
+    func left(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType)
+    func right(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType)
 }

@@ -20,6 +20,8 @@ extension UIFont {
             return self.withTraits(traits: .traitBold)
         case .italics:
             return self.withTraits(traits: .traitItalic)
+        case .regular:
+            return self
         }
     }
     

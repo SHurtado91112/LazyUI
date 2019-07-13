@@ -25,39 +25,43 @@ extension UIView: LUIConstraints {
         centerY(view)
     }
     
-    public func top(_ view: UIView, fromTop: Bool, spacing: CGFloat) {
+    public func top(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType) {
+        let padding = LUIPaddingManager.shared.padding(for: paddingType)
         view.translatesAutoresizingMaskIntoConstraints = false
         if fromTop {
-            view.topAnchor.constraint(equalTo: self.topAnchor, constant: spacing).isActive = true
+            view.topAnchor.constraint(equalTo: self.topAnchor, constant: padding).isActive = true
         } else {
-            view.bottomAnchor.constraint(equalTo: self.topAnchor, constant: -spacing).isActive = true
+            view.bottomAnchor.constraint(equalTo: self.topAnchor, constant: -padding).isActive = true
         }
     }
     
-    public func bottom(_ view: UIView, fromTop: Bool, spacing: CGFloat) {
+    public func bottom(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType) {
+        let padding = LUIPaddingManager.shared.padding(for: paddingType)
         view.translatesAutoresizingMaskIntoConstraints = false
         if fromTop {
-            view.topAnchor.constraint(equalTo: self.bottomAnchor, constant: spacing).isActive = true
+            view.topAnchor.constraint(equalTo: self.bottomAnchor, constant: padding).isActive = true
         } else {
-            view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -spacing).isActive = true
+            view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -padding).isActive = true
         }
     }
     
-    public func left(_ view: UIView, fromLeft: Bool, spacing: CGFloat) {
+    public func left(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType) {
+        let padding = LUIPaddingManager.shared.padding(for: paddingType)
         view.translatesAutoresizingMaskIntoConstraints = false
         if fromLeft {
-            view.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: spacing).isActive = true
+            view.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding).isActive = true
         } else {
-            view.trailingAnchor.constraint(equalTo: self.leadingAnchor, constant: -spacing).isActive = true
+            view.trailingAnchor.constraint(equalTo: self.leadingAnchor, constant: -padding).isActive = true
         }
     }
     
-    public func right(_ view: UIView, fromLeft: Bool, spacing: CGFloat) {
+    public func right(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType) {
+        let padding = LUIPaddingManager.shared.padding(for: paddingType)
         view.translatesAutoresizingMaskIntoConstraints = false
         if fromLeft {
-            view.leadingAnchor.constraint(equalTo: self.trailingAnchor, constant: spacing).isActive = true
+            view.leadingAnchor.constraint(equalTo: self.trailingAnchor, constant: padding).isActive = true
         } else {
-            view.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -spacing).isActive = true
+            view.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding).isActive = true
         }
     }
 }

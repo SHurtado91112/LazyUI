@@ -31,6 +31,10 @@ public enum LUIColorType {
 
 public struct LUIColor {
     
+    public static var defaultTheme = LUIColor(theme: UIColor.blue, border: UIColor.gray, shadow: UIColor.black.withAlphaComponent(0.6), darkBackground: UIColor.darkGray, lightBackground: UIColor.white, intermediateBackground: UIColor.lightGray, darkText: UIColor.darkText, lightText: UIColor.white, intermediateText: UIColor.lightGray, affirmation: UIColor.green, negation: UIColor.red)
+    
+    public static var darkTheme = LUIColor(theme: UIColor.blue, border: UIColor.lightGray, shadow: UIColor.white.withAlphaComponent(0.6), darkBackground: UIColor.white, lightBackground: UIColor.darkGray, intermediateBackground: UIColor.lightGray, darkText: UIColor.white, lightText: UIColor.darkText, intermediateText: UIColor.lightGray, affirmation: UIColor.green, negation: UIColor.red)
+    
     public var theme : UIColor
     public var border : UIColor
     public var shadow : UIColor
@@ -46,11 +50,11 @@ public struct LUIColor {
     public var affirmation : UIColor
     public var negation : UIColor
     
-    public init(theme: UIColor = UIColor(hexString: "#ffcc00"), border: UIColor = UIColor(hexString: "#333333"),
-                shadow: UIColor = UIColor(hexString: "#cccccc"), darkBackground: UIColor = UIColor(hexString: "#999966"),
-                lightBackground: UIColor = UIColor(hexString: "#cccc66"), intermediateBackground: UIColor = UIColor(hexString: "#cccc99"),
-                darkText: UIColor = UIColor(hexString: "#333333"), lightText: UIColor = UIColor(hexString: "#cccccc"),
-                intermediateText: UIColor = UIColor(hexString: "#999999"), affirmation: UIColor = UIColor(hexString: "#00ff66"), negation: UIColor = UIColor(hexString: "#ff3300")) {
+    public init(theme: UIColor = LUIColor.defaultTheme.theme, border: UIColor = LUIColor.defaultTheme.border,
+                shadow: UIColor = LUIColor.defaultTheme.shadow, darkBackground: UIColor = LUIColor.defaultTheme.darkBackground,
+                lightBackground: UIColor = LUIColor.defaultTheme.lightBackground, intermediateBackground: UIColor = LUIColor.defaultTheme.intermediateBackground,
+                darkText: UIColor = LUIColor.defaultTheme.darkText, lightText: UIColor = LUIColor.defaultTheme.lightText,
+                intermediateText: UIColor = LUIColor.defaultTheme.intermediateText, affirmation: UIColor = LUIColor.defaultTheme.affirmation, negation: UIColor = LUIColor.defaultTheme.negation) {
         self.theme = theme
         self.border = border
         self.shadow = shadow
