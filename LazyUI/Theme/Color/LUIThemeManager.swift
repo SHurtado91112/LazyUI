@@ -26,27 +26,27 @@ public class LUIThemeManager: NSObject {
     public func color(for type: LUIColorType) -> UIColor {
         switch type {
             case .theme:
-                return themeColors.theme
+                return self.themeColors.theme
             case .border:
-                return themeColors.border
+                return self.themeColors.border
             case .shadow:
-                return themeColors.shadow
+                return self.themeColors.shadow
             case .darkBackground:
-                return themeColors.darkBackground
+                return self.themeColors.darkBackground
             case .lightBackground:
-                return themeColors.lightBackground
+                return self.themeColors.lightBackground
             case .intermidiateBackground:
-                return themeColors.intermediateBackground
+                return self.themeColors.intermediateBackground
             case .darkText:
-                return themeColors.darkText
+                return self.themeColors.darkText
             case .lightText:
-                return themeColors.lightText
+                return self.themeColors.lightText
             case .intermidiateText:
-                return themeColors.intermediateText
+                return self.themeColors.intermediateText
             case .affirmation:
-                return themeColors.affirmation
+                return self.themeColors.affirmation
             case .negation:
-                return themeColors.negation
+                return self.themeColors.negation
         }
     }
     
