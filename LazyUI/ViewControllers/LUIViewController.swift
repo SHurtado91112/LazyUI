@@ -17,6 +17,9 @@ public typealias LUIViewController = LUIViewControllerClass & LUIViewControllerP
 // should not be subclassed, LUIViewController is to be subclassed
 open class LUIViewControllerClass: UIViewController {
     
+    // private stored property to allow conformance of navigation property for LUINavigation protocol
+    private var _navigation: LUINavigationViewController?
+    
     override open func loadView() {
         self.view = LUIView()
     }
@@ -70,9 +73,17 @@ extension UIViewController : LUIFont {
     
 }
 
-extension LUIViewController : LUINavigation {
+extension LUIViewControllerClass : LUINavigation {
+    public var navigation: LUINavigationViewController? {
+        get {
+            return self._navigation
+        }
+        set(newValue) {
+            self._navigation = newValue
+        }
+    }
+    
     // MARK: - Navigation
-    public var navigation: LUINavigationViewController?
     
     public func push(to vc: UIViewController) {
         if let navigation = self.navigation {

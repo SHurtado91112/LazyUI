@@ -9,12 +9,14 @@
 import Foundation
 
 public protocol LUINavigation {
-    public var navigation: LUINavigationViewController { get }
+    // use private stored property when adding LUINavigation
+    var navigation: LUINavigationViewController? { get set }
     
-    public func push(to vc: UIViewController)
-    public func pop()
-    public func popToRoot()
-    public func present(_ vc: UIViewController)
-    public func popOver(_ vc: UIViewController)
-    public func dismissableModalViewController() -> LUINavigationViewController
+    func push(to vc: UIViewController)
+    func pop()
+    func popToRoot()
+    func present(_ vc: UIViewController)
+    func popOver(_ vc: UIViewController)
+    func dismissableModalViewController() -> LUINavigationViewController
+    
 }

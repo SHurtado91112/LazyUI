@@ -8,9 +8,10 @@
 
 import UIKit
 
-class LUITableViewController: UITableViewController {
-
-    override func viewDidLoad() {
+open class LUITableViewController: UITableViewController {
+    private var _navigation: LUINavigationViewController?
+    
+    override open func viewDidLoad() {
         super.viewDidLoad()
 
         // Uncomment the following line to preserve selection between presentations
@@ -22,12 +23,12 @@ class LUITableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override open func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 0
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 0
     }
@@ -36,7 +37,14 @@ class LUITableViewController: UITableViewController {
 
 extension LUITableViewController : LUINavigation {
     // MARK: - Navigation
-    public var navigation: LUINavigationViewController?
+    public var navigation: LUINavigationViewController? {
+        get {
+            return self._navigation
+        }
+        set(newValue) {
+            self._navigation = newValue
+        }
+    }
     
     public func push(to vc: UIViewController) {
         if let navigation = self.navigation {
@@ -65,8 +73,8 @@ extension LUITableViewController : LUINavigation {
     public func popOver(_ vc: UIViewController) {
         let popOver = LUIPopOverViewController(contentVC: vc)
         self.addChild(popOver)
-        self.addView(popOver.view)
-        self.fill(popOver.view)
+        self.view.addSubview(popOver.view)
+        self.view.fill(popOver.view, padding: .none)
     }
     
     public func dismissableModalViewController() -> LUINavigationViewController {
