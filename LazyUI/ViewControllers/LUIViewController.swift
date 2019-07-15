@@ -16,8 +16,6 @@ public typealias LUIViewController = LUIViewControllerClass & LUIViewControllerP
 
 // should not be subclassed, LUIViewController is to be subclassed
 open class LUIViewControllerClass: UIViewController {
-
-    open var navigation: LUINavigationViewController?
     
     override open func loadView() {
         self.view = LUIView()
@@ -58,13 +56,41 @@ open class LUIViewControllerClass: UIViewController {
         self.view.fill(view, padding: padding)
     }
 
+    override open func addChild(_ childController: UIViewController) {
+        super.addChild(childController)
+        childController.didMove(toParent: self)
+    }
+}
+
+extension UIViewController : LUIFont {
+    
+    public var substituteFont: UIFont {
+        return LUIFontManager.shared.universalFont
+    }
+    
+}
+
+extension LUIViewController : LUINavigation {
     // MARK: - Navigation
+    public var navigation: LUINavigationViewController?
     
     public func push(to vc: UIViewController) {
         if let navigation = self.navigation {
             navigation.push(to: vc)
         } else {
-            self.present(LUINavigationViewController(rootViewController: vc))
+            self.present(LUINavigationViewController(rootVC: vc))
+        }
+    }
+    
+    public func pop() {
+        if let navigation = self.navigation {
+            navigation.popViewController(animated: true)
+        }
+    }
+    
+    public func popToRoot() {
+        if let navigation = self.navigation {
+            navigation.popToRootViewController(animated: true)
         }
     }
     
@@ -79,8 +105,8 @@ open class LUIViewControllerClass: UIViewController {
         self.fill(popOver.view)
     }
     
-    override open func addChild(_ childController: UIViewController) {
-        super.addChild(childController)
-        childController.didMove(toParent: self)
+    public func dismissableModalViewController() -> LUINavigationViewController {
+        return LUINavigationViewController(rootVC: self, largeTitle: false).forDismissal()
     }
+    
 }

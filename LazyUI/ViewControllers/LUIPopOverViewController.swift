@@ -36,7 +36,6 @@ open class LUIPopOverViewController: LUIViewController {
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.view.alpha = 0.0
-        self.contentView.alpha = 1.0
     }
     
     open override func viewDidAppear(_ animated: Bool) {
@@ -45,17 +44,21 @@ open class LUIPopOverViewController: LUIViewController {
     }
     
     public func setUpViews() {
-        self.view.backgroundColor = UIColor.color(for: .intermidiateBackground).withAlphaComponent(0.5)
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.popOverTapped)))
+        self.view.backgroundColor = UIColor.color(for: .shadow).withAlphaComponent(0.6)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.popOverTapped))
+        tapGesture.delegate = self
+        self.view.addGestureRecognizer(tapGesture)
         
         if let vc = self.contentViewController {
             self.contentView.addSubview(vc.view)
             self.contentView.fill(vc.view, padding: .regular)
             self.addChild(vc)
+            self.contentView.alpha = 1.0
         }
     }
     
-    @objc private func popOverTapped() {
+    @objc private func popOverTapped(sender: UITapGestureRecognizer) {
         if self.isDismissible {
             self.view.fadeOut {
                 self.dismiss(animated: true, completion: nil)
@@ -67,5 +70,11 @@ open class LUIPopOverViewController: LUIViewController {
         super.dismiss(animated: flag, completion: completion)
         self.view.removeFromSuperview()
         self.removeFromParent()
+    }
+}
+
+extension LUIPopOverViewController : UIGestureRecognizerDelegate {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return !(touch.view?.isDescendant(of: self.contentView) ?? false)
     }
 }

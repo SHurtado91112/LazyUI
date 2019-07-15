@@ -32,7 +32,7 @@ extension UIView {
     }
     
     public func fadeIn(_ finished: (()->Void)? = nil) {
-        UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), animations: {
+        UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), delay: 0.0, options: .curveEaseIn, animations: {
             self.alpha = 1.0
         }) { (done) in
             finished?()
@@ -40,7 +40,7 @@ extension UIView {
     }
     
     public func fadeOut(_ finished: (()->Void)? = nil) {
-        UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), animations: {
+        UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), delay: 0.0, options: .curveEaseOut, animations: {
             self.alpha = 0.0
         }) { (done) in
             finished?()

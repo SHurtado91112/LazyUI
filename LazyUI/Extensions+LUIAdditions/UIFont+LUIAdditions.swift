@@ -10,23 +10,36 @@ import Foundation
 
 extension UIFont {
     
-    open func withSize(_ fontSizeType: LUIFontSizeType) -> UIFont {
-        return LUIFontManager.shared.font(self, for: fontSizeType) ?? self
+    open func withSize(_ fontSizeType: LUIFontSizeType, substitute: Bool = true) -> UIFont {
+        let font = substitute ? self.substituteFont : self
+        return LUIFontManager.shared.font(font, for: fontSizeType) ?? font
     }
     
-    open func withStyle(_ fontStyleType: LUIFontStyleType) -> UIFont {
+    open func withStyle(_ fontStyleType: LUIFontStyleType, substitute: Bool = true) -> UIFont {
+        let size = self.pointSize
+        let font = substitute ? self.substituteFont : self
         switch fontStyleType {
         case .bold:
-            return self.withTraits(traits: .traitBold)
+            return font.withTraits(traits: .traitBold, size: size, substitute: substitute)
         case .italics:
-            return self.withTraits(traits: .traitItalic)
+            return font.withTraits(traits: .traitItalic, size: size, substitute: substitute)
         case .regular:
-            return self
+            return font.withSize(size)
         }
     }
     
-    func withTraits(traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
-        let descriptor = fontDescriptor.withSymbolicTraits(traits)
-        return UIFont(descriptor: descriptor!, size: 0) //size 0 means keep the size as it is
+    func withTraits(traits: UIFontDescriptor.SymbolicTraits, size: CGFloat, substitute: Bool = true) -> UIFont {
+        let font = substitute ? self.substituteFont : self
+        if let descriptor = font.fontDescriptor.withSymbolicTraits(traits) {
+            return UIFont(descriptor: descriptor, size: size)
+        } else {
+            return font
+        }
+    }
+}
+
+extension UIFont : LUIFont {
+    open var substituteFont: UIFont {
+        return LUIFontManager.shared.universalFont
     }
 }

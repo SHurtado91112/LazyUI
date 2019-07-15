@@ -31,7 +31,6 @@ open class LUITextField : UITextField {
         self.placeholderFontStyleType = placeholderFontStyle
         
         super.init(frame: .zero)
-        self.font = LUIFontManager.shared.universalFont
         self.font = self.font?.withSize(fontSize).withStyle(textFontStyle)
     }
     
@@ -61,7 +60,6 @@ open class LUITextView : UITextView {
         super.init(frame: .zero, textContainer: nil)
         
         self.textContainerInset = LUIPaddingManager.shared.paddingRect(for: paddingType)
-        self.font = LUIFontManager.shared.universalFont
         self.font = self.font?.withSize(fontSize).withStyle(textFontStyle)
     }
     

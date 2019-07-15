@@ -51,7 +51,20 @@ public class LUIThemeManager: NSObject {
     }
     
     private func setTheme() {
+        UIWindow.appearance().backgroundColor = self.themeColors.lightBackground
         LUIView.appearance().backgroundColor = self.themeColors.lightBackground
         LUITextField.appearance().textColor = self.themeColors.darkText
+        
+        // MARK: - NAVIGATION PROXY
+        let navigationBar = UINavigationBar.appearance()
+        navigationBar.tintColor = self.themeColors.theme
+        navigationBar.barTintColor = self.themeColors.lightBackground
+        navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor : self.themeColors.darkText
+        ]
+        navigationBar.largeTitleTextAttributes = [
+            NSAttributedString.Key.foregroundColor : self.themeColors.darkText
+        ]
+        navigationBar.setBackgroundImage(nil, for: .default)
     }
 }

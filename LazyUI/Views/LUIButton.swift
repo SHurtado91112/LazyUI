@@ -66,7 +66,6 @@ open class LUIButton: UIButton {
         super.init(frame: .zero)
         self.contentEdgeInsets = LUIPaddingManager.shared.paddingRect(for: paddingType)
 
-        self.titleLabel?.font = LUIFontManager.shared.universalFont
         self.titleLabel?.font = self.titleLabel?.font?.withSize(fontSize).withStyle(textFontStyle)
         
         self.forAffirmation = affirmation
