@@ -74,66 +74,179 @@ extension UIView: LUIConstraints {
     }
     
     public func top(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool) {
+        self.top(view, fromTop: fromTop, paddingType: paddingType, withSafety: withSafety, constraintOperator: .equal)
+    }
+    public func top(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) {
         let padding = LUIPaddingManager.shared.padding(for: paddingType)
         let anchor = withSafety ? self.safeAreaLayoutGuide.topAnchor : self.topAnchor
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        if fromTop {
-            view.topAnchor.constraint(equalTo: anchor, constant: padding).isActive = true
-        } else {
-            view.bottomAnchor.constraint(equalTo: anchor, constant: -padding).isActive = true
+        switch constraintOperator {
+            case .equal:
+                if fromTop {
+                    view.topAnchor.constraint(equalTo: anchor, constant: padding).isActive = true
+                } else {
+                    view.bottomAnchor.constraint(equalTo: anchor, constant: -padding).isActive = true
+                }
+                break
+            case .greaterThan:
+                if fromTop {
+                    view.topAnchor.constraint(greaterThanOrEqualTo: anchor, constant: padding).isActive = true
+                } else {
+                    view.bottomAnchor.constraint(greaterThanOrEqualTo: anchor, constant: -padding).isActive = true
+                }
+                break
+            case .lessThan:
+                if fromTop {
+                    view.topAnchor.constraint(lessThanOrEqualTo: anchor, constant: padding).isActive = true
+                } else {
+                    view.bottomAnchor.constraint(lessThanOrEqualTo: anchor, constant: -padding).isActive = true
+                }
+                break
         }
     }
     
     public func bottom(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool) {
+        self.bottom(view, fromTop: fromTop, paddingType: paddingType, withSafety: withSafety, constraintOperator: .equal)
+    }
+    public func bottom(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) {
         let padding = LUIPaddingManager.shared.padding(for: paddingType)
         let anchor = withSafety ? self.safeAreaLayoutGuide.bottomAnchor : self.bottomAnchor
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        if fromTop {
-            view.topAnchor.constraint(equalTo: anchor, constant: padding).isActive = true
-        } else {
-            view.bottomAnchor.constraint(equalTo: anchor, constant: -padding).isActive = true
+        switch constraintOperator {
+            case .equal:
+                if fromTop {
+                    view.topAnchor.constraint(equalTo: anchor, constant: padding).isActive = true
+                } else {
+                    view.bottomAnchor.constraint(equalTo: anchor, constant: -padding).isActive = true
+                }
+                break
+            case .greaterThan:
+                if fromTop {
+                    view.topAnchor.constraint(greaterThanOrEqualTo: anchor, constant: padding).isActive = true
+                } else {
+                    view.bottomAnchor.constraint(greaterThanOrEqualTo: anchor, constant: -padding).isActive = true
+                }
+                break
+            case .lessThan:
+                if fromTop {
+                    view.topAnchor.constraint(lessThanOrEqualTo: anchor, constant: padding).isActive = true
+                } else {
+                    view.bottomAnchor.constraint(lessThanOrEqualTo: anchor, constant: -padding).isActive = true
+                }
+                break
         }
     }
     
     public func left(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool) {
+        self.left(view, fromLeft: fromLeft, paddingType: paddingType, withSafety: withSafety, constraintOperator: .equal)
+    }
+    public func left(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) {
         let padding = LUIPaddingManager.shared.padding(for: paddingType)
         let anchor = withSafety ? self.safeAreaLayoutGuide.leadingAnchor : self.leadingAnchor
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        if fromLeft {
-            view.leadingAnchor.constraint(equalTo: anchor, constant: padding).isActive = true
-        } else {
-            view.trailingAnchor.constraint(equalTo: anchor, constant: -padding).isActive = true
+        switch constraintOperator {
+            case .equal:
+                if fromLeft {
+                    view.leadingAnchor.constraint(equalTo: anchor, constant: padding).isActive = true
+                } else {
+                    view.trailingAnchor.constraint(equalTo: anchor, constant: -padding).isActive = true
+                }
+                break
+            case .greaterThan:
+                if fromLeft {
+                    view.leadingAnchor.constraint(greaterThanOrEqualTo: anchor, constant: padding).isActive = true
+                } else {
+                    view.trailingAnchor.constraint(greaterThanOrEqualTo: anchor, constant: -padding).isActive = true
+                }
+                break
+            case .lessThan:
+                if fromLeft {
+                    view.leadingAnchor.constraint(lessThanOrEqualTo: anchor, constant: padding).isActive = true
+                } else {
+                    view.trailingAnchor.constraint(lessThanOrEqualTo: anchor, constant: -padding).isActive = true
+                }
+                break
         }
     }
     
     public func right(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool) {
+        self.right(view, fromLeft: fromLeft, paddingType: paddingType, withSafety: withSafety, constraintOperator: .equal)
+    }
+    public func right(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) {
         let padding = LUIPaddingManager.shared.padding(for: paddingType)
         let anchor = withSafety ? self.safeAreaLayoutGuide.trailingAnchor : self.trailingAnchor
         view.translatesAutoresizingMaskIntoConstraints = false
         
-        if fromLeft {
-            view.leadingAnchor.constraint(equalTo: anchor, constant: padding).isActive = true
-        } else {
-            view.trailingAnchor.constraint(equalTo: anchor, constant: -padding).isActive = true
+        switch constraintOperator {
+            case .equal:
+                if fromLeft {
+                    view.leadingAnchor.constraint(equalTo: anchor, constant: padding).isActive = true
+                } else {
+                    view.trailingAnchor.constraint(equalTo: anchor, constant: -padding).isActive = true
+                }
+                break
+            case .greaterThan:
+                if fromLeft {
+                    view.leadingAnchor.constraint(greaterThanOrEqualTo: anchor, constant: padding).isActive = true
+                } else {
+                    view.trailingAnchor.constraint(greaterThanOrEqualTo: anchor, constant: -padding).isActive = true
+                }
+                break
+            case .lessThan:
+                if fromLeft {
+                    view.leadingAnchor.constraint(lessThanOrEqualTo: anchor, constant: padding).isActive = true
+                } else {
+                    view.trailingAnchor.constraint(lessThanOrEqualTo: anchor, constant: -padding).isActive = true
+                }
+                break
         }
     }
     
     public func width(to width: CGFloat) {
+        self.width(to: width, constraintOperator: .equal)
+    }
+    public func width(to width: CGFloat, constraintOperator: LUIConstraintOperator) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.widthAnchor.constraint(equalToConstant: width).isActive = true
+        
+        switch constraintOperator {
+            case .equal:
+                self.widthAnchor.constraint(equalToConstant: width).isActive = true
+                break
+            case .greaterThan:
+                self.widthAnchor.constraint(greaterThanOrEqualToConstant: width).isActive = true
+                break
+            case .lessThan:
+                self.widthAnchor.constraint(lessThanOrEqualToConstant: width).isActive = true
+                break
+        }
     }
     
     public func height(to height: CGFloat) {
+        self.height(to: height, constraintOperator: .equal)
+    }
+    public func height(to height: CGFloat, constraintOperator: LUIConstraintOperator) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.heightAnchor.constraint(equalToConstant: height).isActive = true
+        
+        switch constraintOperator {
+            case .equal:
+                self.heightAnchor.constraint(equalToConstant: height).isActive = true
+                break
+            case .greaterThan:
+                self.heightAnchor.constraint(greaterThanOrEqualToConstant: height).isActive = true
+                break
+            case .lessThan:
+                self.heightAnchor.constraint(lessThanOrEqualToConstant: height).isActive = true
+                break
+        }
+        
     }
     
     public func square(to size: CGFloat) {
-        self.width(to: size)
-        self.height(to: size)
+        self.width(to: size, constraintOperator: .equal)
+        self.height(to: size, constraintOperator: .equal)
     }
     
     public func circle(to size: CGFloat) {

@@ -31,6 +31,7 @@
 		CD3A5A3B22D1134D009AD5BC /* UIColor+LUIAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3A22D1134D009AD5BC /* UIColor+LUIAdditions.swift */; };
 		CD3A5A3D22D113E6009AD5BC /* LUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3C22D113E6009AD5BC /* LUIColor.swift */; };
 		CD3A5A3F22D116EE009AD5BC /* LUIThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3E22D116EE009AD5BC /* LUIThemeManager.swift */; };
+		CDD4379A22DCCC79003A5A4B /* LUITableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD4379922DCCC79003A5A4B /* LUITableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		CD3A5A3A22D1134D009AD5BC /* UIColor+LUIAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+LUIAdditions.swift"; sourceTree = "<group>"; };
 		CD3A5A3C22D113E6009AD5BC /* LUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIColor.swift; sourceTree = "<group>"; };
 		CD3A5A3E22D116EE009AD5BC /* LUIThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIThemeManager.swift; sourceTree = "<group>"; };
+		CDD4379922DCCC79003A5A4B /* LUITableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUITableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 		CD04303022D294660018D584 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CDD4379822DCCC46003A5A4B /* Cell */,
 				CD04303122D2947E0018D584 /* LUIView.swift */,
 				CD04303322D294D00018D584 /* LUILabel.swift */,
 				CD04304122D98C900018D584 /* LUITextField+LUITextView.swift */,
@@ -193,6 +196,14 @@
 			path = Color;
 			sourceTree = "<group>";
 		};
+		CDD4379822DCCC46003A5A4B /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CDD4379922DCCC79003A5A4B /* LUITableCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -279,6 +290,7 @@
 				CD04304E22DAF32E0018D584 /* TimeInterval+LUIAdditions.swift in Sources */,
 				CD04303222D2947E0018D584 /* LUIView.swift in Sources */,
 				CD04308922DC48490018D584 /* LUINavigation.swift in Sources */,
+				CDD4379A22DCCC79003A5A4B /* LUITableCell.swift in Sources */,
 				CD04304022D98AB10018D584 /* LUIPaddingManager.swift in Sources */,
 				CD3A5A3D22D113E6009AD5BC /* LUIColor.swift in Sources */,
 				CD04304422D9AC130018D584 /* LUIButton.swift in Sources */,

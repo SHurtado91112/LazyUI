@@ -27,7 +27,7 @@ open class LUIButton: UIButton {
     
     public var doesJiggle: Bool = true
     
-    open var text: String = "" {
+    open var text: String? = "" {
         didSet {
             self.setTitle(self.text, for: .normal)
             self.sizeToFit()

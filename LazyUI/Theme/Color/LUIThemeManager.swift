@@ -66,5 +66,10 @@ public class LUIThemeManager: NSObject {
             NSAttributedString.Key.foregroundColor : self.themeColors.darkText
         ]
         navigationBar.setBackgroundImage(nil, for: .default)
+        
+        // MARK: - SEARCH PROXY
+        let searchBar = UISearchBar.appearance()
+        searchBar.tintColor = self.themeColors.theme
+        searchBar.barTintColor = self.themeColors.intermediateBackground
     }
 }

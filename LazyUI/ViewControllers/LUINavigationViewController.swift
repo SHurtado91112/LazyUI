@@ -48,6 +48,6 @@ open class LUINavigationViewController: UINavigationController {
         self.navigationBar.titleTextAttributes?[NSAttributedString.Key.font] =  self.substituteFont.withSize(.regular).withStyle(.bold)
         
         self.navigationBar.largeTitleTextAttributes = UINavigationBar.appearance().largeTitleTextAttributes
-        self.navigationBar.largeTitleTextAttributes?[NSAttributedString.Key.font] =  self.substituteFont.withSize(.large).withStyle(.bold)
+        self.navigationBar.largeTitleTextAttributes?[NSAttributedString.Key.font] =  self.substituteFont.withSize(.title).withStyle(.bold)
     }
 }
