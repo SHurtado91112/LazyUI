@@ -31,6 +31,11 @@
 		CD3A5A3B22D1134D009AD5BC /* UIColor+LUIAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3A22D1134D009AD5BC /* UIColor+LUIAdditions.swift */; };
 		CD3A5A3D22D113E6009AD5BC /* LUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3C22D113E6009AD5BC /* LUIColor.swift */; };
 		CD3A5A3F22D116EE009AD5BC /* LUIThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3E22D116EE009AD5BC /* LUIThemeManager.swift */; };
+		CDC95FC422E779EE00CD378E /* UIImageView+LUIAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC95FC322E779EE00CD378E /* UIImageView+LUIAdditions.swift */; };
+		CDD2942222E50BAA00801908 /* Date+LUIAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD2942122E50BAA00801908 /* Date+LUIAdditions.swift */; };
+		CDD2942422E5135500801908 /* String+LUIAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD2942322E5135500801908 /* String+LUIAdditions.swift */; };
+		CDD2942622E53F2E00801908 /* LUIPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD2942522E53F2E00801908 /* LUIPreviewViewController.swift */; };
+		CDD2942822E5411800801908 /* LUIPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD2942722E5411800801908 /* LUIPreviewView.swift */; };
 		CDD4379A22DCCC79003A5A4B /* LUITableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD4379922DCCC79003A5A4B /* LUITableCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +66,11 @@
 		CD3A5A3A22D1134D009AD5BC /* UIColor+LUIAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+LUIAdditions.swift"; sourceTree = "<group>"; };
 		CD3A5A3C22D113E6009AD5BC /* LUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIColor.swift; sourceTree = "<group>"; };
 		CD3A5A3E22D116EE009AD5BC /* LUIThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIThemeManager.swift; sourceTree = "<group>"; };
+		CDC95FC322E779EE00CD378E /* UIImageView+LUIAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+LUIAdditions.swift"; sourceTree = "<group>"; };
+		CDD2942122E50BAA00801908 /* Date+LUIAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+LUIAdditions.swift"; sourceTree = "<group>"; };
+		CDD2942322E5135500801908 /* String+LUIAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+LUIAdditions.swift"; sourceTree = "<group>"; };
+		CDD2942522E53F2E00801908 /* LUIPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPreviewViewController.swift; sourceTree = "<group>"; };
+		CDD2942722E5411800801908 /* LUIPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPreviewView.swift; sourceTree = "<group>"; };
 		CDD4379922DCCC79003A5A4B /* LUITableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUITableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,6 +93,7 @@
 				CD04303322D294D00018D584 /* LUILabel.swift */,
 				CD04304122D98C900018D584 /* LUITextField+LUITextView.swift */,
 				CD04304322D9AC130018D584 /* LUIButton.swift */,
+				CDD2942722E5411800801908 /* LUIPreviewView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -94,6 +105,7 @@
 				CD04305122DAF9540018D584 /* LUINavigationViewController.swift */,
 				CD04305322DAFD4F0018D584 /* LUIPopOverViewController.swift */,
 				CD04308622DC47910018D584 /* LUITableViewController.swift */,
+				CDD2942522E53F2E00801908 /* LUIPreviewViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -115,6 +127,9 @@
 				CD3A5A3722CFF840009AD5BC /* UIFont+LUIAdditions.swift */,
 				CD04304622DA4BBF0018D584 /* UIImage+LUIAdditions.swift */,
 				CD04304D22DAF32E0018D584 /* TimeInterval+LUIAdditions.swift */,
+				CDD2942122E50BAA00801908 /* Date+LUIAdditions.swift */,
+				CDD2942322E5135500801908 /* String+LUIAdditions.swift */,
+				CDC95FC322E779EE00CD378E /* UIImageView+LUIAdditions.swift */,
 			);
 			path = "Extensions+LUIAdditions";
 			sourceTree = "<group>";
@@ -292,15 +307,20 @@
 				CD04308922DC48490018D584 /* LUINavigation.swift in Sources */,
 				CDD4379A22DCCC79003A5A4B /* LUITableCell.swift in Sources */,
 				CD04304022D98AB10018D584 /* LUIPaddingManager.swift in Sources */,
+				CDD2942622E53F2E00801908 /* LUIPreviewViewController.swift in Sources */,
+				CDD2942822E5411800801908 /* LUIPreviewView.swift in Sources */,
 				CD3A5A3D22D113E6009AD5BC /* LUIColor.swift in Sources */,
 				CD04304422D9AC130018D584 /* LUIButton.swift in Sources */,
 				CD04303422D294D00018D584 /* LUILabel.swift in Sources */,
 				CD04303722D29AAD0018D584 /* LUIViewController.swift in Sources */,
 				CD04305222DAF9540018D584 /* LUINavigationViewController.swift in Sources */,
+				CDD2942222E50BAA00801908 /* Date+LUIAdditions.swift in Sources */,
 				CD04303A22D29D300018D584 /* LUIConstraints.swift in Sources */,
 				CD04304A22DA53770018D584 /* LUIAnimationSpeed.swift in Sources */,
 				CD04304722DA4BBF0018D584 /* UIImage+LUIAdditions.swift in Sources */,
+				CDC95FC422E779EE00CD378E /* UIImageView+LUIAdditions.swift in Sources */,
 				CD04305422DAFD4F0018D584 /* LUIPopOverViewController.swift in Sources */,
+				CDD2942422E5135500801908 /* String+LUIAdditions.swift in Sources */,
 				CD3A5A3F22D116EE009AD5BC /* LUIThemeManager.swift in Sources */,
 				CD3A59FC22CEE86C009AD5BC /* LUIFontManager.swift in Sources */,
 				CD04303C22D2A0980018D584 /* UIView+LUIAdditions.swift in Sources */,

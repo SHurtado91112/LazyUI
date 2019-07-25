@@ -253,4 +253,9 @@ extension UIView: LUIConstraints {
         self.square(to: size)
         self.roundCorners(to: size/2.0)
     }
+    
+    public func aspectRatio(_ ratio: LUIAspectRatio) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: CGFloat(ratio.value)).isActive = true
+    }
 }

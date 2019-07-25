@@ -30,4 +30,5 @@ public protocol LUIConstraints {
     func height(to height: CGFloat, constraintOperator: LUIConstraintOperator)
     func square(to size: CGFloat)
     func circle(to size: CGFloat)
+    func aspectRatio(_ ratio: LUIAspectRatio)
 }

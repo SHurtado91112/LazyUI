@@ -18,3 +18,7 @@ extension UIImage {
         return self.withRenderingMode(.alwaysOriginal)
     }
 }
+
+extension UIImage: LUIPreviewContent {
+    
+}

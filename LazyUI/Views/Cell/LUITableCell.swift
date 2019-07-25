@@ -34,16 +34,16 @@ open class LUITableCell: UITableViewCell {
         self.configureTableViewCell()
     }
     
+    override open func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        // Configure the view for the selected state
+    }
+    
     private func configureTableViewCell() {
         if let cell = self as? LUICellData {
             cell.setUpCell()
         }
     }
     
-    override open func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }
