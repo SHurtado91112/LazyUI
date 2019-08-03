@@ -41,5 +41,13 @@ public struct LUIPadding {
         }
     }
     
+    public static func padding(for type: LUIPaddingType) -> CGFloat {
+        return LUIPaddingManager.shared.padding(for: type)
+    }
+    
+    public static func paddingRect(for type: LUIPaddingType) -> UIEdgeInsets {
+        return LUIPaddingManager.shared.paddingRect(for: type)
+    }
+    
 }
 

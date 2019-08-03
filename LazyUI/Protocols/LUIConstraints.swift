@@ -18,7 +18,7 @@ public protocol LUIConstraints {
     func centerX(_ view: UIView)
     func centerY(_ view: UIView)
     func center(_ view: UIView)
-    func fill(_ view: UIView, padding: LUIPaddingType)
+    func fill(_ view: UIView, padding: LUIPaddingType, withSafety: Bool)
     
     func top(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator)
     func bottom(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator)
@@ -27,7 +27,11 @@ public protocol LUIConstraints {
     func right(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator)
     
     func width(to width: CGFloat, constraintOperator: LUIConstraintOperator)
+    func width(to width: NSLayoutDimension, constraintOperator: LUIConstraintOperator)
+    
     func height(to height: CGFloat, constraintOperator: LUIConstraintOperator)
+    func height(to height: NSLayoutDimension, constraintOperator: LUIConstraintOperator)
+    
     func square(to size: CGFloat)
     func circle(to size: CGFloat)
     func aspectRatio(_ ratio: LUIAspectRatio)

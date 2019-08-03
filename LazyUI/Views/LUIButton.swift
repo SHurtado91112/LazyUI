@@ -56,6 +56,13 @@ open class LUIButton: UIButton {
             }
         }
     }
+    
+    open var padding: LUIPaddingType? {
+        didSet {
+            guard let padding = self.padding else { return }
+            self.contentEdgeInsets = LUIPadding.paddingRect(for: padding)
+        }
+    }
 
     required public init(style: LUIButtonStyle = .none, affirmation: Bool = false, negation: Bool = false, raised: Bool = false, paddingType: LUIPaddingType = .none, fontSize: LUIFontSizeType = .regular, textFontStyle: LUIFontStyleType = .regular) {
         
@@ -64,8 +71,11 @@ open class LUIButton: UIButton {
         }
         
         super.init(frame: .zero)
-        self.contentEdgeInsets = LUIPaddingManager.shared.paddingRect(for: paddingType)
 
+        self.padding = paddingType
+        // set twice because didSet is not called in view's init
+        self.contentEdgeInsets = LUIPadding.paddingRect(for: paddingType)
+        
         self.titleLabel?.font = self.titleLabel?.font?.withSize(fontSize).withStyle(textFontStyle)
         
         self.forAffirmation = affirmation
@@ -120,8 +130,8 @@ open class LUIButton: UIButton {
             return
         }
         
-        
-        UIView.animate(withDuration: TimeInterval.timeInterval(for: .minimum), delay: 0.0, options: .curveEaseOut, animations: {
+        let time = TimeInterval.timeInterval(for: .minimum)
+        UIView.animate(withDuration: time, delay: 0.0, options: .curveEaseOut, animations: {
             self.transform = self.transform.scaledBy(x: self.SCALE_JIGGLE_CONST, y: self.SCALE_JIGGLE_CONST)
         })
         
@@ -133,7 +143,8 @@ open class LUIButton: UIButton {
             return
         }
         
-        UIView.animate(withDuration: TimeInterval.timeInterval(for: .minimum), delay: 0.0, options: .curveEaseOut, animations: {
+        let time = TimeInterval.timeInterval(for: .minimum)
+        UIView.animate(withDuration: time, delay: time, options: .curveEaseOut, animations: {
             self.transform = .identity
         }, completion: nil)
         

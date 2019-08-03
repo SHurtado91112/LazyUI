@@ -115,7 +115,6 @@ open class LUIPreviewManagerViewController: UIPageViewController, LUIViewControl
         }
     }
     
-    
     override open func viewDidLoad() {
         self.setUpViews()
     }

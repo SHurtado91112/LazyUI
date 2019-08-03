@@ -66,11 +66,11 @@ extension UIView: LUIConstraints {
         self.centerY(view)
     }
     
-    public func fill(_ view: UIView, padding: LUIPaddingType) {
-        self.top(view, fromTop: true, paddingType: padding, withSafety: false)
-        self.bottom(view, fromTop: false, paddingType: padding, withSafety: false)
-        self.left(view, fromLeft: true, paddingType: padding, withSafety: false)
-        self.right(view, fromLeft: false, paddingType: padding, withSafety: false)
+    public func fill(_ view: UIView, padding: LUIPaddingType, withSafety: Bool = false) {
+        self.top(view, fromTop: true, paddingType: padding, withSafety: withSafety)
+        self.bottom(view, fromTop: false, paddingType: padding, withSafety: withSafety)
+        self.left(view, fromLeft: true, paddingType: padding, withSafety: withSafety)
+        self.right(view, fromLeft: false, paddingType: padding, withSafety: withSafety)
     }
     
     public func top(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool) {
@@ -223,6 +223,22 @@ extension UIView: LUIConstraints {
                 break
         }
     }
+    public func width(to width: NSLayoutDimension, constraintOperator: LUIConstraintOperator) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        
+        switch constraintOperator {
+        case .equal:
+            self.widthAnchor.constraint(equalTo: width).isActive = true
+            break
+        case .greaterThan:
+            self.widthAnchor.constraint(greaterThanOrEqualTo: width).isActive = true
+            break
+        case .lessThan:
+            self.widthAnchor.constraint(lessThanOrEqualTo: width).isActive = true
+            break
+        }
+        
+    }
     
     public func height(to height: CGFloat) {
         self.height(to: height, constraintOperator: .equal)
@@ -231,15 +247,31 @@ extension UIView: LUIConstraints {
         self.translatesAutoresizingMaskIntoConstraints = false
         
         switch constraintOperator {
-            case .equal:
-                self.heightAnchor.constraint(equalToConstant: height).isActive = true
-                break
-            case .greaterThan:
-                self.heightAnchor.constraint(greaterThanOrEqualToConstant: height).isActive = true
-                break
-            case .lessThan:
-                self.heightAnchor.constraint(lessThanOrEqualToConstant: height).isActive = true
-                break
+        case .equal:
+            self.heightAnchor.constraint(equalToConstant: height).isActive = true
+            break
+        case .greaterThan:
+            self.heightAnchor.constraint(greaterThanOrEqualToConstant: height).isActive = true
+            break
+        case .lessThan:
+            self.heightAnchor.constraint(lessThanOrEqualToConstant: height).isActive = true
+            break
+        }
+        
+    }
+    public func height(to height: NSLayoutDimension, constraintOperator: LUIConstraintOperator) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        
+        switch constraintOperator {
+        case .equal:
+            self.heightAnchor.constraint(equalTo: height).isActive = true
+            break
+        case .greaterThan:
+            self.heightAnchor.constraint(greaterThanOrEqualTo: height).isActive = true
+            break
+        case .lessThan:
+            self.heightAnchor.constraint(lessThanOrEqualTo: height).isActive = true
+            break
         }
         
     }

@@ -10,8 +10,8 @@ import UIKit
 
 open class LUITextField : UITextField {
     
-    private var paddingType : LUIPaddingType!
-    private var placeholderFontStyleType : LUIFontStyleType!
+    
+    // MARK: - Public
     
     override open var placeholder: String? {
         didSet {
@@ -21,9 +21,13 @@ open class LUITextField : UITextField {
             self.attributedPlaceholder = NSAttributedString(string: text, attributes: [
                 NSAttributedString.Key.foregroundColor: color,
                 NSAttributedString.Key.font : font
-            ])
+                ])
         }
     }
+    
+    // MARK: - Private
+    private var paddingType : LUIPaddingType!
+    private var placeholderFontStyleType : LUIFontStyleType!
     
     required public init(paddingType: LUIPaddingType = .none, fontSize: LUIFontSizeType = .regular, textFontStyle: LUIFontStyleType = .regular, placeholderFontStyle: LUIFontStyleType = .regular) {
         
@@ -52,9 +56,20 @@ open class LUITextField : UITextField {
         let padding = LUIPaddingManager.shared.paddingRect(for: self.paddingType)
         return bounds.inset(by: padding)
     }
+    
 }
 
 open class LUITextView : UITextView {
+    
+    private var isBuilding: Bool = false
+    
+    open var viewOnly: Bool = false {
+        didSet {
+            self.isUserInteractionEnabled = true
+            self.isEditable = !self.viewOnly
+            self.isScrollEnabled = !self.viewOnly
+        }
+    }
     
     required public init(paddingType: LUIPaddingType = .none, fontSize: LUIFontSizeType = .regular, textFontStyle: LUIFontStyleType = .regular) {
         super.init(frame: .zero, textContainer: nil)
@@ -66,4 +81,56 @@ open class LUITextView : UITextView {
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    // erases current text for text building session
+    public func beginBuilding() {
+        self.isBuilding = true
+        self.text = ""
+    }
+    
+    public func endBuilding() {
+        self.isBuilding = false
+        
+        
+        let fixedWidth = self.frame.size.width
+        let newSize = self.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        self.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+    }
+    
+    public func addText(_ text: String, textColor: UIColor) {
+        if !self.isBuilding {
+            fatalError("Accessing building function when 'beginBuilding' has not been called.")
+        }
+        
+        let newText = NSAttributedString(string: text, attributes: [.foregroundColor: textColor])
+        
+        let attributedText = NSMutableAttributedString(attributedString: self.attributedText)
+        attributedText.append(newText)
+        self.attributedText = attributedText
+    }
+    
+    public func addLink(_ text: String, linkColor: UIColor, urlStr: String) {
+        if !self.isBuilding {
+            fatalError("Accessing building function when 'beginBuilding' has not been called.")
+        }
+        
+        if let url = URL(string: urlStr) {
+            
+            let attributedLink = NSMutableAttributedString(string: text)
+            attributedLink.setAttributes([.link: url], range: NSMakeRange(0, text.count))
+            
+            let leftOverText = NSMutableAttributedString(attributedString: self.attributedText)
+            leftOverText.append(attributedLink)
+            self.attributedText = leftOverText
+            self.linkTextAttributes = [
+                .foregroundColor: linkColor,
+            ]
+            
+            // assumption for when links are involved, can be changed on client end
+            self.viewOnly = true
+        } else {
+            fatalError("\(urlStr) is not a valid URL.")
+        }
+    }
+    
 }

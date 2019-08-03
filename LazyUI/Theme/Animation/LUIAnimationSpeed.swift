@@ -33,5 +33,8 @@ public struct LUIAnimationSpeed {
         self.minimum = minimum
         self.none = 0.0
     }
-    
+
+    public static func timeInterval(for type: LUIAnimationSpeedType) -> TimeInterval {
+        return LUIAnimationSpeedManager.shared.timeInterval(for: type)
+    }
 }
