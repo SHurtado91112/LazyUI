@@ -10,8 +10,13 @@ import UIKit
 
 open class LUITextField : UITextField {
     
-    
     // MARK: - Public
+    open var errorValidator: ((String?)->Bool)?
+    open var errorString: String? {
+        didSet {
+            self.errorLabel.text = self.errorString
+        }
+    }
     
     override open var placeholder: String? {
         didSet {
@@ -21,13 +26,27 @@ open class LUITextField : UITextField {
             self.attributedPlaceholder = NSAttributedString(string: text, attributes: [
                 NSAttributedString.Key.foregroundColor: color,
                 NSAttributedString.Key.font : font
-                ])
+            ])
         }
     }
     
     // MARK: - Private
     private var paddingType : LUIPaddingType!
     private var placeholderFontStyleType : LUIFontStyleType!
+    private lazy var errorLabel: LUILabel = {
+        let label = LUILabel(color: .negation, fontSize: .small, fontStyle: .italics)
+        label.textAlignment = .right
+        label.lineHeight = .regular
+        
+        self.addSubview(label)
+        self.bottom(label, fromTop: true, paddingType: .small, withSafety: false)
+        self.left(label, fromLeft: true, paddingType: .none, withSafety: false)
+        self.right(label, fromLeft: false, paddingType: .none, withSafety: false)
+        
+        label.isHidden = true
+        
+        return label
+    } ()
     
     required public init(paddingType: LUIPaddingType = .none, fontSize: LUIFontSizeType = .regular, textFontStyle: LUIFontStyleType = .regular, placeholderFontStyle: LUIFontStyleType = .regular) {
         
@@ -57,6 +76,15 @@ open class LUITextField : UITextField {
         return bounds.inset(by: padding)
     }
     
+    public func validate() -> Bool {
+        if let validator = self.errorValidator, !validator(self.text) {
+            self.errorLabel.isHidden = false
+            return false
+        } else {
+            self.errorLabel.isHidden = true
+        }
+        return true
+    }
 }
 
 open class LUITextView : UITextView {

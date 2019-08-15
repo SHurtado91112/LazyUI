@@ -21,7 +21,17 @@ open class LUIViewControllerClass: UIViewController {
     private var _navigation: LUINavigationViewController?
     
     override open func loadView() {
-        self.view = LUIView()
+        self.view = LUIView(root: true)
+    }
+    
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        LUIKeyboardManager.shared.registerEvents(for: self)
+    }
+    
+    override open func viewDidDisappear(_ animated: Bool) {
+        LUIKeyboardManager.shared.unregisterEvents()
+        super.viewDidDisappear(animated)
     }
     
     override open func viewDidLoad() {
@@ -34,6 +44,25 @@ open class LUIViewControllerClass: UIViewController {
     private func setUp() {
         if let lazyVC = self as? LUIViewController {
             lazyVC.setUpViews()
+        }
+        
+        self.setUpGestures()
+    }
+    
+    // MARK: - GESTURE SET UP
+    
+    private func setUpGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.viewDidTap))
+        self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func viewDidTap(sender: UITapGestureRecognizer) {
+        
+        // Tap and if the text field wasn't tapped then we dismiss editing
+        if let activeTextField = LUIKeyboardManager.shared.activeTextField {
+            if sender.view != activeTextField {
+                self.view.endEditing(true)
+            }
         }
     }
     

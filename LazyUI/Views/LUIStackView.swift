@@ -64,7 +64,7 @@ open class LUIStackView: UIScrollView {
         }
     }
     
-    open func addArrangedSubview(contentView: UIView, page: Int = 0, identifier: String = "", fill: Bool = false) {
+    open func addArrangedSubview(contentView: UIView, identifier: String = "", fill: Bool = false) {
         self.stackView.addArrangedSubview(contentView)
 
         if fill {
@@ -77,18 +77,18 @@ open class LUIStackView: UIScrollView {
         }
     }
     
-    open func addArrangedSubview(contentViews: [UIView], page: Int = 0, identifier: String = "", fill: Bool = false) {
-        let hView = UIStackView(arrangedSubviews: contentViews)
-        hView.axis = .horizontal
-        hView.alignment = .center
-        hView.distribution = .fillEqually
-        hView.spacing = LUIPadding.padding(for: self.padding)
+    open func addArrangedSubview(contentViews: [UIView], identifier: String = "", fill: Bool = false, direction: NSLayoutConstraint.Axis = .horizontal) {
+        let stackView = UIStackView(arrangedSubviews: contentViews)
+        stackView.axis = direction
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        stackView.spacing = LUIPadding.padding(for: self.padding)
         
-        self.stackView.addArrangedSubview(hView)
+        self.stackView.addArrangedSubview(stackView)
         
         if fill {
-            self.stackView.left(hView, fromLeft: true, paddingType: self.padding, withSafety: false)
-            self.stackView.right(hView, fromLeft: false, paddingType: self.padding, withSafety: false)
+            self.stackView.left(stackView, fromLeft: true, paddingType: self.padding, withSafety: false)
+            self.stackView.right(stackView, fromLeft: false, paddingType: self.padding, withSafety: false)
         }
         
         if !identifier.isEmpty {

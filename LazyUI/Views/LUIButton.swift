@@ -41,10 +41,13 @@ open class LUIButton: UIButton {
         }
     }
     
+    private var style: LUIButtonStyle = .none
     override open var isEnabled: Bool {
         didSet {
             if !self.isEnabled {
                 self.setButtonStyle(style: .disabled)
+            } else {
+                self.setButtonStyle(style: self.style)
             }
         }
     }
@@ -82,6 +85,7 @@ open class LUIButton: UIButton {
         self.forNegation = negation
         self.isRaised = raised
         
+        self.style = style
         self.setButtonStyle(style: style)
         
         self.addTarget(self, action: #selector(self.touchDown(_:)), for: .touchDown)

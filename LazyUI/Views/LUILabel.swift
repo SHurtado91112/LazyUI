@@ -31,6 +31,18 @@ open class LUILabel: UILabel {
         }
     }
     
+    open var doesWrap: Bool = false {
+        didSet {
+            if self.doesWrap {
+                self.numberOfLines = 0
+                self.lineBreakMode = .byWordWrapping
+            } else {
+                self.numberOfLines = 1
+                self.lineBreakMode = .byTruncatingTail
+            }
+        }
+    }
+    
     required public init(color: LUIColorType = .darkText, fontSize: LUIFontSizeType = .regular, fontStyle: LUIFontStyleType = .regular) {
         super.init(frame: CGRect.zero)
         self.font = self.font.withSize(fontSize).withStyle(fontStyle)
