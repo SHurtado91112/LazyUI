@@ -41,7 +41,10 @@ open class LUIStackView: UIScrollView {
         self.showsHorizontalScrollIndicator = false
         self.addSubview(self.stackView)
         self.fill(self.stackView, padding: .none)
-        self.stackView.spacing = LUIPadding.padding(for: self.padding)
+        
+        let padding = LUIPadding.padding(for: self.padding)
+        self.stackView.spacing = padding
+    
         self.stackView.width(to: self.widthAnchor, constraintOperator: .equal)
     }
     

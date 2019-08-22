@@ -17,6 +17,15 @@ open class LUITextField : UITextField {
             self.errorLabel.text = self.errorString
         }
     }
+    open var maxCharacterLength: Int = 0 {
+        didSet {
+            if self.maxCharacterLength > 0 {
+                self.addTarget(self, action: #selector(self.textDidChange), for: .editingChanged)
+            } else {
+                self.removeTarget(self, action: #selector(self.textDidChange), for: .editingChanged)
+            }
+        }
+    }
     
     override open var placeholder: String? {
         didSet {
@@ -84,6 +93,12 @@ open class LUITextField : UITextField {
             self.errorLabel.isHidden = true
         }
         return true
+    }
+    
+    @objc private func textDidChange() {
+        guard let text = self.text else { return }
+        let trimmed = text.prefix(self.maxCharacterLength)
+        self.text = String(trimmed)
     }
 }
 

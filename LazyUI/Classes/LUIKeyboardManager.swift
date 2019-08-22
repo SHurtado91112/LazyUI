@@ -14,7 +14,7 @@ open class LUIKeyboardManager: NSObject {
     public static let shared = LUIKeyboardManager()
     
     // private properties
-    private(set) var activeTextField: UIView?
+    dynamic private(set) var activeTextField: UIView?
     private var rootOrigin: CGPoint?
     
     private var rootViewController: UIViewController?

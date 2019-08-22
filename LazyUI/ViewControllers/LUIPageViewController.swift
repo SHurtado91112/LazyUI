@@ -9,6 +9,7 @@
 import UIKit
 
 public protocol LUIPageViewControllerDelegate {
+    func pagingAllowed() -> Bool
     func pageChanged()
 }
 
@@ -112,7 +113,7 @@ extension LUIPageViewController: UIPageViewControllerDelegate, UIPageViewControl
     
     public func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         let index = viewController.view.tag
-        if (index + 1) < self.pages.count {
+        if (index + 1) < self.pages.count, self.pageDelegate?.pagingAllowed() ?? false {
             return self.viewController(index + 1)
         }
         
