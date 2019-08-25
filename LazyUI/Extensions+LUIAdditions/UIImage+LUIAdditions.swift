@@ -20,5 +20,7 @@ extension UIImage {
 }
 
 extension UIImage: LUIPreviewContent {
-    
+    public var aspectRatio: LUIAspectRatio {
+        return .standard // 4x3
+    }
 }

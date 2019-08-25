@@ -118,7 +118,9 @@ extension LUIViewControllerClass : LUINavigation {
         if let navigation = self.navigation {
             navigation.push(to: vc)
         } else {
-            self.present(LUINavigationViewController(rootVC: vc))
+            let navigation = LUINavigationViewController(rootVC: vc)
+            self.navigation = navigation
+            self.present(navigation)
         }
     }
     

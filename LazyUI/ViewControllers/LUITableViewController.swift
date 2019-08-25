@@ -41,7 +41,7 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
         let controller = UISearchController(searchResultsController: nil)
         controller.searchResultsUpdater = self
         
-        controller.definesPresentationContext = true
+        controller.definesPresentationContext = false
         controller.obscuresBackgroundDuringPresentation = false
         controller.hidesNavigationBarDuringPresentation = false
         
@@ -83,6 +83,18 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
         self.setUpViews()
     }
     
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let selectedRows = self.tableView.indexPathsForSelectedRows {
+            
+            for row in selectedRows {
+                self.tableView.deselectRow(at: row, animated: true)
+            }
+            
+        }
+    }
+    
     open func setUpViews() {
         self.tableView.register(self.cellType, forCellReuseIdentifier: self.cellIdentifier)
         self.tableView.delegate = self
@@ -92,6 +104,7 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
         self.tableView.rowHeight = UITableView.automaticDimension
 
         self.tableView.separatorColor = UIColor.color(for: .intermidiateBackground)
+        self.definesPresentationContext = true
     }
     
     open func resetCells(for type: LUITableCell.Type, cellIdentifier: String) {
@@ -150,9 +163,12 @@ extension LUITableViewController : LUINavigation {
     // MARK: - Navigation
     public var navigation: LUINavigationViewController? {
         get {
+            if let navController = self.navigationController as? LUINavigationViewController, self._navigation == nil {
+                self._navigation = navController
+            }
             return self._navigation
         }
-        set(newValue) {
+        set {
             self._navigation = newValue
         }
     }
@@ -161,7 +177,9 @@ extension LUITableViewController : LUINavigation {
         if let navigation = self.navigation {
             navigation.push(to: vc)
         } else {
-            self.present(LUINavigationViewController(rootVC: vc))
+            let navigation = LUINavigationViewController(rootVC: vc)
+            self.navigation = navigation
+            self.present(navigation)
         }
     }
     

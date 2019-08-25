@@ -10,6 +10,10 @@ import UIKit
 
 class LUIPreviewViewController: LUIViewController {
     
+    // private for LUIPannable protocol
+    var _originalPosition: CGPoint = .zero
+    var _currentPositionTouched: CGPoint = .zero
+    
     // open/public
     public var index: Int = -1
     public var selectedContent: LUIPreviewContent? {
@@ -26,30 +30,43 @@ class LUIPreviewViewController: LUIViewController {
     
     private let previewView = LUIPreviewView()
     
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
-        
-        scrollView.minimumZoomScale = self.MIN_ZOOM_SCALE
-        scrollView.maximumZoomScale = self.MAX_ZOOM_SCALE
-        scrollView.delegate = self
-        
-        return scrollView
-    } ()
+    private lazy var scrollView = UIScrollView()
     
     // open/public
     public func setUpViews() {
         self.view.backgroundColor = UIColor.color(for: .darkBackground)
+
+        self.scrollView.showsHorizontalScrollIndicator = false
+        self.scrollView.showsVerticalScrollIndicator = false
+        self.scrollView.minimumZoomScale = self.MIN_ZOOM_SCALE
+        self.scrollView.maximumZoomScale = self.MAX_ZOOM_SCALE
+        self.scrollView.delegate = self
         
         self.addView(self.scrollView)
-        self.fill(self.scrollView)
+        
+        self.view.top(self.scrollView, fromTop: true, paddingType: .none, withSafety: true)
+        self.view.left(self.scrollView, fromLeft: true, paddingType: .none, withSafety: true)
+        self.view.right(self.scrollView, fromLeft: false, paddingType: .none, withSafety: true)
+        self.view.bottom(self.scrollView, fromTop: false, paddingType: .none, withSafety: false)
+        
         self.scrollView.addSubview(self.previewView)
+        self.previewView.width(to: self.scrollView.widthAnchor, constraintOperator: .equal)
+        self.scrollView.center(self.previewView)
+        
+        if let contentView = self.view as? LUIView {
+            let contentScrollView = contentView.contentScrollView
+            contentScrollView.showsHorizontalScrollIndicator = false
+            contentScrollView.showsVerticalScrollIndicator = false
+        }
+        
+        self.setUpGestures()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         self.scrollView.contentOffset = CGPoint.zero
         self.scrollView.contentSize = self.previewView.bounds.size
-        
-        self.setUpGestures()
     }
     
     // private
@@ -58,6 +75,7 @@ class LUIPreviewViewController: LUIViewController {
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.doubleTapGestured))
         doubleTapGesture.numberOfTapsRequired = 2
         self.scrollView.addGestureRecognizer(doubleTapGesture)
+        self.scrollView.addGestureRecognizer(self.panGestureRecognizer)
     }
     
     @objc private func doubleTapGestured(gesture: UIGestureRecognizer) {
@@ -67,6 +85,7 @@ class LUIPreviewViewController: LUIViewController {
             self.scrollView.setZoomScale(self.scrollView.maximumZoomScale/2, animated: true)
         }
     }
+    
 }
 
 extension LUIPreviewViewController: UIScrollViewDelegate {
@@ -197,7 +216,9 @@ extension LUIPreviewManagerViewController: LUINavigation {
         if let navigation = self.navigation {
             navigation.push(to: vc)
         } else {
-            self.present(LUINavigationViewController(rootVC: vc))
+            let navigation = LUINavigationViewController(rootVC: vc)
+            self.navigation = navigation
+            self.present(navigation)
         }
     }
     
@@ -225,6 +246,11 @@ extension LUIPreviewManagerViewController: LUINavigation {
     }
     
     public func dismissableModalViewController() -> LUINavigationViewController {
-        return LUINavigationViewController(rootVC: self, largeTitle: false).forDismissal()
+        let dismissableVC = LUINavigationViewController(rootVC: self, largeTitle: false).forDismissal()
+        
+        self.modalPresentationStyle = .overCurrentContext
+        dismissableVC.modalPresentationStyle = .overCurrentContext
+        
+        return dismissableVC
     }
 }

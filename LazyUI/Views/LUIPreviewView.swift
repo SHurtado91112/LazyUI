@@ -39,7 +39,7 @@ extension LUIAspectRatio {
 }
 
 public protocol LUIPreviewContent {
-    
+    var aspectRatio: LUIAspectRatio { get }
 }
 
 open class LUIPreviewView: LUIView {
@@ -47,8 +47,11 @@ open class LUIPreviewView: LUIView {
     var content: LUIPreviewContent? = nil {
         didSet {
             if let image = self.content as? UIImage {
-                self.frame = CGRect(x: 0.0, y: 0.0, width: image.size.width, height: image.size.height)
                 self.imageView.image = image
+                self.imageView.width(to: self.widthAnchor, constraintOperator: .equal)
+                
+                self.imageView.aspectRatio(image.aspectRatio)
+                self.height(to: self.imageView.heightAnchor, constraintOperator: .equal)
             }
         }
     }
@@ -56,8 +59,10 @@ open class LUIPreviewView: LUIView {
     lazy var imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
+        iv.backgroundColor = .clear
+        self.backgroundColor = .clear
         self.addSubview(iv)
-        self.fill(iv, padding: .none)
+        self.fill(iv, padding: .none, withSafety: false)
         return iv
     } ()
     
