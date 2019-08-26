@@ -34,6 +34,8 @@
 		CDA48B9C2310A24100CC8B09 /* LUIImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA48B9B2310A24100CC8B09 /* LUIImagePicker.swift */; };
 		CDA48BA02312B47C00CC8B09 /* LUIPannable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA48B9F2312B47C00CC8B09 /* LUIPannable.swift */; };
 		CDA48BA22312B50400CC8B09 /* LUIPreviewViewController+LUIPannable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA48BA12312B50400CC8B09 /* LUIPreviewViewController+LUIPannable.swift */; };
+		CDA48BA6231440B400CC8B09 /* LUISearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA48BA5231440B400CC8B09 /* LUISearchController.swift */; };
+		CDA48BA82314414900CC8B09 /* LUISearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA48BA72314414900CC8B09 /* LUISearchBar.swift */; };
 		CDC95FC422E779EE00CD378E /* UIImageView+LUIAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC95FC322E779EE00CD378E /* UIImageView+LUIAdditions.swift */; };
 		CDC95FF422E9EBE000CD378E /* LUIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC95FF322E9EBE000CD378E /* LUIStackView.swift */; };
 		CDC95FFD22EFBDAA00CD378E /* LUIPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC95FFC22EFBDAA00CD378E /* LUIPageViewController.swift */; };
@@ -76,6 +78,8 @@
 		CDA48B9B2310A24100CC8B09 /* LUIImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIImagePicker.swift; sourceTree = "<group>"; };
 		CDA48B9F2312B47C00CC8B09 /* LUIPannable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPannable.swift; sourceTree = "<group>"; };
 		CDA48BA12312B50400CC8B09 /* LUIPreviewViewController+LUIPannable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LUIPreviewViewController+LUIPannable.swift"; sourceTree = "<group>"; };
+		CDA48BA5231440B400CC8B09 /* LUISearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUISearchController.swift; sourceTree = "<group>"; };
+		CDA48BA72314414900CC8B09 /* LUISearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUISearchBar.swift; sourceTree = "<group>"; };
 		CDC95FC322E779EE00CD378E /* UIImageView+LUIAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+LUIAdditions.swift"; sourceTree = "<group>"; };
 		CDC95FF322E9EBE000CD378E /* LUIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIStackView.swift; sourceTree = "<group>"; };
 		CDC95FFC22EFBDAA00CD378E /* LUIPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPageViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +114,7 @@
 				CD04304322D9AC130018D584 /* LUIButton.swift */,
 				CDD2942722E5411800801908 /* LUIPreviewView.swift */,
 				CDC9602522FB24F400CD378E /* LUIKeyboardToolBar.swift */,
+				CDA48BA72314414900CC8B09 /* LUISearchBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 				CD04308622DC47910018D584 /* LUITableViewController.swift */,
 				CDD2942522E53F2E00801908 /* LUIPreviewViewController.swift */,
 				CDC95FFC22EFBDAA00CD378E /* LUIPageViewController.swift */,
+				CDA48BA5231440B400CC8B09 /* LUISearchController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -327,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDA48BA82314414900CC8B09 /* LUISearchBar.swift in Sources */,
 				CD04304222D98C900018D584 /* LUITextField+LUITextView.swift in Sources */,
 				CD04303E22D58C430018D584 /* LUIPadding.swift in Sources */,
 				CD3A5A3622CFF180009AD5BC /* LUIFontSize.swift in Sources */,
@@ -354,6 +361,7 @@
 				CD04303A22D29D300018D584 /* LUIConstraints.swift in Sources */,
 				CD04304A22DA53770018D584 /* LUIAnimationSpeed.swift in Sources */,
 				CD04304722DA4BBF0018D584 /* UIImage+LUIAdditions.swift in Sources */,
+				CDA48BA6231440B400CC8B09 /* LUISearchController.swift in Sources */,
 				CDC95FC422E779EE00CD378E /* UIImageView+LUIAdditions.swift in Sources */,
 				CD04305422DAFD4F0018D584 /* LUIPopOverViewController.swift in Sources */,
 				CDD2942422E5135500801908 /* String+LUIAdditions.swift in Sources */,

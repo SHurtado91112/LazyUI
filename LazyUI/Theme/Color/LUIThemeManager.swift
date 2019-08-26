@@ -65,6 +65,7 @@ public class LUIThemeManager: NSObject {
         navigationBar.largeTitleTextAttributes = [
             NSAttributedString.Key.foregroundColor : self.themeColors.darkText
         ]
+        
         navigationBar.setBackgroundImage(nil, for: .default)
         
         // MARK: - SEARCH PROXY

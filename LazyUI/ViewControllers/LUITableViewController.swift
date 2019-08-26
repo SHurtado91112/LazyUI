@@ -27,6 +27,11 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
             self.searchController.searchBar.scopeButtonTitles = self.scopeData
             self.searchController.searchBar.showsScopeBar = true
             self.searchController.searchBar.delegate = self
+            
+            let keyboardToolbar = LUIKeyboardToolBar()
+            keyboardToolbar.keyboardDelegate = self
+            
+            self.searchController.searchBar.inputAccessoryView = keyboardToolbar
         }
     }
     
@@ -36,9 +41,9 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
     private var _navigation: LUINavigationViewController?
     private var selectedScopeIndex : Int = 0
     private let ESTIMATE_ROW_HEIGHT: CGFloat = 48.0
-    
-    private lazy var searchController: UISearchController = {
-        let controller = UISearchController(searchResultsController: nil)
+
+    private lazy var searchController: LUISearchController = {
+        let controller = LUISearchController(searchResultsController: nil)
         controller.searchResultsUpdater = self
         
         controller.definesPresentationContext = false
@@ -159,7 +164,7 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
     }
 }
 
-extension LUITableViewController : LUINavigation {
+extension LUITableViewController: LUINavigation {
     // MARK: - Navigation
     public var navigation: LUINavigationViewController? {
         get {
@@ -211,7 +216,7 @@ extension LUITableViewController : LUINavigation {
     }
 }
 
-extension LUITableViewController : UISearchBarDelegate, UISearchResultsUpdating {
+extension LUITableViewController: UISearchBarDelegate, UISearchResultsUpdating {
     
     public func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         self.selectedScopeIndex = selectedScope
@@ -224,3 +229,27 @@ extension LUITableViewController : UISearchBarDelegate, UISearchResultsUpdating 
     }
     
 }
+
+extension LUITableViewController: LUIKeyboardToolBarDelegate {
+    func dismissRequested() {
+        self.searchController.searchBar.endEditing(true)
+        self.tableView.reloadData()
+    }
+    
+    func canGoToPrevious() -> Bool {
+        return false
+    }
+    
+    func canGoToNext() -> Bool {
+        return false
+    }
+    
+    func previousFieldRequested() {
+        //
+    }
+    
+    func nextFieldRequested() {
+        //
+    }
+}
+

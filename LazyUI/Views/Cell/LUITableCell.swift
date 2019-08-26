@@ -15,6 +15,26 @@ public protocol LUICellData {
 
 open class LUITableCell: UITableViewCell {
     
+    private lazy var _interactionBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.color(for: .intermidiateBackground)
+        self.addSubview(view)
+        self.fill(view, padding: .none, withSafety: false)
+        return view
+    } ()
+    
+    private var interactionBackgroundView: UIView {
+        get {
+            let view = self._interactionBackgroundView
+            self.sendSubviewToBack(view)
+            view.alpha = 0.0
+            return view
+        }
+        set {
+            self._interactionBackgroundView = newValue
+        }
+    }
+    
     convenience public init() {
         self.init(style: .default, reuseIdentifier: nil)
     }
@@ -37,10 +57,19 @@ open class LUITableCell: UITableViewCell {
     override open func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        // Configure the view for the selected state
+        if selected {
+            UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), animations: {
+                self.interactionBackgroundView.alpha = 1.0
+            }) { (finished) in
+                UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), animations: {
+                    self.interactionBackgroundView.alpha = 0.0
+                })
+            }
+        }
     }
     
     private func configureTableViewCell() {
+        self.selectionStyle = .none
         if let cell = self as? LUICellData {
             cell.setUpCell()
         }

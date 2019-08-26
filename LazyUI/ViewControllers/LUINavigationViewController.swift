@@ -28,6 +28,10 @@ open class LUINavigationViewController: UINavigationController {
         self.setUpNavigationView()
     }
     
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     open func push(to vc: UIViewController) {
         self.pushViewController(vc, animated: true)
     }
@@ -49,5 +53,8 @@ open class LUINavigationViewController: UINavigationController {
         
         self.navigationBar.largeTitleTextAttributes = UINavigationBar.appearance().largeTitleTextAttributes
         self.navigationBar.largeTitleTextAttributes?[NSAttributedString.Key.font] =  self.substituteFont.withSize(.title).withStyle(.bold)
+        
+        
+        self.navigationBar.topItem?.backBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font : self.substituteFont.withSize(.regular).withStyle(.regular)], for: .normal)
     }
 }

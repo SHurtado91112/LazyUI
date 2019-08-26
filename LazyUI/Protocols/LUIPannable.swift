@@ -14,4 +14,6 @@ protocol LUIPannable {
     var currentPositionTouched: CGPoint { get set }
     
     func panGestureAction(_ panGesture: UIPanGestureRecognizer)
+    
+    var dismissedAction:(() -> Void)? { get set }
 }

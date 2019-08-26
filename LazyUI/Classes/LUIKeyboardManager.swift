@@ -22,9 +22,11 @@ open class LUIKeyboardManager: NSObject {
     private var currentTextFields: [UIResponder] = [] {
         didSet {
             for i in 0..<self.currentTextFields.count {
+                
                 if let field = self.currentTextFields[i] as? UIView {
                     field.tag = i
                 }
+                
             }
         }
     }
@@ -172,6 +174,7 @@ open class LUIKeyboardManager: NSObject {
             if let textView = textFieldView as? UITextView {
                 textView.inputAccessoryView = self.inputAccessoryView()
             }
+            
         }
     }
     

@@ -105,9 +105,12 @@ extension UIViewController : LUIFont {
 extension LUIViewControllerClass : LUINavigation {
     public var navigation: LUINavigationViewController? {
         get {
+            if let navController = self.navigationController as? LUINavigationViewController, self._navigation == nil || self._navigation != navController {
+                self._navigation = navController
+            }
             return self._navigation
         }
-        set(newValue) {
+        set {
             self._navigation = newValue
         }
     }
@@ -148,7 +151,9 @@ extension LUIViewControllerClass : LUINavigation {
     }
     
     public func dismissableModalViewController() -> LUINavigationViewController {
-        return LUINavigationViewController(rootVC: self, largeTitle: false).forDismissal()
+        let nav = LUINavigationViewController(rootVC: self, largeTitle: false).forDismissal()
+        self.navigation = nav
+        return nav
     }
     
 }

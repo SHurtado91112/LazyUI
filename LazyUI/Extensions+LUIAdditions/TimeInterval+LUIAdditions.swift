@@ -9,6 +9,12 @@
 import Foundation
 
 extension TimeInterval {
+    
+    public var miliseconds: Int {
+        let intervalInSeconds = self
+        return Int(intervalInSeconds * 1000.0)
+    }
+    
     public static func timeInterval(for type: LUIAnimationSpeedType) -> TimeInterval {
         return LUIAnimationSpeedManager.shared.timeInterval(for: type)
     }

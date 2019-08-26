@@ -13,6 +13,7 @@ class LUIPreviewViewController: LUIViewController {
     // private for LUIPannable protocol
     var _originalPosition: CGPoint = .zero
     var _currentPositionTouched: CGPoint = .zero
+    var _dismissedAction: (()->Void)?
     
     // open/public
     public var index: Int = -1
@@ -30,7 +31,7 @@ class LUIPreviewViewController: LUIViewController {
     
     private let previewView = LUIPreviewView()
     
-    private lazy var scrollView = UIScrollView()
+    private(set) lazy var scrollView = UIScrollView()
     
     // open/public
     public func setUpViews() {
@@ -101,6 +102,7 @@ extension LUIPreviewViewController: UIScrollViewDelegate {
 
 public protocol LUIPreviewDelegate {
     func pageChanged()
+    func dismissedPreview()
 }
 
 open class LUIPreviewManagerViewController: UIPageViewController, LUIViewControllerProtocol {
@@ -138,6 +140,12 @@ open class LUIPreviewManagerViewController: UIPageViewController, LUIViewControl
         self.setUpViews()
     }
     
+    override open func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.componentController?.scrollView.setZoomScale(1.0, animated: true)
+        self.previewDelegate?.dismissedPreview()
+    }
+    
     open func setUpViews() {
         self.setController()
 
@@ -160,6 +168,10 @@ open class LUIPreviewManagerViewController: UIPageViewController, LUIViewControl
         let previewController = LUIPreviewViewController()
         previewController.index = index
         previewController.selectedContent = self.previewContent[index]
+        previewController.dismissedAction = {
+            previewController.scrollView.setZoomScale(1.0, animated: true)
+            self.previewDelegate?.dismissedPreview()
+        }
         return previewController
     }
     
@@ -205,9 +217,12 @@ extension LUIPreviewManagerViewController: LUINavigation {
     // MARK: - Navigation
     public var navigation: LUINavigationViewController? {
         get {
+            if let navController = self.navigationController as? LUINavigationViewController, self._navigation == nil {
+                self._navigation = navController
+            }
             return self._navigation
         }
-        set(newValue) {
+        set {
             self._navigation = newValue
         }
     }
