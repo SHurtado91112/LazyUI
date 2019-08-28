@@ -24,8 +24,8 @@
 		CD04305422DAFD4F0018D584 /* LUIPopOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04305322DAFD4F0018D584 /* LUIPopOverViewController.swift */; };
 		CD04308722DC47910018D584 /* LUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04308622DC47910018D584 /* LUITableViewController.swift */; };
 		CD04308922DC48490018D584 /* LUINavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04308822DC48490018D584 /* LUINavigation.swift */; };
+		CD0E627B231699A9001F4498 /* LUIFontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0E627A231699A9001F4498 /* LUIFontManager.swift */; };
 		CD3A59F122CEE80B009AD5BC /* LazyUI.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3A59EF22CEE80B009AD5BC /* LazyUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CD3A59FC22CEE86C009AD5BC /* LUIFontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A59FB22CEE86C009AD5BC /* LUIFontManager.swift */; };
 		CD3A5A3622CFF180009AD5BC /* LUIFontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3522CFF180009AD5BC /* LUIFontSize.swift */; };
 		CD3A5A3822CFF840009AD5BC /* UIFont+LUIAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3722CFF840009AD5BC /* UIFont+LUIAdditions.swift */; };
 		CD3A5A3B22D1134D009AD5BC /* UIColor+LUIAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3A22D1134D009AD5BC /* UIColor+LUIAdditions.swift */; };
@@ -66,10 +66,10 @@
 		CD04305322DAFD4F0018D584 /* LUIPopOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPopOverViewController.swift; sourceTree = "<group>"; };
 		CD04308622DC47910018D584 /* LUITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUITableViewController.swift; sourceTree = "<group>"; };
 		CD04308822DC48490018D584 /* LUINavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUINavigation.swift; sourceTree = "<group>"; };
+		CD0E627A231699A9001F4498 /* LUIFontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIFontManager.swift; sourceTree = "<group>"; };
 		CD3A59EC22CEE80B009AD5BC /* LazyUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LazyUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD3A59EF22CEE80B009AD5BC /* LazyUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LazyUI.h; sourceTree = "<group>"; };
 		CD3A59F022CEE80B009AD5BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CD3A59FB22CEE86C009AD5BC /* LUIFontManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LUIFontManager.swift; path = ../../../../../../Desktop/LUIFontManager.swift; sourceTree = "<group>"; };
 		CD3A5A3522CFF180009AD5BC /* LUIFontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIFontSize.swift; sourceTree = "<group>"; };
 		CD3A5A3722CFF840009AD5BC /* UIFont+LUIAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+LUIAdditions.swift"; sourceTree = "<group>"; };
 		CD3A5A3A22D1134D009AD5BC /* UIColor+LUIAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+LUIAdditions.swift"; sourceTree = "<group>"; };
@@ -214,7 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				CD3A5A3522CFF180009AD5BC /* LUIFontSize.swift */,
-				CD3A59FB22CEE86C009AD5BC /* LUIFontManager.swift */,
+				CD0E627A231699A9001F4498 /* LUIFontManager.swift */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -333,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD0E627B231699A9001F4498 /* LUIFontManager.swift in Sources */,
 				CDA48BA82314414900CC8B09 /* LUISearchBar.swift in Sources */,
 				CD04304222D98C900018D584 /* LUITextField+LUITextView.swift in Sources */,
 				CD04303E22D58C430018D584 /* LUIPadding.swift in Sources */,
@@ -366,7 +367,6 @@
 				CD04305422DAFD4F0018D584 /* LUIPopOverViewController.swift in Sources */,
 				CDD2942422E5135500801908 /* String+LUIAdditions.swift in Sources */,
 				CD3A5A3F22D116EE009AD5BC /* LUIThemeManager.swift in Sources */,
-				CD3A59FC22CEE86C009AD5BC /* LUIFontManager.swift in Sources */,
 				CD04303C22D2A0980018D584 /* UIView+LUIAdditions.swift in Sources */,
 				CD3A5A3B22D1134D009AD5BC /* UIColor+LUIAdditions.swift in Sources */,
 				CD04308722DC47910018D584 /* LUITableViewController.swift in Sources */,
