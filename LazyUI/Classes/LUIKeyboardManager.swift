@@ -186,11 +186,11 @@ open class LUIKeyboardManager: NSObject {
 
 extension LUIKeyboardManager: LUIKeyboardToolBarDelegate {
     
-    func dismissRequested() {
+    public func dismissRequested() {
         self.activeTextField?.endEditing(true)
     }
     
-    func canGoToPrevious() -> Bool {
+    public func canGoToPrevious() -> Bool {
         let indexRequested = (self.activeTextField?.tag ?? 0) - 1
         
         if self.currentTextFields.count > 0, indexRequested > -1 {
@@ -200,7 +200,7 @@ extension LUIKeyboardManager: LUIKeyboardToolBarDelegate {
         return false
     }
     
-    func canGoToNext() -> Bool {
+    public func canGoToNext() -> Bool {
         let indexRequested = (self.activeTextField?.tag ?? -1) + 1
         
         if self.currentTextFields.count > 0, indexRequested < self.currentTextFields.count {
@@ -210,7 +210,7 @@ extension LUIKeyboardManager: LUIKeyboardToolBarDelegate {
         return false
     }
     
-    func previousFieldRequested() {
+    public func previousFieldRequested() {
         let indexRequested = (self.activeTextField?.tag ?? 0) - 1
         
         if self.currentTextFields.count > 0, indexRequested > -1 {
@@ -218,7 +218,7 @@ extension LUIKeyboardManager: LUIKeyboardToolBarDelegate {
         }
     }
     
-    func nextFieldRequested() {
+    public func nextFieldRequested() {
         let indexRequested = (self.activeTextField?.tag ?? -1) + 1
         
         if self.currentTextFields.count > 0, indexRequested < self.currentTextFields.count {

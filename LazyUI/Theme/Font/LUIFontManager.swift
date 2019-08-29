@@ -18,6 +18,7 @@ public class LUIFontManager: NSObject {
     private var universalSizes : LUIFontSize!
     
     private override init() {
+        
     }
 
     public static let shared = LUIFontManager()

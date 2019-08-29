@@ -231,24 +231,24 @@ extension LUITableViewController: UISearchBarDelegate, UISearchResultsUpdating {
 }
 
 extension LUITableViewController: LUIKeyboardToolBarDelegate {
-    func dismissRequested() {
+    public func dismissRequested() {
         self.searchController.searchBar.endEditing(true)
         self.tableView.reloadData()
     }
     
-    func canGoToPrevious() -> Bool {
+    public func canGoToPrevious() -> Bool {
         return false
     }
     
-    func canGoToNext() -> Bool {
+    public func canGoToNext() -> Bool {
         return false
     }
     
-    func previousFieldRequested() {
+    public func previousFieldRequested() {
         //
     }
     
-    func nextFieldRequested() {
+    public func nextFieldRequested() {
         //
     }
 }

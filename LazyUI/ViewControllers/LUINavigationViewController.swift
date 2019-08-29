@@ -48,13 +48,23 @@ open class LUINavigationViewController: UINavigationController {
 
     private func setUpNavigationView() {
         
-        self.navigationBar.titleTextAttributes = UINavigationBar.appearance().titleTextAttributes
+        // MARK: - NAVIGATION PROXY
+        let navigationBar = UINavigationBar.appearance()
+        self.navigationBar.titleTextAttributes = navigationBar.titleTextAttributes
         self.navigationBar.titleTextAttributes?[NSAttributedString.Key.font] =  self.substituteFont.withSize(.regular).withStyle(.bold)
         
-        self.navigationBar.largeTitleTextAttributes = UINavigationBar.appearance().largeTitleTextAttributes
+        self.navigationBar.largeTitleTextAttributes = navigationBar.largeTitleTextAttributes
         self.navigationBar.largeTitleTextAttributes?[NSAttributedString.Key.font] =  self.substituteFont.withSize(.title).withStyle(.bold)
         
+        let barButton = UIBarButtonItem.appearance()
+        let attributes = [
+            NSAttributedString.Key.font : self.substituteFont.withSize(.regular).withStyle(.regular)
+        ]
         
-        self.navigationBar.topItem?.backBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font : self.substituteFont.withSize(.regular).withStyle(.regular)], for: .normal)
+        barButton.setTitleTextAttributes(attributes, for: .normal)
+        barButton.setTitleTextAttributes(attributes, for: .highlighted)
+        barButton.setTitleTextAttributes(attributes, for: .disabled)
+        barButton.setTitleTextAttributes(attributes, for: .selected)
+        
     }
 }

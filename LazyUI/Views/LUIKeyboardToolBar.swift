@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol LUIKeyboardToolBarDelegate {
+public protocol LUIKeyboardToolBarDelegate {
     func dismissRequested()
     func canGoToPrevious() -> Bool
     func canGoToNext() -> Bool
@@ -16,15 +16,15 @@ protocol LUIKeyboardToolBarDelegate {
     func nextFieldRequested()
 }
 
-class LUIKeyboardToolBar: UIToolbar {
+open class LUIKeyboardToolBar: UIToolbar {
 
-    var placeHolder: String = "" {
+    open var placeHolder: String = "" {
         didSet {
             self.placeHolderLabel.title = self.placeHolder
         }
     }
     
-    var keyboardDelegate: LUIKeyboardToolBarDelegate? {
+    open var keyboardDelegate: LUIKeyboardToolBarDelegate? {
         didSet {
             if let delegate = self.keyboardDelegate {
                 self.prevBtn.isEnabled = delegate.canGoToPrevious()
