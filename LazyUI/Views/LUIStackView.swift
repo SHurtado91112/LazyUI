@@ -11,8 +11,6 @@ import UIKit
 open class LUIStackView: UIScrollView {
     
     // MARK: - Public
-    open var viewMap : [String : UIView] = [:]
-    open var sectionMap : [String : [UIView]] = [:]
     
     // MARK: - Private
     private var padding: LUIPaddingType = .none
@@ -20,6 +18,8 @@ open class LUIStackView: UIScrollView {
     private lazy var stackView: UIStackView = {
         return self.pageStackView()
     } ()
+    private var viewMap : [String : UIView] = [:]
+    private var sectionMap : [String : [UIView]] = [:]
     
     public convenience init(padding: LUIPaddingType) {
         self.init()
@@ -111,6 +111,14 @@ open class LUIStackView: UIScrollView {
         divider.backgroundColor = UIColor.color(for: .intermidiateBackground)
         
         return divider
+    }
+    
+    open func viewFor(id: String) -> UIView? {
+        return self.viewMap[id]
+    }
+    
+    open func viewSectionFor(id: String) -> [UIView]? {
+        return self.sectionMap[id]
     }
     
     private func pageStackView() -> UIStackView {
