@@ -20,7 +20,7 @@ extension UIView {
     
     public func roundCorners(to radius: CGFloat) {
         self.layer.cornerRadius = radius
-        self.clipsToBounds = false
+//        self.clipsToBounds = false
     }
     
     public func fadeInOut(_ finished: (()->Void)? = nil) {
