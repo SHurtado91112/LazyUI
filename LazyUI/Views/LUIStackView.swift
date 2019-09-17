@@ -11,6 +11,32 @@ import UIKit
 open class LUIStackView: UIScrollView {
     
     // MARK: - Public
+    open var distribution: UIStackView.Distribution {
+        get {
+            return self.stackView.distribution
+        }
+        set {
+            self.stackView.distribution = newValue
+        }
+    }
+    
+    open var alignment: UIStackView.Alignment {
+        get {
+            return self.stackView.alignment
+        }
+        set {
+            self.stackView.alignment = newValue
+        }
+    }
+    
+    open var axis: NSLayoutConstraint.Axis {
+        get {
+            return self.stackView.axis
+        }
+        set {
+            self.stackView.axis = newValue
+        }
+    }
     
     // MARK: - Private
     private var padding: LUIPaddingType = .none
@@ -80,11 +106,11 @@ open class LUIStackView: UIScrollView {
         }
     }
     
-    open func addArrangedSubview(contentViews: [UIView], identifier: String = "", fill: Bool = false, direction: NSLayoutConstraint.Axis = .horizontal) {
+    open func addArrangedSubview(contentViews: [UIView], identifier: String = "", fill: Bool = false, direction: NSLayoutConstraint.Axis = .horizontal, distribution: UIStackView.Distribution = .fillEqually, alignment: UIStackView.Alignment = .center) {
         let stackView = UIStackView(arrangedSubviews: contentViews)
         stackView.axis = direction
-        stackView.alignment = .center
-        stackView.distribution = .fillEqually
+        stackView.alignment = alignment
+        stackView.distribution = distribution
         stackView.spacing = LUIPadding.padding(for: self.padding)
         
         self.stackView.addArrangedSubview(stackView)
@@ -100,8 +126,11 @@ open class LUIStackView: UIScrollView {
     }
     
     open func addPadding(_ padding: LUIPaddingType) {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: self.stackView.frame.width, height: LUIPadding.padding(for: padding)))
+        let paddingView = UIView()
+        
         paddingView.backgroundColor = .clear
+        paddingView.width(to: self.stackView.frame.width)
+        paddingView.height(to: LUIPadding.padding(for: padding))
         
         self.addArrangedSubview(contentView: paddingView)
     }
