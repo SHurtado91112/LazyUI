@@ -121,6 +121,7 @@ open class LUIButton: UIButton {
                 self.textColor = UIColor.color(for: .lightText)
                 break
             case .none:
+                self.textColor = color
                 break
         }
         
