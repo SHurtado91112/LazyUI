@@ -165,16 +165,18 @@ open class LUIKeyboardManager: NSObject {
     @objc func textFieldViewDidBeginEditing(_ notification: Notification?) {
         
         if let textFieldView = notification?.object as? UIView {
+            
+            if !self.currentTextFields.contains(textFieldView) {
+                self.currentTextFields.append(textFieldView)
+            }
+            
             self.activeTextField = textFieldView
                 
             if let textField = textFieldView as? UITextField {
                 textField.inputAccessoryView = self.inputAccessoryView()
-            }
-            
-            if let textView = textFieldView as? UITextView {
+            } else if let textView = textFieldView as? UITextView {
                 textView.inputAccessoryView = self.inputAccessoryView()
             }
-            
         }
     }
     
