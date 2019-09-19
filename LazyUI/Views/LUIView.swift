@@ -53,8 +53,7 @@ open class LUIView: UIView {
     }
     
     // scroll view control and set up
-    // internal
-    var contentScrollView: UIScrollView {
+    open var contentScrollView: UIScrollView {
         return self._scrollView
     }
     

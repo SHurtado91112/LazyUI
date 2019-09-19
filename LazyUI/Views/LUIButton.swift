@@ -30,8 +30,6 @@ open class LUIButton: UIButton {
     open var text: String? = "" {
         didSet {
             self.setTitle(self.text, for: .normal)
-            self.sizeToFit()
-            self.layoutIfNeeded()
         }
     }
     

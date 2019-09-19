@@ -189,7 +189,7 @@ open class LUIKeyboardManager: NSObject {
 extension LUIKeyboardManager: LUIKeyboardToolBarDelegate {
     
     public func dismissRequested() {
-        self.activeTextField?.endEditing(true)
+        self.rootViewController?.view.endEditing(true)
     }
     
     public func canGoToPrevious() -> Bool {

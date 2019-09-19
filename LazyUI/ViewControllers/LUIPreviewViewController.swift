@@ -131,6 +131,7 @@ open class LUIPreviewManagerViewController: UIPageViewController, LUIViewControl
     
     public var previewContent: [LUIPreviewContent] = [] {
         didSet {
+            self.componentController?.selectedContent = self.previewContent[self.currentPage]
             self.countLabel.text = "\(self.currentPage+1)/\(self.previewContent.count)"
             self.countLabel.isHidden = self.previewContent.count <= 1
         }
