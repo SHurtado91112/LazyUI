@@ -150,6 +150,17 @@ open class LUIStackView: UIScrollView {
         return self.sectionMap[id]
     }
     
+    open func fitStack() {
+        self.stackView.setNeedsLayout()
+        self.stackView.layoutIfNeeded()
+        
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+        
+        self.stackView.sizeToFit()
+        self.sizeToFit()
+    }
+    
     private func pageStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .vertical

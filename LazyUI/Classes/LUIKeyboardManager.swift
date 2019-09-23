@@ -37,7 +37,13 @@ open class LUIKeyboardManager: NSObject {
     }
     
     internal func registerEvents(for viewController: UIViewController) {
-        self.rootViewController = viewController
+        
+        if let popOverParent = viewController.parent as? LUIPopOverViewController {
+            self.rootViewController = popOverParent
+        } else {
+            self.rootViewController = viewController
+        }
+        guard let rootViewController = self.rootViewController else { return }
         
         let UIKeyboardWillShow = UIResponder.keyboardWillShowNotification
         let UIKeyboardWillHide = UIResponder.keyboardWillHideNotification
@@ -53,7 +59,7 @@ open class LUIKeyboardManager: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(self.textFieldViewDidBeginEditing(_:)), name: DidBeginEditing, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.textFieldViewDidEndEditing(_:)), name: DidEndEditing, object: nil)
         
-        self.rootOrigin = viewController.view.frame.origin
+        self.rootOrigin = rootViewController.view.frame.origin
     }
     
     internal func unregisterEvents() {
@@ -222,7 +228,7 @@ extension LUIKeyboardManager: LUIKeyboardToolBarDelegate {
     
     public func nextFieldRequested() {
         let indexRequested = (self.activeTextField?.tag ?? -1) + 1
-        
+        self.activeTextField?.resignFirstResponder()
         if self.currentTextFields.count > 0, indexRequested < self.currentTextFields.count {
             self.currentTextFields[indexRequested].becomeFirstResponder()
         }

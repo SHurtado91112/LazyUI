@@ -21,7 +21,7 @@ open class LUIViewControllerClass: UIViewController {
     private var _navigation: LUINavigationViewController?
     
     override open func loadView() {
-        self.view = LUIView(root: true)
+        self.view = LUIView()
     }
     
     override open func viewDidAppear(_ animated: Bool) {

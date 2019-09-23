@@ -72,5 +72,7 @@ public class LUIThemeManager: NSObject {
         let searchBar = UISearchBar.appearance()
         searchBar.tintColor = self.themeColors.theme
         searchBar.barTintColor = self.themeColors.intermediateBackground
+        
+        
     }
 }

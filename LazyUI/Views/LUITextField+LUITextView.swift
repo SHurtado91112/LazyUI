@@ -17,6 +17,19 @@ open class LUITextField : UITextField {
             self.errorLabel.text = self.errorString
         }
     }
+    
+    open var errorPosition: NSTextAlignment = .right {
+        didSet {
+            self.errorLabel.textAlignment = self.errorPosition
+        }
+    }
+    
+    open var errorSpace: LUIPaddingType = .none { // should only be set ONCE, or susceptible to inconsistent constraint behavior
+        didSet {
+            self.bottom(self.errorLabel, fromTop: true, paddingType: self.errorSpace, withSafety: false, constraintOperator: .greaterThan)
+        }
+    }
+    
     open var maxCharacterLength: Int = 0 {
         didSet {
             if self.maxCharacterLength > 0 {
@@ -42,13 +55,14 @@ open class LUITextField : UITextField {
     // MARK: - Private
     private var paddingType : LUIPaddingType!
     private var placeholderFontStyleType : LUIFontStyleType!
+    
     private lazy var errorLabel: LUILabel = {
         let label = LUILabel(color: .negation, fontSize: .small, fontStyle: .italics)
-        label.textAlignment = .right
+        label.textAlignment = self.errorPosition
         label.lineHeight = .regular
         
         self.addSubview(label)
-        self.bottom(label, fromTop: true, paddingType: .small, withSafety: false)
+        self.bottom(label, fromTop: true, paddingType: .none, withSafety: false, constraintOperator: .greaterThan)
         self.left(label, fromLeft: true, paddingType: .none, withSafety: false)
         self.right(label, fromLeft: false, paddingType: .none, withSafety: false)
         

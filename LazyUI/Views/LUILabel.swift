@@ -9,13 +9,6 @@
 import UIKit
 
 open class LUILabel: UILabel {
-
-    override open var text: String? {
-        didSet {
-            self.sizeToFit()
-            self.layoutIfNeeded()
-        }
-    }
     
     open var lineHeight: LUIPaddingType = .none {
         didSet {

@@ -16,9 +16,12 @@ open class LUIPopOverViewController: LUIViewController {
         let view = LUIView()
         self.addView(view)
         self.center(view)
-        view.square(to: UIScreen.main.bounds.width*2.0/3.0)
+        
+        view.width(to: UIScreen.main.bounds.width*2.0/3.0)
+        view.height(to: UIScreen.main.bounds.width*2.0/3.0, constraintOperator: .greaterThan)
         view.roundCorners(to: 16.0)
         view.addShadow()
+        
         return view
     } ()
     
@@ -41,14 +44,17 @@ open class LUIPopOverViewController: LUIViewController {
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.view.fadeIn()
+        self.setUpGestures()
+    }
+    
+    open override func viewDidDisappear(_ animated: Bool) {
+        LUIKeyboardManager.shared.unregisterEvents()
+        
+        super.viewDidDisappear(animated)
     }
     
     public func setUpViews() {
         self.view.backgroundColor = UIColor.color(for: .shadow).withAlphaComponent(0.6)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.popOverTapped))
-        tapGesture.delegate = self
-        self.view.addGestureRecognizer(tapGesture)
         
         if let vc = self.contentViewController {
             self.contentView.addSubview(vc.view)
@@ -56,9 +62,20 @@ open class LUIPopOverViewController: LUIViewController {
             self.addChild(vc)
             self.contentView.alpha = 1.0
         }
+        
     }
     
-    @objc private func popOverTapped(sender: UITapGestureRecognizer) {
+    private func setUpGestures() {
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.popOverTapped))
+        self.view.addGestureRecognizer(tapGesture)
+        self.view.isUserInteractionEnabled = true
+        
+        tapGesture.delegate = self
+        
+    }
+    
+    @objc private func popOverTapped() {
         if self.isDismissible {
             self.view.fadeOut {
                 self.dismiss(animated: true, completion: nil)

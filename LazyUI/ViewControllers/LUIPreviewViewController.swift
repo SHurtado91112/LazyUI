@@ -54,12 +54,6 @@ class LUIPreviewViewController: LUIViewController {
         self.previewView.width(to: self.scrollView.widthAnchor, constraintOperator: .equal)
         self.scrollView.center(self.previewView)
         
-        if let contentView = self.view as? LUIView {
-            let contentScrollView = contentView.contentScrollView
-            contentScrollView.showsHorizontalScrollIndicator = false
-            contentScrollView.showsVerticalScrollIndicator = false
-        }
-        
         self.setUpGestures()
     }
     
