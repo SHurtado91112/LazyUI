@@ -20,6 +20,14 @@ open class LUIPageViewController: UIPageViewController {
     public var pages: [UIView] = []
     public var pageDelegate: LUIPageViewControllerDelegate?
     
+    public var doubleTapForPaging: Bool = false {
+        didSet {
+            if self.doubleTapForPaging {
+                self.setDoubleTapGesture()
+            }
+        }
+    }
+    
     // transitional state
     private var pendingFromController : UIViewController?
     private var pendingToController : UIViewController?
@@ -41,8 +49,13 @@ open class LUIPageViewController: UIPageViewController {
         self.setUpViews()
     }
     
-    open func setUpViews() {
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.setController()
+    }
+    
+    open func setUpViews() {
+        
     }
     
     open func nextPage() {
@@ -73,6 +86,34 @@ open class LUIPageViewController: UIPageViewController {
         }
     }
     
+    private func setDoubleTapGesture() {
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.receivedDoubleTap))
+        tapGesture.numberOfTapsRequired = 2
+        tapGesture.numberOfTouchesRequired = 1
+        
+        self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func receivedDoubleTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        
+        let touchPoint = gestureRecognizer.location(in: self.view)
+        
+        let leftSideArea = self.view.frame.width / 3.0 + self.view.frame.origin.x
+        let rightSideArea = leftSideArea + self.view.frame.width / 3.0
+        
+        if touchPoint.x < leftSideArea {
+            
+            // double tap on the left side
+            self.prevPage()
+            
+        } else if touchPoint.x > rightSideArea {
+            
+            // double on the right side
+            self.nextPage()
+        }
+    }
+    
     private func setController() {
         if let viewController = self.viewController(self.currentPage) {
             self.componentController = viewController
@@ -97,6 +138,10 @@ open class LUIPageViewController: UIPageViewController {
             return controller
         }
     }
+    
+}
+
+extension LUIPageViewController: UIGestureRecognizerDelegate {
     
 }
 
