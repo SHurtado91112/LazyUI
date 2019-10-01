@@ -15,6 +15,10 @@ extension UIColor {
         return LUIThemeManager.shared.color(for: type)
     }
     
+    public var type: LUIColorType {
+        return LUIThemeManager.shared.type(for: self)
+    }
+    
     /**
      Creates an UIColor from HEX String in "#363636" format
      

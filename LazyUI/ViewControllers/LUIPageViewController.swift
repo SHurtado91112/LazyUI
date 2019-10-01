@@ -121,6 +121,11 @@ open class LUIPageViewController: UIPageViewController {
         }
     }
     
+    public func setViewController(_ controller: UIViewController, for index: Int) {
+        self.cachedControllers[index] = controller
+        controller.view.tag = index
+    }
+    
     private func viewController(_ index: Int) -> UIViewController? {
         
         if let controller = self.cachedControllers[index] {
