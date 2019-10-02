@@ -34,7 +34,7 @@ public struct LUIColor {
     
     public static var defaultTheme = LUIColor(theme: UIColor.blue, border: UIColor.gray, shadow: UIColor.black.withAlphaComponent(0.6), darkBackground: UIColor.darkGray, lightBackground: UIColor.white, intermediateBackground: UIColor.lightGray, darkText: UIColor.darkText, lightText: UIColor.white, intermediateText: UIColor.lightGray, affirmation: UIColor(hexString: "#34C759"), negation: UIColor.red)
     
-    public static var darkTheme = LUIColor(theme: UIColor.orange, border: UIColor.lightGray, shadow: UIColor.black.withAlphaComponent(0.6), darkBackground: UIColor.white, lightBackground: UIColor.darkGray, intermediateBackground: UIColor.lightGray, darkText: UIColor.white, lightText: UIColor.darkText, intermediateText: UIColor.lightGray, affirmation: UIColor(hexString: "#34C759"), negation: UIColor.red)
+    public static var darkTheme = LUIColor(theme: UIColor.orange, border: UIColor.lightGray, shadow: UIColor.lightGray.withAlphaComponent(0.6), darkBackground: UIColor.white, lightBackground: UIColor.darkGray, intermediateBackground: UIColor.lightGray, darkText: UIColor.white, lightText: UIColor.darkText, intermediateText: UIColor.lightGray, affirmation: UIColor(hexString: "#34C759"), negation: UIColor.red)
     
     public var theme : UIColor
     public var border : UIColor

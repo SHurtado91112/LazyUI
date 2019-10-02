@@ -213,9 +213,7 @@ open class LUIButton: UIButton, LUIViewProtocol {
 extension LUIButton: LUIThemeProtocol {
     
     @objc func themeUpdated() { // reset colors based on last color type
-        self.backgroundColor = UIColor.color(for: self.backgroundColorType)
-        self.tintColor = UIColor.color(for: self.tintColorType)
-        self.textColor = UIColor.color(for: self.textColorType)
+        self.setButtonStyle(style: self.style)
     }
     
     func registerForThemeObserver() {
