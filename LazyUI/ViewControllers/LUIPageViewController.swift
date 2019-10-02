@@ -16,8 +16,18 @@ public protocol LUIPageViewControllerDelegate {
 open class LUIPageViewController: UIPageViewController {
 
     // public
-    public var currentPage : Int = 0
-    public var pages: [UIView] = []
+    public var currentPage : Int = 0 {
+        didSet {
+            self.pager.currentPage = self.currentPage
+            self.view.bringSubviewToFront(self.pager)
+        }
+    }
+    
+    public var pages: [UIView] = [] {
+        didSet {
+            self.pager.numberOfPages = self.pages.count
+        }
+    }
     public var pageDelegate: LUIPageViewControllerDelegate?
     
     public var doubleTapForPaging: Bool = false {
@@ -27,6 +37,24 @@ open class LUIPageViewController: UIPageViewController {
             }
         }
     }
+    
+    public var showsPageControl: Bool = true {
+        didSet {
+            self.pager.isHidden = !self.showsPageControl
+        }
+    }
+    
+    private var pageControlVerticalPosition: LUIPageControl.VerticalPosition = .baseline
+    
+    private var pageControlHorizontalPosition: LUIPageControl.HorizontalPosition = .center
+    
+    // private subviews
+    private lazy var pager: LUIPageControl = {
+        let pager = LUIPageControl()
+        pager.delegate = self
+        self.view.addSubview(pager)
+        return pager
+    } ()
     
     // transitional state
     private var pendingFromController : UIViewController?
@@ -39,6 +67,17 @@ open class LUIPageViewController: UIPageViewController {
         
         self.delegate = self
         self.dataSource = self
+    }
+    
+    public init(pageControlVerticalPosition: LUIPageControl.VerticalPosition, pageControlHorizontalPosition: LUIPageControl.HorizontalPosition) {
+        
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: .none)
+        
+        self.delegate = self
+        self.dataSource = self
+        
+        self.pageControlVerticalPosition = pageControlVerticalPosition
+        self.pageControlHorizontalPosition = pageControlHorizontalPosition
     }
     
     public required init?(coder: NSCoder) {
@@ -55,7 +94,8 @@ open class LUIPageViewController: UIPageViewController {
     }
     
     open func setUpViews() {
-        
+        self.setVerticalPagerPosition()
+        self.setHorizontalPagerPosition()
     }
     
     open func nextPage() {
@@ -84,6 +124,31 @@ open class LUIPageViewController: UIPageViewController {
                 self.delegate?.pageViewController?(self, didFinishAnimating: finished, previousViewControllers: [currentViewController], transitionCompleted: finished)
             }
         }
+    }
+    
+    private func setVerticalPagerPosition() {
+        switch self.pageControlVerticalPosition {
+            case .baseline:
+                self.view.bottom(self.pager, fromTop: false, paddingType: .small, withSafety: true)
+                break
+            case .below:
+                self.view.bottom(self.pager, fromTop: true, paddingType: .small, withSafety: true)
+                break
+        }
+    }
+    
+    private func setHorizontalPagerPosition() {
+        switch self.pageControlHorizontalPosition {
+            case .left:
+                self.view.left(self.pager, fromLeft: true, paddingType: .regular, withSafety: true)
+                break
+            case .right:
+                self.view.right(self.pager, fromLeft: false, paddingType: .regular, withSafety: true)
+                break
+            case .center:
+                self.view.centerX(self.pager)
+                break
+            }
     }
     
     private func setDoubleTapGesture() {
@@ -146,10 +211,6 @@ open class LUIPageViewController: UIPageViewController {
     
 }
 
-extension LUIPageViewController: UIGestureRecognizerDelegate {
-    
-}
-
 extension LUIPageViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     
     public func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -180,6 +241,16 @@ extension LUIPageViewController: UIPageViewControllerDelegate, UIPageViewControl
         if completed, let controller = self.pendingToController, let prev = self.pendingFromController, controller != prev {
             self.currentPage = controller.view.tag
             self.pageDelegate?.pageChanged()
+        }
+    }
+}
+
+extension LUIPageViewController: LUIPageControlDelegate {
+    public func pageControlUpdated(sender: UIPageControl) {
+        if sender.currentPage > self.currentPage {
+            self.nextPage()
+        } else if sender.currentPage < self.currentPage {
+            self.prevPage()
         }
     }
 }

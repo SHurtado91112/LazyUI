@@ -24,6 +24,7 @@
 		CD04305422DAFD4F0018D584 /* LUIPopOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04305322DAFD4F0018D584 /* LUIPopOverViewController.swift */; };
 		CD04308722DC47910018D584 /* LUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04308622DC47910018D584 /* LUITableViewController.swift */; };
 		CD04308922DC48490018D584 /* LUINavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04308822DC48490018D584 /* LUINavigation.swift */; };
+		CD0DC3632344FA23002479DA /* LUIPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0DC3622344FA23002479DA /* LUIPageControl.swift */; };
 		CD0E627B231699A9001F4498 /* LUIFontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0E627A231699A9001F4498 /* LUIFontManager.swift */; };
 		CD3A59F122CEE80B009AD5BC /* LazyUI.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3A59EF22CEE80B009AD5BC /* LazyUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD3A5A3622CFF180009AD5BC /* LUIFontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3522CFF180009AD5BC /* LUIFontSize.swift */; };
@@ -67,6 +68,7 @@
 		CD04305322DAFD4F0018D584 /* LUIPopOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPopOverViewController.swift; sourceTree = "<group>"; };
 		CD04308622DC47910018D584 /* LUITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUITableViewController.swift; sourceTree = "<group>"; };
 		CD04308822DC48490018D584 /* LUINavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUINavigation.swift; sourceTree = "<group>"; };
+		CD0DC3622344FA23002479DA /* LUIPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPageControl.swift; sourceTree = "<group>"; };
 		CD0E627A231699A9001F4498 /* LUIFontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIFontManager.swift; sourceTree = "<group>"; };
 		CD3A59EC22CEE80B009AD5BC /* LazyUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LazyUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD3A59EF22CEE80B009AD5BC /* LazyUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LazyUI.h; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				CDD2942722E5411800801908 /* LUIPreviewView.swift */,
 				CDC9602522FB24F400CD378E /* LUIKeyboardToolBar.swift */,
 				CDA48BA72314414900CC8B09 /* LUISearchBar.swift */,
+				CD0DC3622344FA23002479DA /* LUIPageControl.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 				CD04308922DC48490018D584 /* LUINavigation.swift in Sources */,
 				CDD4379A22DCCC79003A5A4B /* LUITableCell.swift in Sources */,
 				CD04304022D98AB10018D584 /* LUIPaddingManager.swift in Sources */,
+				CD0DC3632344FA23002479DA /* LUIPageControl.swift in Sources */,
 				CDC9602422F741B200CD378E /* LUIKeyboardManager.swift in Sources */,
 				CDD2942622E53F2E00801908 /* LUIPreviewViewController.swift in Sources */,
 				CDA5F85423390071005C915E /* UIAlertController+LUIAdditions.swift in Sources */,

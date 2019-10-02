@@ -62,6 +62,12 @@ public class LUIThemeManager: NSObject {
         searchBar.tintColor = self.themeColors.theme
         searchBar.barTintColor = self.themeColors.intermediateBackground
         
+        // MARK: - PAGE CONTROL PROXY
+        let pageControl = LUIPageControl.appearance()
+        pageControl.currentPageIndicatorTintColor = self.themeColors.theme
+        pageControl.hidesForSinglePage = true
+        pageControl.isUserInteractionEnabled = true
+        
         // Set off observer for theme update
         NotificationCenter.default.post(name: LUIThemeUpdateNotification, object: nil)
     }
