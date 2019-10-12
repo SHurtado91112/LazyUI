@@ -1,2 +1,2 @@
 # LazyUI
-Swift UI Framework for lazy people.
+UI Framework in Swift for lazy people.

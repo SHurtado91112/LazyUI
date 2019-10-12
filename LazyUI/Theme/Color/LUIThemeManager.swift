@@ -9,6 +9,14 @@
 import Foundation
 import UIKit
 
+internal let LUIThemeUpdateNotification = Notification.Name(rawValue: "lazy_ui_theme_updated")
+
+internal protocol LUIThemeProtocol {
+    func themeUpdated()
+    func registerForThemeObserver()
+    func unregisterForThemeObserver()
+}
+
 public class LUIThemeManager: NSObject {
     
     private var themeColors : LUIColor!
@@ -24,30 +32,11 @@ public class LUIThemeManager: NSObject {
     }
     
     public func color(for type: LUIColorType) -> UIColor {
-        switch type {
-            case .theme:
-                return self.themeColors.theme
-            case .border:
-                return self.themeColors.border
-            case .shadow:
-                return self.themeColors.shadow
-            case .darkBackground:
-                return self.themeColors.darkBackground
-            case .lightBackground:
-                return self.themeColors.lightBackground
-            case .intermidiateBackground:
-                return self.themeColors.intermediateBackground
-            case .darkText:
-                return self.themeColors.darkText
-            case .lightText:
-                return self.themeColors.lightText
-            case .intermidiateText:
-                return self.themeColors.intermediateText
-            case .affirmation:
-                return self.themeColors.affirmation
-            case .negation:
-                return self.themeColors.negation
-        }
+        return self.themeColors.color(for: type)
+    }
+    
+    public func type(for color: UIColor) -> LUIColorType {
+        return self.themeColors.type(for: color)
     }
     
     private func setTheme() {
@@ -73,6 +62,13 @@ public class LUIThemeManager: NSObject {
         searchBar.tintColor = self.themeColors.theme
         searchBar.barTintColor = self.themeColors.intermediateBackground
         
+        // MARK: - PAGE CONTROL PROXY
+        let pageControl = LUIPageControl.appearance()
+        pageControl.currentPageIndicatorTintColor = self.themeColors.theme
+        pageControl.hidesForSinglePage = true
+        pageControl.isUserInteractionEnabled = true
         
+        // Set off observer for theme update
+        NotificationCenter.default.post(name: LUIThemeUpdateNotification, object: nil)
     }
 }
