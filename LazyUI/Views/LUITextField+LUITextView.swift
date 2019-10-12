@@ -128,6 +128,15 @@ open class LUITextView : UITextView {
         }
     }
     
+    override open var font: UIFont? {
+        get {
+            return super.font ?? UIFont().substituteFont
+        }
+        set {
+            super.font = newValue
+        }
+    }
+    
     required public init(paddingType: LUIPaddingType = .none, fontSize: LUIFontSizeType = .regular, textFontStyle: LUIFontStyleType = .regular) {
         super.init(frame: .zero, textContainer: nil)
         
@@ -148,18 +157,25 @@ open class LUITextView : UITextView {
     public func endBuilding() {
         self.isBuilding = false
         
-        
         let fixedWidth = self.frame.size.width
         let newSize = self.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
         self.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
     }
     
     public func addText(_ text: String, textColor: UIColor) {
+        
+        guard let font = self.font else {
+            fatalError("Invalid font for text view")
+        }
+        
         if !self.isBuilding {
             fatalError("Accessing building function when 'beginBuilding' has not been called.")
         }
         
-        let newText = NSAttributedString(string: text, attributes: [.foregroundColor: textColor])
+        let newText = NSAttributedString(string: text, attributes: [
+            .foregroundColor: textColor,
+            .font: font
+        ])
         
         let attributedText = NSMutableAttributedString(attributedString: self.attributedText)
         attributedText.append(newText)
@@ -167,6 +183,11 @@ open class LUITextView : UITextView {
     }
     
     public func addLink(_ text: String, linkColor: UIColor, urlStr: String) {
+        
+        guard let font = self.font else {
+            fatalError("Invalid font for text view")
+        }
+        
         if !self.isBuilding {
             fatalError("Accessing building function when 'beginBuilding' has not been called.")
         }
@@ -174,13 +195,16 @@ open class LUITextView : UITextView {
         if let url = URL(string: urlStr) {
             
             let attributedLink = NSMutableAttributedString(string: text)
-            attributedLink.setAttributes([.link: url], range: NSMakeRange(0, text.count))
+            attributedLink.setAttributes([
+                .link: url,
+                .font: font
+            ], range: NSMakeRange(0, text.count))
             
             let leftOverText = NSMutableAttributedString(attributedString: self.attributedText)
             leftOverText.append(attributedLink)
             self.attributedText = leftOverText
             self.linkTextAttributes = [
-                .foregroundColor: linkColor,
+                .foregroundColor: linkColor
             ]
             
             // assumption for when links are involved, can be changed on client end

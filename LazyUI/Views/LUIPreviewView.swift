@@ -43,7 +43,7 @@ public protocol LUIPreviewContent {
 }
 
 open class LUIPreviewView: LUIView {
-
+    
     var content: LUIPreviewContent? = nil {
         didSet {
             if let image = self.content as? UIImage {
@@ -65,5 +65,7 @@ open class LUIPreviewView: LUIView {
         self.fill(iv, padding: .none, withSafety: false)
         return iv
     } ()
+    
+    public func setUpView() {}
     
 }

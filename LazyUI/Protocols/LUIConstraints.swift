@@ -14,25 +14,37 @@ public enum LUIConstraintOperator {
     case greaterThan
 }
 
+extension NSLayoutConstraint {
+    func eliminate() {
+        self.firstItem?.removeConstraint(self)
+        self.secondItem?.removeConstraint(self)
+    }
+}
+
 public protocol LUIConstraints {
-    func centerX(_ view: UIView)
-    func centerY(_ view: UIView)
-    func center(_ view: UIView)
-    func fill(_ view: UIView, padding: LUIPaddingType, withSafety: Bool)
+    func centerX(_ view: UIView) -> NSLayoutConstraint
+    func centerY(_ view: UIView) -> NSLayoutConstraint
+    func center(_ view: UIView) -> [NSLayoutConstraint]
     
-    func top(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator)
-    func bottom(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator)
+    func centerX(_ view: UIView, offset: CGFloat) -> NSLayoutConstraint
+    func centerY(_ view: UIView, offset: CGFloat) -> NSLayoutConstraint
+    func center(_ view: UIView, offset: CGFloat) -> [NSLayoutConstraint]
     
-    func left(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator)
-    func right(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator)
+    func fill(_ view: UIView, padding: LUIPaddingType, withSafety: Bool) -> [NSLayoutConstraint]
     
-    func width(to width: CGFloat, constraintOperator: LUIConstraintOperator)
-    func width(to width: NSLayoutDimension, constraintOperator: LUIConstraintOperator)
+    func top(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
+    func bottom(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
     
-    func height(to height: CGFloat, constraintOperator: LUIConstraintOperator)
-    func height(to height: NSLayoutDimension, constraintOperator: LUIConstraintOperator)
+    func left(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
+    func right(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
     
-    func square(to size: CGFloat)
-    func circle(to size: CGFloat)
-    func aspectRatio(_ ratio: LUIAspectRatio)
+    func width(to width: CGFloat, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
+    func width(to width: NSLayoutDimension, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
+    
+    func height(to height: CGFloat, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
+    func height(to height: NSLayoutDimension, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
+    
+    func square(to size: CGFloat) -> [NSLayoutConstraint]
+    func circle(to size: CGFloat) -> [NSLayoutConstraint]
+    func aspectRatio(_ ratio: LUIAspectRatio) -> NSLayoutConstraint
 }

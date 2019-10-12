@@ -8,10 +8,18 @@
 
 import UIKit
 
-open class LUIView: UIView {
+public protocol LUIViewProtocol {
+    func setUpView()
+}
+
+public typealias LUIView = LUIViewClass & LUIViewProtocol
+
+open class LUIViewClass: UIView {
 
     public convenience init() {
         self.init(frame: .zero)
+        
+        self.initView()
     }
     
     override public init(frame: CGRect) {
@@ -30,4 +38,12 @@ open class LUIView: UIView {
         super.addSubview(view)
     }
     
+    private func initView() {
+        // by default
+        self.backgroundColor = UIColor.color(for: .lightBackground)
+        
+        if let view = self as? LUIView {
+            view.setUpView()
+        }
+    }
 }

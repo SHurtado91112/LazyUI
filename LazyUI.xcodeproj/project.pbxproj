@@ -47,6 +47,7 @@
 		CDD2942622E53F2E00801908 /* LUIPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD2942522E53F2E00801908 /* LUIPreviewViewController.swift */; };
 		CDD2942822E5411800801908 /* LUIPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD2942722E5411800801908 /* LUIPreviewView.swift */; };
 		CDD4379A22DCCC79003A5A4B /* LUITableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD4379922DCCC79003A5A4B /* LUITableCell.swift */; };
+		CDE034B523514D78004287E9 /* LUIActivitiyIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE034B423514D78004287E9 /* LUIActivitiyIndicatorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +93,7 @@
 		CDD2942522E53F2E00801908 /* LUIPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPreviewViewController.swift; sourceTree = "<group>"; };
 		CDD2942722E5411800801908 /* LUIPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPreviewView.swift; sourceTree = "<group>"; };
 		CDD4379922DCCC79003A5A4B /* LUITableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUITableCell.swift; sourceTree = "<group>"; };
+		CDE034B423514D78004287E9 /* LUIActivitiyIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIActivitiyIndicatorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 				CDD2942722E5411800801908 /* LUIPreviewView.swift */,
 				CDC9602522FB24F400CD378E /* LUIKeyboardToolBar.swift */,
 				CDA48BA72314414900CC8B09 /* LUISearchBar.swift */,
+				CDE034B423514D78004287E9 /* LUIActivitiyIndicatorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				CDC95FC422E779EE00CD378E /* UIImageView+LUIAdditions.swift in Sources */,
 				CD04305422DAFD4F0018D584 /* LUIPopOverViewController.swift in Sources */,
 				CDD2942422E5135500801908 /* String+LUIAdditions.swift in Sources */,
+				CDE034B523514D78004287E9 /* LUIActivitiyIndicatorView.swift in Sources */,
 				CD3A5A3F22D116EE009AD5BC /* LUIThemeManager.swift in Sources */,
 				CD04303C22D2A0980018D584 /* UIView+LUIAdditions.swift in Sources */,
 				CD3A5A3B22D1134D009AD5BC /* UIColor+LUIAdditions.swift in Sources */,

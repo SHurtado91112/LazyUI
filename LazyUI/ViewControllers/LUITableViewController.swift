@@ -153,6 +153,33 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
         self.searchCriteria = criteria
     }
     
+    // MARK: - Adding Views and Constraints
+    
+    public func addView(_ view: UIView) {
+        self.view.addSubview(view)
+    }
+    
+    public func centerX(_ view: UIView) {
+        self.view.centerX(view)
+    }
+    
+    public func centerY(_ view: UIView) {
+        self.view.centerY(view)
+    }
+    
+    public func center(_ view: UIView) {
+        self.view.center(view)
+    }
+    
+    public func fill(_ view: UIView, padding: LUIPaddingType = .none) {
+        self.view.fill(view, padding: padding)
+    }
+    
+    override open func addChild(_ childController: UIViewController) {
+        super.addChild(childController)
+        childController.didMove(toParent: self)
+    }
+    
     // MARK: - Private functions
     
     private func filterSearch(for text: String) {
@@ -206,9 +233,11 @@ extension LUITableViewController: LUINavigation {
     
     public func popOver(_ vc: UIViewController) {
         let popOver = LUIPopOverViewController(contentVC: vc)
-        self.addChild(popOver)
-        self.view.addSubview(popOver.view)
-        self.view.fill(popOver.view, padding: .none)
+        LUIPopOverViewController.current = popOver
+        
+        let currentWindow: UIWindow? = UIApplication.shared.keyWindow
+        currentWindow?.addSubview(popOver.view)
+        currentWindow?.fill(popOver.view, padding: .none)
     }
     
     public func dismissableModalViewController() -> LUINavigationViewController {

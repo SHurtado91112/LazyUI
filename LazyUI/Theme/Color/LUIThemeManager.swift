@@ -52,7 +52,7 @@ public class LUIThemeManager: NSObject {
     
     private func setTheme() {
         UIWindow.appearance().backgroundColor = self.themeColors.lightBackground
-        LUIView.appearance().backgroundColor = self.themeColors.lightBackground
+        LUIViewClass.appearance().backgroundColor = self.themeColors.lightBackground
         LUITextField.appearance().textColor = self.themeColors.darkText
         
         // MARK: - NAVIGATION PROXY

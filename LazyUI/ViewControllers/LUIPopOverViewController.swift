@@ -10,20 +10,52 @@ import UIKit
 
 open class LUIPopOverViewController: LUIViewController {
     
-    public var isDismissible = true
+    static public internal(set) var current: LUIPopOverViewController?
     
-    lazy var contentView : LUIView = {
-        let view = LUIView()
+    public var isDismissible = true
+    public var doesObscure: Bool = true {
+        didSet {
+            self.backgroundView.isHidden = !self.doesObscure
+            self.view.isUserInteractionEnabled = self.doesObscure
+        }
+    }
+    
+    private var shadow: UIColor {
+        return UIColor.color(for: .shadow).withAlphaComponent(0.6)
+    }
+    
+    lazy var backgroundView: UIView = {
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = self.shadow
+        
+        self.addView(backgroundView)
+        self.center(backgroundView)
+        self.fill(backgroundView)
+        
+        return backgroundView
+    } ()
+    
+    private var fillConstraints: [NSLayoutConstraint]?
+    private var widthConstraint: NSLayoutConstraint?
+    
+    lazy var contentView: UIView = {
+        let view = UIView()
         self.addView(view)
         self.center(view)
         
-        view.width(to: UIScreen.main.bounds.width*2.0/3.0)
-        view.height(to: UIScreen.main.bounds.width*2.0/3.0, constraintOperator: .greaterThan)
+        self.fillConstraints = [
+            self.view.left(view, fromLeft: true, paddingType: .large, withSafety: false),
+            self.view.right(view, fromLeft: false, paddingType: .large, withSafety: false)
+        ]
+        
+        view.width(to: UIScreen.main.bounds.width, constraintOperator: .lessThan)
         view.roundCorners(to: 16.0)
         view.addShadow()
         
         return view
     } ()
+    
+    lazy var desiredHeight: CGFloat = .zero
     
     private var contentViewController : UIViewController?
     
@@ -54,28 +86,60 @@ open class LUIPopOverViewController: LUIViewController {
     }
     
     public func setUpViews() {
-        self.view.backgroundColor = UIColor.color(for: .shadow).withAlphaComponent(0.6)
+        self.view.backgroundColor = .clear
         
         if let vc = self.contentViewController {
+            
+            self.contentView.backgroundColor = vc.view.backgroundColor
             self.contentView.addSubview(vc.view)
             self.contentView.fill(vc.view, padding: .regular)
+            
+            self.contentView.height(to: self.desiredHeight, constraintOperator: .greaterThan)
+            
             self.addChild(vc)
             self.contentView.alpha = 1.0
         }
         
+        self.view.sendSubviewToBack(self.backgroundView)
+    }
+    
+    open func applyFill() {
+        self.widthConstraint?.eliminate()
+        
+        if let constraints = self.fillConstraints {
+            for constraint in constraints {
+                constraint.isActive = true
+            }
+        }
+    }
+    
+    open func applyWidth(_ width: CGFloat) {
+        self.widthConstraint?.eliminate()
+        
+        if let constraints = self.fillConstraints {
+            for constraint in constraints {
+                constraint.isActive = false
+            }
+        }
+        
+        self.widthConstraint = self.contentView.width(to: width + 2.0 * LUIPadding.padding(for: .regular)) // include padding
     }
     
     private func setUpGestures() {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.popOverTapped))
-        self.view.addGestureRecognizer(tapGesture)
-        self.view.isUserInteractionEnabled = true
-        
+        self.backgroundView.addGestureRecognizer(tapGesture)
+
         tapGesture.delegate = self
+        tapGesture.cancelsTouchesInView = false
         
     }
     
     @objc private func popOverTapped() {
+        self.dismiss()
+    }
+    
+    open func dismiss() {
         if self.isDismissible {
             self.view.fadeOut {
                 self.dismiss(animated: true, completion: nil)
