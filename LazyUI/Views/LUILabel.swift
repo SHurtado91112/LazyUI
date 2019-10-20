@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class LUILabel: UILabel, LUIViewProtocol {
+open class LUILabel: UILabel, LUIViewThemeProtocol {
     
     override open var backgroundColor: UIColor? {
         didSet {

@@ -20,12 +20,9 @@ open class LUIViewControllerClass: UIViewController {
     // private stored property to allow conformance of navigation property for LUINavigation protocol
     private var _navigation: LUINavigationViewController?
     
-    override open func loadView() {
-        self.view = LUIView()
-    }
-    
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         LUIKeyboardManager.shared.registerEvents(for: self)
     }
     
@@ -43,6 +40,7 @@ open class LUIViewControllerClass: UIViewController {
     // MARK: - Set Up For View Controller's views
     private func setUp() {
         if let lazyVC = self as? LUIViewController {
+            self.view.backgroundColor = UIColor.color(for: .lightBackground)
             lazyVC.setUpViews()
         }
         
@@ -145,9 +143,12 @@ extension LUIViewControllerClass : LUINavigation {
     
     public func popOver(_ vc: UIViewController) {
         let popOver = LUIPopOverViewController(contentVC: vc)
-        self.addChild(popOver)
-        self.addView(popOver.view)
-        self.fill(popOver.view)
+        LUIPopOverViewController.current = popOver
+        
+        let currentWindow: UIWindow? = UIApplication.shared.keyWindow
+        currentWindow?.addSubview(popOver.view)
+        currentWindow?.fill(popOver.view, padding: .none)
+//        self.addChild(popOver)
     }
     
     public func dismissableModalViewController() -> LUINavigationViewController {

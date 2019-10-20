@@ -74,11 +74,28 @@ open class LUIStackView: UIScrollView {
         self.stackView.width(to: self.widthAnchor, constraintOperator: .equal)
     }
     
+    open func addArrangedSubtitle(_ text: String, identifier: String = "") {
+        let templateLabel = LUILabel(color: .intermidiateText, fontSize: .regular, fontStyle: .regular)
+        templateLabel.text = text
+        
+        self.stackView.addArrangedSubview(templateLabel)
+        
+        self.stackView.left(templateLabel, fromLeft: true, paddingType: self.padding, withSafety: false)
+        self.stackView.right(templateLabel, fromLeft: false, paddingType: self.padding, withSafety: false)
+        
+        if !identifier.isEmpty {
+            self.viewMap[identifier] = templateLabel
+        }
+    }
+    
     open func addArrangedSubview(subtitle: String, contentText: String = "", identifier: String = "") {
         let templateLabel = LUILabel(color: .intermidiateText, fontSize: .small, fontStyle: .regular)
+        templateLabel.text = subtitle
+        
         let titleLabel = LUILabel(color: .darkText, fontSize: .regular, fontStyle: .regular)
         titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.numberOfLines = 0
+        titleLabel.text = contentText
         
         self.stackView.addArrangedSubview(templateLabel)
         self.stackView.left(templateLabel, fromLeft: true, paddingType: self.padding, withSafety: false)
@@ -137,8 +154,9 @@ open class LUIStackView: UIScrollView {
     
     open func addDivider() -> UIView {
         let divider = UIView(frame: CGRect(x: 0, y: 0, width: self.stackView.frame.width, height: 1.0))
-        divider.backgroundColor = UIColor.color(for: .intermidiateBackground)
-        
+        divider.backgroundColor = UIColor.color(for: .border)
+        self.addArrangedSubview(contentView: divider, fill: true)
+        divider.height(to: 1.0)
         return divider
     }
     
@@ -151,14 +169,7 @@ open class LUIStackView: UIScrollView {
     }
     
     open func fitStack() {
-        self.stackView.setNeedsLayout()
-        self.stackView.layoutIfNeeded()
-        
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
-        
-        self.stackView.sizeToFit()
-        self.sizeToFit()
+        self.height(to: self.stackView.heightAnchor, constraintOperator: .greaterThan)
     }
     
     private func pageStackView() -> UIStackView {

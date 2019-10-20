@@ -85,7 +85,7 @@ open class LUIPageControl: UIPageControl, LUIViewProtocol {
         super.init(coder: aDecoder)
     }
     
-    private func setUpView() {
+    public func setUpView() {
         self.addTarget(self, action: #selector(self.pageValueChanged), for: .valueChanged)
         
         self.registerForThemeObserver()

@@ -28,7 +28,6 @@ open class LUIImagePicker: NSObject {
         self.delegate = delegate
         
         self.pickerController.delegate = self
-        self.pickerController.allowsEditing = true
         self.pickerController.mediaTypes = ["public.image"]
     }
     
@@ -43,7 +42,8 @@ open class LUIImagePicker: NSObject {
         }
     }
     
-    public func present(from sourceView: UIView, identifier: String? = "") {
+    public func present(from sourceView: UIView, identifier: String? = "", canEdit: Bool = false) {
+        self.pickerController.allowsEditing = canEdit
         
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -84,10 +84,15 @@ extension LUIImagePicker: UIImagePickerControllerDelegate {
     
     public func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        guard let image = info[.editedImage] as? UIImage else {
+        
+        if let image = info[.editedImage] as? UIImage {
+            return self.pickerController(picker, didSelect: image)
+        } else if let image = info[.originalImage] as? UIImage {
+            return self.pickerController(picker, didSelect: image)
+        } else {
             return self.pickerController(picker, didSelect: nil)
         }
-        self.pickerController(picker, didSelect: image)
+        
     }
 }
 

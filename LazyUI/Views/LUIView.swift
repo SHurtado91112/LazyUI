@@ -8,13 +8,25 @@
 
 import UIKit
 
-internal protocol LUIViewProtocol {
+public protocol LUIViewProtocol {
+    func setUpView()
+}
+
+internal protocol LUIViewThemeProtocol {
     var backgroundColorType: LUIColorType { get set }
     var textColorType: LUIColorType { get set }
     var tintColorType: LUIColorType { get set }
 }
 
-open class LUIView: UIView, LUIViewProtocol {
+public typealias LUIView = LUIViewClass & LUIViewProtocol
+
+open class LUIViewClass: UIView, LUIViewThemeProtocol {
+
+    public convenience init() {
+        self.init(frame: .zero)
+        
+        self.initView()
+    }
     
     override open var backgroundColor: UIColor? {
         didSet {
@@ -67,9 +79,18 @@ open class LUIView: UIView, LUIViewProtocol {
     deinit {
         self.unregisterForThemeObserver()
     }
+    
+    private func initView() {
+        // by default
+        self.backgroundColor = UIColor.color(for: .lightBackground)
+        
+        if let view = self as? LUIView {
+            view.setUpView()
+        }
+    }
 }
 
-extension LUIView: LUIThemeProtocol {
+extension LUIViewClass: LUIThemeProtocol {
 
     @objc func themeUpdated() { // reset colors based on last color type
         self.backgroundColor = UIColor.color(for: self.backgroundColorType)
@@ -83,5 +104,4 @@ extension LUIView: LUIThemeProtocol {
     func unregisterForThemeObserver() {
         NotificationCenter.default.removeObserver(self, name: LUIThemeUpdateNotification, object: nil)
     }
-
 }

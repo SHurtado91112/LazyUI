@@ -18,7 +18,7 @@ public enum LUIButtonStyle {
     
 }
 
-open class LUIButton: UIButton, LUIViewProtocol {
+open class LUIButton: UIButton, LUIViewThemeProtocol {
     
     // theming protocol
     override open var backgroundColor: UIColor? {

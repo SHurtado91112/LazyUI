@@ -24,6 +24,14 @@ extension UIAlertController {
         viewController.present(alert, animated: true, completion: nil)
     }
     
+    static public func presentActionSheet(title: String, message: String, withOptions options: [UIAlertAction], viewController: UIViewController) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        for option in options {
+            alert.addAction(option)
+        }
+        viewController.present(alert, animated: true, completion: nil)
+    }
+    
     static public func presentAlertWithOptions(title: String, message: String, options: [UIAlertAction], viewController: UIViewController) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         for option in options {

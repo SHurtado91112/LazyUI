@@ -42,6 +42,33 @@ open class LUINavigationViewController: UINavigationController {
         return self
     }
     
+    // MARK: - Adding Views and Constraints
+    
+    public func addView(_ view: UIView) {
+        self.view.addSubview(view)
+    }
+    
+    public func centerX(_ view: UIView) {
+        self.view.centerX(view)
+    }
+    
+    public func centerY(_ view: UIView) {
+        self.view.centerY(view)
+    }
+    
+    public func center(_ view: UIView) {
+        self.view.center(view)
+    }
+    
+    public func fill(_ view: UIView, padding: LUIPaddingType = .none) {
+        self.view.fill(view, padding: padding)
+    }
+    
+    override open func addChild(_ childController: UIViewController) {
+        super.addChild(childController)
+        childController.didMove(toParent: self)
+    }
+    
     @objc public func dismissNavigation() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -67,4 +94,41 @@ open class LUINavigationViewController: UINavigationController {
         barButton.setTitleTextAttributes(attributes, for: .selected)
         
     }
+}
+
+extension LUINavigationViewController: LUINavigation {
+    public var navigation: LUINavigationViewController? {
+        get {
+            return self
+        }
+        set { }
+    }
+    
+    public func pop() {
+        self.popViewController(animated: true)
+    }
+    
+    public func popToRoot() {
+        self.popToRootViewController(animated: true)
+    }
+    
+    public func present(_ vc: UIViewController) {
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    public func popOver(_ vc: UIViewController) {
+        let popOver = LUIPopOverViewController(contentVC: vc)
+        LUIPopOverViewController.current = popOver
+        
+        let currentWindow: UIWindow? = UIApplication.shared.keyWindow
+        currentWindow?.addSubview(popOver.view)
+        currentWindow?.fill(popOver.view, padding: .none)
+//        self.addChild(popOver)
+    }
+    
+    public func dismissableModalViewController() -> LUINavigationViewController {
+        return LUINavigationViewController(rootVC: self, largeTitle: false).forDismissal()
+    }
+    
+    
 }
