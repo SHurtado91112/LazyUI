@@ -146,10 +146,9 @@ open class LUIStackView: UIScrollView {
         let paddingView = UIView()
         
         paddingView.backgroundColor = .clear
-        paddingView.width(to: self.stackView.frame.width)
         paddingView.height(to: LUIPadding.padding(for: padding))
         
-        self.addArrangedSubview(contentView: paddingView)
+        self.addArrangedSubview(contentView: paddingView, fill: true)
     }
     
     open func addDivider() -> UIView {
