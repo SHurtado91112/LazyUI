@@ -9,15 +9,12 @@
 fileprivate let SLIDE_SCREEN_WIDTH: CGFloat = UIScreen.main.bounds.width / 4.0 * 3.0
 fileprivate let SLIDE_SCREEN_OFFSET: CGFloat = UIScreen.main.bounds.width / 4.0
 
-class LUISlideMenuTableViewController: LUITableViewController {
-    
-}
-
 public protocol LUISlideMenuContainer: LUIViewControllerProtocol {
     var slideMenuDelegate: LUISlideMenuDelegate? { get set }
 }
 
 public protocol LUISlideMenuDelegate: LUIViewControllerProtocol {
+    func closeMenu()
     func openMenu()
 }
 
@@ -54,7 +51,13 @@ open class LUISlideMenuViewController: LUIViewController {
         self._mainContentViewController = mainContent
         self._mainContentViewController.slideMenuDelegate = self
         
-        self._slideMenuContentViewController = slideMenuContent
+        if let tableViewContent = slideMenuContent as? LUISlideMenuTableViewController {
+            tableViewContent.slideMenuDelegate = self
+            
+            self._slideMenuContentViewController = LUINavigationViewController(rootVC: tableViewContent, largeTitle: false).forDismissal()
+        } else {
+            self._slideMenuContentViewController = slideMenuContent
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -113,19 +116,17 @@ open class LUISlideMenuViewController: LUIViewController {
             self.view.layoutIfNeeded()
         })
     }
-
-    @objc public func closeMenu() {
-        self.toggleMenu(true)
-    }
     
 }
 
 extension LUISlideMenuViewController: LUISlideMenuDelegate {
     
+    @objc public func closeMenu() {
+        self.toggleMenu(true)
+    }
+    
     public func openMenu() {
-        
         self.toggleMenu(false)
-        
     }
     
 }

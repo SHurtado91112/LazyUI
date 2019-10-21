@@ -13,6 +13,22 @@ public protocol LUICellData {
     func formatCell(for data: Any)
 }
 
+public protocol LUIActionCellData: LUICellData {
+    var action: (()->Void)? { get set }
+}
+
+open class LUIActionTableCell: LUITableCell {
+    
+    @objc override internal func cellTapped() {
+        super.cellTapped()
+        
+        if let cell = self as? LUIActionCellData {
+            cell.action?()
+        }
+    }
+    
+}
+
 open class LUITableCell: UITableViewCell {
     
     private lazy var _interactionBackgroundView: UIView = {
@@ -54,25 +70,31 @@ open class LUITableCell: UITableViewCell {
         self.configureTableViewCell()
     }
     
-    override open func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    private func animateCellBackground() {
         
-        if selected {
+        UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), animations: {
+            self.interactionBackgroundView.alpha = 1.0
+        }) { (finished) in
             UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), animations: {
-                self.interactionBackgroundView.alpha = 1.0
-            }) { (finished) in
-                UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), animations: {
-                    self.interactionBackgroundView.alpha = 0.0
-                })
-            }
+                self.interactionBackgroundView.alpha = 0.0
+            })
         }
+        
     }
     
-    private func configureTableViewCell() {
+    internal func configureTableViewCell() {
         self.selectionStyle = .none
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.cellTapped))
+        tapRecognizer.cancelsTouchesInView = false
+        self.addGestureRecognizer(tapRecognizer)
+        
         if let cell = self as? LUICellData {
             cell.setUpCell()
         }
     }
     
+    @objc internal func cellTapped() {
+        self.animateCellBackground()
+    }
 }

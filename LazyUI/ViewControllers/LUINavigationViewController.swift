@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class LUINavigationViewController: UINavigationController {
+open class LUINavigationViewController: UINavigationController, LUIViewControllerProtocol {
 
     required public init(rootVC: UIViewController, largeTitle: Bool = true) {
         super.init(rootViewController: rootVC)
@@ -25,7 +25,7 @@ open class LUINavigationViewController: UINavigationController {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        self.setUpNavigationView()
+        self.setUpViews()
     }
     
     override open func viewWillAppear(_ animated: Bool) {
@@ -71,6 +71,10 @@ open class LUINavigationViewController: UINavigationController {
     
     @objc public func dismissNavigation() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    public func setUpViews() {
+        self.setUpNavigationView()
     }
 
     private func setUpNavigationView() {
@@ -123,7 +127,6 @@ extension LUINavigationViewController: LUINavigation {
         let currentWindow: UIWindow? = UIApplication.shared.keyWindow
         currentWindow?.addSubview(popOver.view)
         currentWindow?.fill(popOver.view, padding: .none)
-//        self.addChild(popOver)
     }
     
     public func dismissableModalViewController() -> LUINavigationViewController {

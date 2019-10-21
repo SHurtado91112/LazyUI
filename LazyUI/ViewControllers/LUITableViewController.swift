@@ -108,7 +108,7 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
         self.tableView.estimatedRowHeight = self.ESTIMATE_ROW_HEIGHT
         self.tableView.rowHeight = UITableView.automaticDimension
 
-        self.tableView.separatorColor = UIColor.color(for: .intermidiateBackground)
+        self.tableView.separatorColor = UIColor.color(for: .border)
         self.definesPresentationContext = true
     }
     

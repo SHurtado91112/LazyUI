@@ -39,6 +39,7 @@
 		CDA48BA82314414900CC8B09 /* LUISearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA48BA72314414900CC8B09 /* LUISearchBar.swift */; };
 		CDA5F85423390071005C915E /* UIAlertController+LUIAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA5F85323390071005C915E /* UIAlertController+LUIAdditions.swift */; };
 		CDAF68F3235E1EB6003F7C4F /* LUISlideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAF68F2235E1EB6003F7C4F /* LUISlideMenuViewController.swift */; };
+		CDAF68F8235E3E2C003F7C4F /* LUISlideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAF68F7235E3E2C003F7C4F /* LUISlideMenuTableViewController.swift */; };
 		CDC95FC422E779EE00CD378E /* UIImageView+LUIAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC95FC322E779EE00CD378E /* UIImageView+LUIAdditions.swift */; };
 		CDC95FF422E9EBE000CD378E /* LUIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC95FF322E9EBE000CD378E /* LUIStackView.swift */; };
 		CDC95FFD22EFBDAA00CD378E /* LUIPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC95FFC22EFBDAA00CD378E /* LUIPageViewController.swift */; };
@@ -87,6 +88,7 @@
 		CDA48BA72314414900CC8B09 /* LUISearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUISearchBar.swift; sourceTree = "<group>"; };
 		CDA5F85323390071005C915E /* UIAlertController+LUIAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+LUIAdditions.swift"; sourceTree = "<group>"; };
 		CDAF68F2235E1EB6003F7C4F /* LUISlideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUISlideMenuViewController.swift; sourceTree = "<group>"; };
+		CDAF68F7235E3E2C003F7C4F /* LUISlideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUISlideMenuTableViewController.swift; sourceTree = "<group>"; };
 		CDC95FC322E779EE00CD378E /* UIImageView+LUIAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+LUIAdditions.swift"; sourceTree = "<group>"; };
 		CDC95FF322E9EBE000CD378E /* LUIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIStackView.swift; sourceTree = "<group>"; };
 		CDC95FFC22EFBDAA00CD378E /* LUIPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPageViewController.swift; sourceTree = "<group>"; };
@@ -139,7 +141,7 @@
 				CDD2942522E53F2E00801908 /* LUIPreviewViewController.swift */,
 				CDC95FFC22EFBDAA00CD378E /* LUIPageViewController.swift */,
 				CDA48BA5231440B400CC8B09 /* LUISearchController.swift */,
-				CDAF68F2235E1EB6003F7C4F /* LUISlideMenuViewController.swift */,
+				CDAF68F6235E3DD3003F7C4F /* LUISlideMenu */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -247,6 +249,15 @@
 				CD3A5A3E22D116EE009AD5BC /* LUIThemeManager.swift */,
 			);
 			path = Color;
+			sourceTree = "<group>";
+		};
+		CDAF68F6235E3DD3003F7C4F /* LUISlideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				CDAF68F2235E1EB6003F7C4F /* LUISlideMenuViewController.swift */,
+				CDAF68F7235E3E2C003F7C4F /* LUISlideMenuTableViewController.swift */,
+			);
+			path = LUISlideMenu;
 			sourceTree = "<group>";
 		};
 		CDC9602222F7418700CD378E /* Classes */ = {
@@ -378,6 +389,7 @@
 				CD04304A22DA53770018D584 /* LUIAnimationSpeed.swift in Sources */,
 				CD04304722DA4BBF0018D584 /* UIImage+LUIAdditions.swift in Sources */,
 				CDA48BA6231440B400CC8B09 /* LUISearchController.swift in Sources */,
+				CDAF68F8235E3E2C003F7C4F /* LUISlideMenuTableViewController.swift in Sources */,
 				CDC95FC422E779EE00CD378E /* UIImageView+LUIAdditions.swift in Sources */,
 				CD04305422DAFD4F0018D584 /* LUIPopOverViewController.swift in Sources */,
 				CDD2942422E5135500801908 /* String+LUIAdditions.swift in Sources */,
