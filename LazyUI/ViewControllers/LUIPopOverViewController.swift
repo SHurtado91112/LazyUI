@@ -21,7 +21,7 @@ open class LUIPopOverViewController: LUIViewController {
     }
     
     private var shadow: UIColor {
-        return UIColor.color(for: .shadow).withAlphaComponent(0.6)
+        return UIColor.color(for: .shadow)
     }
     
     lazy var backgroundView: UIView = {
