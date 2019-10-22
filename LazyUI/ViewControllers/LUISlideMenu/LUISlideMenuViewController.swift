@@ -109,6 +109,7 @@ open class LUISlideMenuViewController: LUIViewController {
         
         self.slideMenuHiddenConstraint?.isActive = hide
         self.slideMenuPresentedConstraint?.isActive = !hide
+        self.slideMenuPresentedConstraint?.constant = -SLIDE_SCREEN_OFFSET
         
         let menuView = self.slideMenuContentViewController.view
         if hide {
@@ -151,8 +152,8 @@ open class LUISlideMenuViewController: LUIViewController {
                 self.slideMenuHiddenConstraint?.isActive = false
                 self.slideMenuPresentedConstraint?.isActive = true
                 self.slideMenuPresentedConstraint?.constant = -minOffset
-                
                 break
+            
             case .changed:
             
                 if let _ = recognizer.view {
@@ -163,8 +164,8 @@ open class LUISlideMenuViewController: LUIViewController {
                     }
                     self.slideMenuPresentedConstraint?.constant = -offset
                 }
-
                 break
+            
             case .ended:
                 
                 let halfWayPoint = (minOffset - maxOffset) / 2.0
@@ -173,8 +174,12 @@ open class LUISlideMenuViewController: LUIViewController {
                 if offset > halfWayPoint {
                     self.closeMenu()
                 }
-                
                 break
+            
+            case .cancelled:
+                self.slideMenuPresentedConstraint?.constant = -maxOffset
+                break
+            
             default:
                 break
         }

@@ -192,6 +192,7 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
 }
 
 extension LUITableViewController: LUINavigation {
+    
     // MARK: - Navigation
     public var navigation: LUINavigationViewController? {
         get {
@@ -228,7 +229,19 @@ extension LUITableViewController: LUINavigation {
     }
     
     public func present(_ vc: UIViewController) {
+        self.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    public func presentModally(_ vc: UIViewController) {
+        self.modalPresentationStyle = .pageSheet
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    public func presentNavigation(_ vc: UIViewController) {
+        let nav = LUINavigationViewController(rootVC: vc)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true, completion: nil)
     }
     
     public func popOver(_ vc: UIViewController) {
@@ -240,7 +253,7 @@ extension LUITableViewController: LUINavigation {
         currentWindow?.fill(popOver.view, padding: .none)
     }
     
-    public func dismissableModalViewController() -> LUINavigationViewController {
+    public func dissmissableNavigation() -> LUINavigationViewController {
         return LUINavigationViewController(rootVC: self, largeTitle: false).forDismissal()
     }
 }
