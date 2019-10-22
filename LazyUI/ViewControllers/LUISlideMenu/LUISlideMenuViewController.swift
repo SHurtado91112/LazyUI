@@ -95,6 +95,14 @@ open class LUISlideMenuViewController: LUIViewController {
             self.shadowBackground.alpha = 0.0
         }
         
+        self.setUpGestures()
+    }
+    
+    private func setUpGestures() {
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(_:)))
+        self.view.addGestureRecognizer(panGesture)
+        
     }
     
     private func toggleMenu(_ hide: Bool) {
@@ -104,8 +112,8 @@ open class LUISlideMenuViewController: LUIViewController {
         
         let menuView = self.slideMenuContentViewController.view
         if hide {
-            menuView?.fadeOut()
-            self.shadowBackground.fadeOut()
+            menuView?.fadeOut(delayed: true)
+            self.shadowBackground.fadeOut(delayed: true)
         } else {
             menuView?.fadeIn()
             self.shadowBackground.fadeIn()
@@ -115,6 +123,67 @@ open class LUISlideMenuViewController: LUIViewController {
         UIView.animate(withDuration: speed, delay: 0.0, options: .curveEaseInOut, animations: {
             self.view.layoutIfNeeded()
         })
+        
+    }
+    
+    @objc private func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
+        
+        guard recognizer.velocity(in: view).x > 0 else {
+            print("Not in the right direction")
+            self.closeMenu()
+            return
+        }
+        
+        let menuView = self.slideMenuContentViewController.view
+        let minOffset = UIScreen.main.bounds.width
+        let maxOffset = SLIDE_SCREEN_OFFSET
+        
+        let translation = recognizer.translation(in: self.view).x
+        let offset = max(minOffset - translation, maxOffset)
+        
+        print("MIN: \(minOffset)")
+        print("Translation: \(offset)")
+        print("MAX: \(maxOffset)")
+        
+        switch recognizer.state {
+            case .began:
+                
+                self.slideMenuHiddenConstraint?.isActive = false
+                self.slideMenuPresentedConstraint?.isActive = true
+                self.slideMenuPresentedConstraint?.constant = -minOffset
+                
+                break
+            case .changed:
+            
+                if let _ = recognizer.view {
+                    let quarterPoint = minOffset - (minOffset - maxOffset) / 4.0
+                    if offset < quarterPoint {
+                        menuView?.fadeIn()
+                        self.shadowBackground.fadeIn()
+                    }
+                    self.slideMenuPresentedConstraint?.constant = -offset
+                }
+
+                break
+            case .ended:
+                
+                let halfWayPoint = (minOffset - maxOffset) / 2.0
+                self.slideMenuPresentedConstraint?.constant = -maxOffset
+                
+                if offset > halfWayPoint {
+                    self.closeMenu()
+                }
+                
+                break
+            default:
+                break
+        }
+        
+        let speed = TimeInterval.timeInterval(for: .fast)
+        UIView.animate(withDuration: speed, delay: 0.0, options: .curveEaseInOut, animations: {
+            self.view.layoutIfNeeded()
+        })
+        
     }
     
 }

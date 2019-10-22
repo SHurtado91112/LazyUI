@@ -25,22 +25,38 @@ extension UIView {
     
     public func fadeInOut(_ finished: (()->Void)? = nil) {
         self.fadeIn {
-            self.fadeOut({
+            self.fadeOut {
                 finished?()
-            })
+            }
         }
     }
     
-    public func fadeIn(_ finished: (()->Void)? = nil) {
-        UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), delay: 0.0, options: .curveEaseIn, animations: {
+    public func fadeIn(delayed: Bool = false, _ finished: (()->Void)? = nil) {
+        
+        let speed = TimeInterval.timeInterval(for: .fast)
+        var delaySpeed = 0.0
+        
+        if delayed || self.alpha != 0.0 {
+            delaySpeed = speed
+        }
+        
+        UIView.animate(withDuration: speed, delay: delaySpeed, options: .curveEaseIn, animations: {
             self.alpha = 1.0
         }) { (done) in
             finished?()
         }
     }
     
-    public func fadeOut(_ finished: (()->Void)? = nil) {
-        UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), delay: 0.0, options: .curveEaseOut, animations: {
+    public func fadeOut(delayed: Bool = false, _ finished: (()->Void)? = nil) {
+        
+        let speed = TimeInterval.timeInterval(for: .fast)
+        var delaySpeed = 0.0
+        
+        if delayed || self.alpha != 1.0 {
+            delaySpeed = speed
+        }
+        
+        UIView.animate(withDuration: speed, delay: delaySpeed, options: .curveEaseOut, animations: {
             self.alpha = 0.0
         }) { (done) in
             finished?()
