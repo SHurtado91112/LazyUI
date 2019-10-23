@@ -73,7 +73,7 @@ open class LUINavigationViewController: UINavigationController, LUIViewControlle
         self.dismiss(animated: true, completion: nil)
     }
     
-    public func setUpViews() {
+    open func setUpViews() {
         self.setUpNavigationView()
     }
 

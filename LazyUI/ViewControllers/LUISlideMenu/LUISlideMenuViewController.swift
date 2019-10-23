@@ -80,7 +80,8 @@ open class LUISlideMenuViewController: LUIViewController {
             self.addView(slideContentView)
             slideContentView.width(to: SLIDE_SCREEN_WIDTH)
             slideContentView.height(to: self.view.heightAnchor, constraintOperator: .equal)
-            slideContentView.addShadow()
+            slideContentView.addShadow(radius: 6.0, intensity: 2.0)
+            slideContentView.clipsToBounds = false
             
             self.view.left(slideContentView, fromLeft: true, paddingType: .none, withSafety: false, constraintOperator: .lessThan)
             

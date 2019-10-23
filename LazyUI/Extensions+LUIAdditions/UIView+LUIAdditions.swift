@@ -11,11 +11,12 @@ import UIKit
 
 extension UIView {
     
-    public func addShadow() {
-        self.layer.shadowColor = UIColor.color(for: .shadow).cgColor
-        self.layer.shadowOpacity = 1.0
-        self.layer.shadowOffset = CGSize(width: -1, height: 1)
-        self.layer.shadowRadius = 3.0
+    public func addShadow(opacity: Float = 1.0, offset: CGSize = CGSize(width: -1, height: 1), radius: CGFloat = 3.0, intensity: CGFloat = 1.0) {
+        let currentShadowAlpha = UIColor.color(for: .shadow).rgba.alpha
+        self.layer.shadowColor = UIColor.color(for: .shadow).withAlphaComponent(currentShadowAlpha * intensity).cgColor
+        self.layer.shadowOpacity = opacity
+        self.layer.shadowOffset = offset
+        self.layer.shadowRadius = radius
     }
     
     public func roundCorners(to radius: CGFloat) {
