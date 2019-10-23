@@ -102,7 +102,7 @@ open class LUISlideMenuViewController: LUIViewController {
     private func setUpGestures() {
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(_:)))
-        self.view.addGestureRecognizer(panGesture)
+        self.mainContentViewController.view.addGestureRecognizer(panGesture)
         
     }
     
@@ -135,28 +135,28 @@ open class LUISlideMenuViewController: LUIViewController {
             self.closeMenu()
             return
         }
-        
+
         let menuView = self.slideMenuContentViewController.view
         let minOffset = UIScreen.main.bounds.width
         let maxOffset = SLIDE_SCREEN_OFFSET
-        
+
         let translation = recognizer.translation(in: self.view).x
         let offset = max(minOffset - translation, maxOffset)
-        
+
         print("MIN: \(minOffset)")
         print("Translation: \(offset)")
         print("MAX: \(maxOffset)")
-        
+
         switch recognizer.state {
             case .began:
-                
+
                 self.slideMenuHiddenConstraint?.isActive = false
                 self.slideMenuPresentedConstraint?.isActive = true
                 self.slideMenuPresentedConstraint?.constant = -minOffset
                 break
-            
+
             case .changed:
-            
+
                 if let _ = recognizer.view {
                     let quarterPoint = minOffset - (minOffset - maxOffset) / 4.0
                     if offset < quarterPoint {
@@ -166,30 +166,30 @@ open class LUISlideMenuViewController: LUIViewController {
                     self.slideMenuPresentedConstraint?.constant = -offset
                 }
                 break
-            
+
             case .ended:
-                
+
                 let halfWayPoint = (minOffset - maxOffset) / 2.0
                 self.slideMenuPresentedConstraint?.constant = -maxOffset
-                
+
                 if offset > halfWayPoint {
                     self.closeMenu()
                 }
                 break
-            
+
             case .cancelled:
                 self.slideMenuPresentedConstraint?.constant = -maxOffset
                 break
-            
+
             default:
                 break
         }
-        
+
         let speed = TimeInterval.timeInterval(for: .fast)
         UIView.animate(withDuration: speed, delay: 0.0, options: .curveEaseInOut, animations: {
             self.view.layoutIfNeeded()
         })
-        
+
     }
     
 }
