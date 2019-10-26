@@ -38,6 +38,13 @@ public protocol LUIConstraints {
     func left(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
     func right(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
     
+    // with custom padding value
+    func top(_ view: UIView, fromTop: Bool, padding: CGFloat, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
+    func bottom(_ view: UIView, fromTop: Bool, padding: CGFloat, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
+    
+    func left(_ view: UIView, fromLeft: Bool, padding: CGFloat, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
+    func right(_ view: UIView, fromLeft: Bool, padding: CGFloat, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
+    
     func width(to width: CGFloat, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
     func width(to width: NSLayoutDimension, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint
     

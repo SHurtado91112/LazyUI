@@ -101,6 +101,7 @@ extension UIViewController : LUIFont {
 }
 
 extension LUIViewControllerClass : LUINavigation {
+    
     public var navigation: LUINavigationViewController? {
         get {
             if let navController = self.navigationController as? LUINavigationViewController, self._navigation == nil || self._navigation != navController {
@@ -138,7 +139,19 @@ extension LUIViewControllerClass : LUINavigation {
     }
     
     public func present(_ vc: UIViewController) {
+        vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    public func presentModally(_ vc: UIViewController) {
+        vc.modalPresentationStyle = .pageSheet
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    public func presentNavigation(_ vc: UIViewController) {
+        let nav = LUINavigationViewController(rootVC: vc)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true, completion: nil)
     }
     
     public func popOver(_ vc: UIViewController) {
@@ -151,7 +164,7 @@ extension LUIViewControllerClass : LUINavigation {
 //        self.addChild(popOver)
     }
     
-    public func dismissableModalViewController() -> LUINavigationViewController {
+    public func dissmissableNavigation() -> LUINavigationViewController {
         let nav = LUINavigationViewController(rootVC: self, largeTitle: false).forDismissal()
         self.navigation = nav
         return nav

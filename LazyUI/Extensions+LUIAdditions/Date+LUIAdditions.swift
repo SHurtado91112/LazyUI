@@ -26,6 +26,18 @@ extension Date {
         return self.component(for: "EEEE")
     }
     
+    public var yearInt: Int {
+        return Int(self.component(for: "yyyy")) ?? -1
+    }
+    
+    public var monthInt: Int {
+        return Int(self.component(for: "MM")) ?? -1
+    }
+    
+    public var dayInt: Int {
+        return Int(self.component(for: "dd")) ?? -1
+    }
+    
     func component(for format: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format

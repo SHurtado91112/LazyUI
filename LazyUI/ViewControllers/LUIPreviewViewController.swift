@@ -245,7 +245,19 @@ extension LUIPreviewManagerViewController: LUINavigation {
     }
     
     public func present(_ vc: UIViewController) {
+        self.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    public func presentModally(_ vc: UIViewController) {
+        self.modalPresentationStyle = .pageSheet
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    public func presentNavigation(_ vc: UIViewController) {
+        let nav = LUINavigationViewController(rootVC: vc)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true, completion: nil)
     }
     
     public func popOver(_ vc: UIViewController) {
@@ -255,7 +267,7 @@ extension LUIPreviewManagerViewController: LUINavigation {
         self.view.fill(popOver.view, padding: .none)
     }
     
-    public func dismissableModalViewController() -> LUINavigationViewController {
+    public func dissmissableNavigation() -> LUINavigationViewController {
         let dismissableVC = LUINavigationViewController(rootVC: self, largeTitle: false).forDismissal()
         
         self.modalPresentationStyle = .overCurrentContext

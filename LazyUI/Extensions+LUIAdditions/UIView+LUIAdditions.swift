@@ -11,11 +11,12 @@ import UIKit
 
 extension UIView {
     
-    public func addShadow() {
-        self.layer.shadowColor = UIColor.color(for: .shadow).cgColor
-        self.layer.shadowOpacity = 1.0
-        self.layer.shadowOffset = CGSize(width: -1, height: 1)
-        self.layer.shadowRadius = 3.0
+    public func addShadow(opacity: Float = 1.0, offset: CGSize = CGSize(width: -1, height: 1), radius: CGFloat = 3.0, intensity: CGFloat = 1.0) {
+        let currentShadowAlpha = UIColor.color(for: .shadow).rgba.alpha
+        self.layer.shadowColor = UIColor.color(for: .shadow).withAlphaComponent(currentShadowAlpha * intensity).cgColor
+        self.layer.shadowOpacity = opacity
+        self.layer.shadowOffset = offset
+        self.layer.shadowRadius = radius
     }
     
     public func roundCorners(to radius: CGFloat) {
@@ -25,25 +26,43 @@ extension UIView {
     
     public func fadeInOut(_ finished: (()->Void)? = nil) {
         self.fadeIn {
-            self.fadeOut({
+            self.fadeOut {
                 finished?()
-            })
+            }
         }
     }
     
-    public func fadeIn(_ finished: (()->Void)? = nil) {
-        UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), delay: 0.0, options: .curveEaseIn, animations: {
+    public func fadeIn(delayed: Bool = false, _ finished: (()->Void)? = nil) {
+        
+        let speed = TimeInterval.timeInterval(for: .fast)
+        var delaySpeed = 0.0
+        
+        if delayed || self.alpha != 0.0 {
+            delaySpeed = speed
+        }
+        
+        UIView.animate(withDuration: speed, delay: delaySpeed, options: [.curveEaseIn], animations: {
             self.alpha = 1.0
         }) { (done) in
-            finished?()
+            if done { finished?() }
         }
     }
     
-    public func fadeOut(_ finished: (()->Void)? = nil) {
-        UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), delay: 0.0, options: .curveEaseOut, animations: {
+    public func fadeOut(delayed: Bool = false, _ finished: (()->Void)? = nil) {
+        
+        let speed = TimeInterval.timeInterval(for: .fast)
+        var delaySpeed = 0.0
+        
+        if delayed || self.alpha != 1.0 {
+            delaySpeed = speed
+        }
+        
+        UIView.animate(withDuration: speed, delay: delaySpeed, options: [.curveEaseOut], animations: {
             self.alpha = 0.0
         }) { (done) in
-            finished?()
+            if done {
+                finished?()
+            }
         }
     }
     
@@ -121,37 +140,7 @@ extension UIView: LUIConstraints {
     }
     @discardableResult public func top(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint {
         let padding = LUIPaddingManager.shared.padding(for: paddingType)
-        let anchor = withSafety ? self.safeAreaLayoutGuide.topAnchor : self.topAnchor
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        var constraint: NSLayoutConstraint!
-        
-        switch constraintOperator {
-            case .equal:
-                if fromTop {
-                    constraint = view.topAnchor.constraint(equalTo: anchor, constant: padding)
-                } else {
-                    constraint = view.bottomAnchor.constraint(equalTo: anchor, constant: -padding)
-                }
-                break
-            case .greaterThan:
-                if fromTop {
-                    constraint = view.topAnchor.constraint(greaterThanOrEqualTo: anchor, constant: padding)
-                } else {
-                    constraint = view.bottomAnchor.constraint(greaterThanOrEqualTo: anchor, constant: -padding)
-                }
-                break
-            case .lessThan:
-                if fromTop {
-                    constraint = view.topAnchor.constraint(lessThanOrEqualTo: anchor, constant: padding)
-                } else {
-                    constraint = view.bottomAnchor.constraint(lessThanOrEqualTo: anchor, constant: -padding)
-                }
-                break
-        }
-        
-        constraint.isActive = true
-        return constraint
+        return self.top(view, fromTop: fromTop, padding: padding, withSafety: withSafety, constraintOperator: constraintOperator)
     }
     
     @discardableResult public func bottom(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool) -> NSLayoutConstraint {
@@ -159,37 +148,7 @@ extension UIView: LUIConstraints {
     }
     @discardableResult public func bottom(_ view: UIView, fromTop: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint {
         let padding = LUIPaddingManager.shared.padding(for: paddingType)
-        let anchor = withSafety ? self.safeAreaLayoutGuide.bottomAnchor : self.bottomAnchor
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        var constraint: NSLayoutConstraint!
-        
-        switch constraintOperator {
-            case .equal:
-                if fromTop {
-                    constraint = view.topAnchor.constraint(equalTo: anchor, constant: padding)
-                } else {
-                    constraint = view.bottomAnchor.constraint(equalTo: anchor, constant: -padding)
-                }
-                break
-            case .greaterThan:
-                if fromTop {
-                    constraint = view.topAnchor.constraint(greaterThanOrEqualTo: anchor, constant: padding)
-                } else {
-                    constraint = view.bottomAnchor.constraint(greaterThanOrEqualTo: anchor, constant: -padding)
-                }
-                break
-            case .lessThan:
-                if fromTop {
-                    constraint = view.topAnchor.constraint(lessThanOrEqualTo: anchor, constant: padding)
-                } else {
-                    constraint = view.bottomAnchor.constraint(lessThanOrEqualTo: anchor, constant: -padding)
-                }
-                break
-        }
-        
-        constraint.isActive = true
-        return constraint
+        return bottom(view, fromTop: fromTop, padding: padding, withSafety: withSafety, constraintOperator: constraintOperator)
     }
     
     @discardableResult public func left(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool) -> NSLayoutConstraint {
@@ -197,37 +156,7 @@ extension UIView: LUIConstraints {
     }
     @discardableResult public func left(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint {
         let padding = LUIPaddingManager.shared.padding(for: paddingType)
-        let anchor = withSafety ? self.safeAreaLayoutGuide.leadingAnchor : self.leadingAnchor
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        var constraint: NSLayoutConstraint!
-        
-        switch constraintOperator {
-            case .equal:
-                if fromLeft {
-                    constraint = view.leadingAnchor.constraint(equalTo: anchor, constant: padding)
-                } else {
-                    constraint = view.trailingAnchor.constraint(equalTo: anchor, constant: -padding)
-                }
-                break
-            case .greaterThan:
-                if fromLeft {
-                    constraint = view.leadingAnchor.constraint(greaterThanOrEqualTo: anchor, constant: padding)
-                } else {
-                    constraint = view.trailingAnchor.constraint(greaterThanOrEqualTo: anchor, constant: -padding)
-                }
-                break
-            case .lessThan:
-                if fromLeft {
-                    constraint = view.leadingAnchor.constraint(lessThanOrEqualTo: anchor, constant: padding)
-                } else {
-                    constraint = view.trailingAnchor.constraint(lessThanOrEqualTo: anchor, constant: -padding)
-                }
-                break
-        }
-        
-        constraint.isActive = true
-        return constraint
+        return self.left(view, fromLeft: fromLeft, padding: padding, withSafety: withSafety, constraintOperator: constraintOperator)
     }
     
     @discardableResult public func right(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool) -> NSLayoutConstraint {
@@ -235,33 +164,140 @@ extension UIView: LUIConstraints {
     }
     @discardableResult public func right(_ view: UIView, fromLeft: Bool, paddingType: LUIPaddingType, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint {
         let padding = LUIPaddingManager.shared.padding(for: paddingType)
+        return self.right(view, fromLeft: fromLeft, padding: padding, withSafety: withSafety, constraintOperator: constraintOperator)
+    }
+    
+    @discardableResult public func top(_ view: UIView, fromTop: Bool, padding: CGFloat, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint {
+        
+        let anchor = withSafety ? self.safeAreaLayoutGuide.topAnchor : self.topAnchor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        var constraint: NSLayoutConstraint!
+        
+        switch constraintOperator {
+        case .equal:
+            if fromTop {
+                constraint = view.topAnchor.constraint(equalTo: anchor, constant: padding)
+            } else {
+                constraint = view.bottomAnchor.constraint(equalTo: anchor, constant: -padding)
+            }
+            break
+        case .greaterThan:
+            if fromTop {
+                constraint = view.topAnchor.constraint(greaterThanOrEqualTo: anchor, constant: padding)
+            } else {
+                constraint = view.bottomAnchor.constraint(greaterThanOrEqualTo: anchor, constant: -padding)
+            }
+            break
+        case .lessThan:
+            if fromTop {
+                constraint = view.topAnchor.constraint(lessThanOrEqualTo: anchor, constant: padding)
+            } else {
+                constraint = view.bottomAnchor.constraint(lessThanOrEqualTo: anchor, constant: -padding)
+            }
+            break
+        }
+        
+        constraint.isActive = true
+        return constraint
+    }
+    
+    @discardableResult public func bottom(_ view: UIView, fromTop: Bool, padding: CGFloat, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint {
+        let anchor = withSafety ? self.safeAreaLayoutGuide.bottomAnchor : self.bottomAnchor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        var constraint: NSLayoutConstraint!
+        
+        switch constraintOperator {
+        case .equal:
+            if fromTop {
+                constraint = view.topAnchor.constraint(equalTo: anchor, constant: padding)
+            } else {
+                constraint = view.bottomAnchor.constraint(equalTo: anchor, constant: -padding)
+            }
+            break
+        case .greaterThan:
+            if fromTop {
+                constraint = view.topAnchor.constraint(greaterThanOrEqualTo: anchor, constant: padding)
+            } else {
+                constraint = view.bottomAnchor.constraint(greaterThanOrEqualTo: anchor, constant: -padding)
+            }
+            break
+        case .lessThan:
+            if fromTop {
+                constraint = view.topAnchor.constraint(lessThanOrEqualTo: anchor, constant: padding)
+            } else {
+                constraint = view.bottomAnchor.constraint(lessThanOrEqualTo: anchor, constant: -padding)
+            }
+            break
+        }
+        
+        constraint.isActive = true
+        return constraint
+    }
+    
+    @discardableResult public func left(_ view: UIView, fromLeft: Bool, padding: CGFloat, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint {
+        let anchor = withSafety ? self.safeAreaLayoutGuide.leadingAnchor : self.leadingAnchor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        var constraint: NSLayoutConstraint!
+        
+        switch constraintOperator {
+        case .equal:
+            if fromLeft {
+                constraint = view.leadingAnchor.constraint(equalTo: anchor, constant: padding)
+            } else {
+                constraint = view.trailingAnchor.constraint(equalTo: anchor, constant: -padding)
+            }
+            break
+        case .greaterThan:
+            if fromLeft {
+                constraint = view.leadingAnchor.constraint(greaterThanOrEqualTo: anchor, constant: padding)
+            } else {
+                constraint = view.trailingAnchor.constraint(greaterThanOrEqualTo: anchor, constant: -padding)
+            }
+            break
+        case .lessThan:
+            if fromLeft {
+                constraint = view.leadingAnchor.constraint(lessThanOrEqualTo: anchor, constant: padding)
+            } else {
+                constraint = view.trailingAnchor.constraint(lessThanOrEqualTo: anchor, constant: -padding)
+            }
+            break
+        }
+        
+        constraint.isActive = true
+        return constraint
+    }
+    
+    @discardableResult public func right(_ view: UIView, fromLeft: Bool, padding: CGFloat, withSafety: Bool, constraintOperator: LUIConstraintOperator) -> NSLayoutConstraint {
         let anchor = withSafety ? self.safeAreaLayoutGuide.trailingAnchor : self.trailingAnchor
         view.translatesAutoresizingMaskIntoConstraints = false
         
         var constraint: NSLayoutConstraint!
         
         switch constraintOperator {
-            case .equal:
-                if fromLeft {
-                    constraint = view.leadingAnchor.constraint(equalTo: anchor, constant: padding)
-                } else {
-                    constraint = view.trailingAnchor.constraint(equalTo: anchor, constant: -padding)
-                }
-                break
-            case .greaterThan:
-                if fromLeft {
-                    constraint = view.leadingAnchor.constraint(greaterThanOrEqualTo: anchor, constant: padding)
-                } else {
-                    constraint = view.trailingAnchor.constraint(greaterThanOrEqualTo: anchor, constant: -padding)
-                }
-                break
-            case .lessThan:
-                if fromLeft {
-                    constraint = view.leadingAnchor.constraint(lessThanOrEqualTo: anchor, constant: padding)
-                } else {
-                    constraint = view.trailingAnchor.constraint(lessThanOrEqualTo: anchor, constant: -padding)
-                }
-                break
+        case .equal:
+            if fromLeft {
+                constraint = view.leadingAnchor.constraint(equalTo: anchor, constant: padding)
+            } else {
+                constraint = view.trailingAnchor.constraint(equalTo: anchor, constant: -padding)
+            }
+            break
+        case .greaterThan:
+            if fromLeft {
+                constraint = view.leadingAnchor.constraint(greaterThanOrEqualTo: anchor, constant: padding)
+            } else {
+                constraint = view.trailingAnchor.constraint(greaterThanOrEqualTo: anchor, constant: -padding)
+            }
+            break
+        case .lessThan:
+            if fromLeft {
+                constraint = view.leadingAnchor.constraint(lessThanOrEqualTo: anchor, constant: padding)
+            } else {
+                constraint = view.trailingAnchor.constraint(lessThanOrEqualTo: anchor, constant: -padding)
+            }
+            break
         }
         constraint.isActive = true
         return constraint

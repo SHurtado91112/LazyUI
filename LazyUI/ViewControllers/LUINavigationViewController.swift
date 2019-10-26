@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class LUINavigationViewController: UINavigationController {
+open class LUINavigationViewController: UINavigationController, LUIViewControllerProtocol {
 
     required public init(rootVC: UIViewController, largeTitle: Bool = true) {
         super.init(rootViewController: rootVC)
@@ -25,7 +25,7 @@ open class LUINavigationViewController: UINavigationController {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        self.setUpNavigationView()
+        self.setUpViews()
     }
     
     override open func viewWillAppear(_ animated: Bool) {
@@ -72,6 +72,10 @@ open class LUINavigationViewController: UINavigationController {
     @objc public func dismissNavigation() {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    open func setUpViews() {
+        self.setUpNavigationView()
+    }
 
     private func setUpNavigationView() {
         
@@ -97,6 +101,7 @@ open class LUINavigationViewController: UINavigationController {
 }
 
 extension LUINavigationViewController: LUINavigation {
+    
     public var navigation: LUINavigationViewController? {
         get {
             return self
@@ -113,7 +118,19 @@ extension LUINavigationViewController: LUINavigation {
     }
     
     public func present(_ vc: UIViewController) {
+        self.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    public func presentModally(_ vc: UIViewController) {
+        self.modalPresentationStyle = .pageSheet
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    public func presentNavigation(_ vc: UIViewController) {
+        let nav = LUINavigationViewController(rootVC: vc)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true, completion: nil)
     }
     
     public func popOver(_ vc: UIViewController) {
@@ -123,10 +140,9 @@ extension LUINavigationViewController: LUINavigation {
         let currentWindow: UIWindow? = UIApplication.shared.keyWindow
         currentWindow?.addSubview(popOver.view)
         currentWindow?.fill(popOver.view, padding: .none)
-//        self.addChild(popOver)
     }
     
-    public func dismissableModalViewController() -> LUINavigationViewController {
+    public func dissmissableNavigation() -> LUINavigationViewController {
         return LUINavigationViewController(rootVC: self, largeTitle: false).forDismissal()
     }
     

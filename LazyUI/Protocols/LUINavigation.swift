@@ -16,7 +16,9 @@ public protocol LUINavigation {
     func pop()
     func popToRoot()
     func present(_ vc: UIViewController)
+    func presentModally(_ vc: UIViewController)
+    func presentNavigation(_ vc: UIViewController)
     func popOver(_ vc: UIViewController)
-    func dismissableModalViewController() -> LUINavigationViewController
+    func dissmissableNavigation() -> LUINavigationViewController
     
 }
