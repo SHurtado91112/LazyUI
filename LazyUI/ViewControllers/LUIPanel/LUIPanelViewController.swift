@@ -121,6 +121,16 @@ open class LUIPanelViewController: LUIViewController {
         self.view.roundCorners(to: self.PANEL_CORNER_RADIUS) // system rounded corners?
         self.view.addShadow(offset: CGSize(width: 0.0, height: -4.0))
         
+        // background blocker view
+        let blockerView = UIView()
+        blockerView.backgroundColor = self.view.backgroundColor
+        blockerView.width(to: UIScreen.main.bounds.width)
+        blockerView.height(to: self.fullScreenHeight / 2.0) // overflow to ensure proper blockage
+        
+        self.addView(blockerView)
+        self.view.centerX(blockerView)
+        self.view.bottom(blockerView, fromTop: true, paddingType: .none, withSafety: false, constraintOperator: .equal)
+        
         self.addView(self.contentView)
         self.addView(self.dragBar)
         
@@ -155,7 +165,9 @@ open class LUIPanelViewController: LUIViewController {
         
         self.view.right(self.contentView, fromLeft: false, paddingType: .none, withSafety: false)
         self.view.right(self.dragBar, fromLeft: false, paddingType: .none, withSafety: false)
-        self.view.bottom(self.contentView, fromTop: false, padding: -padding, withSafety: false, constraintOperator: .equal)
+//        self.view.bottom(self.contentView, fromTop: false, padding: -padding, withSafety: false, constraintOperator: .equal)
+        let contentBottomConstraint = self.contentView.bottom(self.view, fromTop: false, padding: -padding, withSafety: false, constraintOperator: .equal)
+        contentBottomConstraint.priority = .required
         
         self.containingViewController.addChild(self)
         self.containingViewController.view.addSubview(self.view!)
