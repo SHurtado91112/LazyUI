@@ -26,6 +26,7 @@
 		CD04308922DC48490018D584 /* LUINavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04308822DC48490018D584 /* LUINavigation.swift */; };
 		CD0DC3632344FA23002479DA /* LUIPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0DC3622344FA23002479DA /* LUIPageControl.swift */; };
 		CD0E627B231699A9001F4498 /* LUIFontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0E627A231699A9001F4498 /* LUIFontManager.swift */; };
+		CD37A0DF2360916B00C6E31C /* LUIPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD37A0DE2360916B00C6E31C /* LUIPanelViewController.swift */; };
 		CD3A59F122CEE80B009AD5BC /* LazyUI.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3A59EF22CEE80B009AD5BC /* LazyUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD3A5A3622CFF180009AD5BC /* LUIFontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3522CFF180009AD5BC /* LUIFontSize.swift */; };
 		CD3A5A3822CFF840009AD5BC /* UIFont+LUIAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3722CFF840009AD5BC /* UIFont+LUIAdditions.swift */; };
@@ -73,6 +74,7 @@
 		CD04308822DC48490018D584 /* LUINavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUINavigation.swift; sourceTree = "<group>"; };
 		CD0DC3622344FA23002479DA /* LUIPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPageControl.swift; sourceTree = "<group>"; };
 		CD0E627A231699A9001F4498 /* LUIFontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIFontManager.swift; sourceTree = "<group>"; };
+		CD37A0DE2360916B00C6E31C /* LUIPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPanelViewController.swift; sourceTree = "<group>"; };
 		CD3A59EC22CEE80B009AD5BC /* LazyUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LazyUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD3A59EF22CEE80B009AD5BC /* LazyUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LazyUI.h; sourceTree = "<group>"; };
 		CD3A59F022CEE80B009AD5BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				CDD2942522E53F2E00801908 /* LUIPreviewViewController.swift */,
 				CDC95FFC22EFBDAA00CD378E /* LUIPageViewController.swift */,
 				CDA48BA5231440B400CC8B09 /* LUISearchController.swift */,
+				CD37A0DD2360912D00C6E31C /* LUIPanel */,
 				CDAF68F6235E3DD3003F7C4F /* LUISlideMenu */,
 			);
 			path = ViewControllers;
@@ -180,6 +183,14 @@
 				CD04304B22DAF12F0018D584 /* LUIAnimationManager.swift */,
 			);
 			path = Animation;
+			sourceTree = "<group>";
+		};
+		CD37A0DD2360912D00C6E31C /* LUIPanel */ = {
+			isa = PBXGroup;
+			children = (
+				CD37A0DE2360916B00C6E31C /* LUIPanelViewController.swift */,
+			);
+			path = LUIPanel;
 			sourceTree = "<group>";
 		};
 		CD3A59E222CEE80B009AD5BC = {
@@ -360,6 +371,7 @@
 				CDA48BA82314414900CC8B09 /* LUISearchBar.swift in Sources */,
 				CD04304222D98C900018D584 /* LUITextField+LUITextView.swift in Sources */,
 				CD04303E22D58C430018D584 /* LUIPadding.swift in Sources */,
+				CD37A0DF2360916B00C6E31C /* LUIPanelViewController.swift in Sources */,
 				CD3A5A3622CFF180009AD5BC /* LUIFontSize.swift in Sources */,
 				CD04304C22DAF12F0018D584 /* LUIAnimationManager.swift in Sources */,
 				CD04304E22DAF32E0018D584 /* TimeInterval+LUIAdditions.swift in Sources */,

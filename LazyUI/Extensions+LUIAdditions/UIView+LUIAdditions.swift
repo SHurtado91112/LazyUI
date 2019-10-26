@@ -41,10 +41,10 @@ extension UIView {
             delaySpeed = speed
         }
         
-        UIView.animate(withDuration: speed, delay: delaySpeed, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: speed, delay: delaySpeed, options: [.curveEaseIn], animations: {
             self.alpha = 1.0
         }) { (done) in
-            finished?()
+            if done { finished?() }
         }
     }
     
@@ -57,10 +57,12 @@ extension UIView {
             delaySpeed = speed
         }
         
-        UIView.animate(withDuration: speed, delay: delaySpeed, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: speed, delay: delaySpeed, options: [.curveEaseOut], animations: {
             self.alpha = 0.0
         }) { (done) in
-            finished?()
+            if done {
+                finished?()
+            }
         }
     }
     

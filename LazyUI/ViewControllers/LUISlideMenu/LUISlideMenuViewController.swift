@@ -102,6 +102,7 @@ open class LUISlideMenuViewController: LUIViewController {
     private func setUpGestures() {
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(_:)))
+        panGesture.delegate = self
         self.mainContentViewController.view.addGestureRecognizer(panGesture)
         
     }
@@ -202,6 +203,21 @@ extension LUISlideMenuViewController: LUISlideMenuDelegate {
     
     public func openMenu() {
         self.toggleMenu(false)
+    }
+    
+}
+
+extension LUISlideMenuViewController: UIGestureRecognizerDelegate {
+    
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        if let panGesture = gestureRecognizer as? UIPanGestureRecognizer {
+            let velocity = panGesture.velocity(in: self.mainContentViewController.view)
+            
+            return abs(velocity.x) > abs(velocity.y) // only detect horizontal pans
+        }
+        
+        return false
     }
     
 }
