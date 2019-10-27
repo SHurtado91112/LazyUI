@@ -10,6 +10,12 @@ import UIKit
 
 class LUISearchBar: UISearchBar {
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.tintColor = UIColor.color(for: .theme)
+    }
+    
     override func setShowsCancelButton(_ showsCancelButton: Bool, animated: Bool) {
         super.setShowsCancelButton(false, animated: false)
     }

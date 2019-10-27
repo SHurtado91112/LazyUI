@@ -260,6 +260,11 @@ extension LUITableViewController: LUINavigation {
 
 extension LUITableViewController: UISearchBarDelegate, UISearchResultsUpdating {
     
+    public func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.showsCancelButton = false
+        return true
+    }
+    
     public func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         self.selectedScopeIndex = selectedScope
         self.delegate?.selectedScopeDidChange(index: selectedScope)
