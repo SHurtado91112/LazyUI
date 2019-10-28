@@ -31,7 +31,17 @@ open class LUISearchController: UISearchController, UISearchBarDelegate {
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.searchBar.searchTextField.tintColor = UIColor.color(for: .theme)
+        self.searchBar.tintColor = UIColor.color(for: .theme)
+        self.searchBar.barTintColor = UIColor.color(for: .lightBackground)
+        
+        self.searchBar.backgroundColor = .clear
+        self.searchBar.searchTextField.backgroundColor = .clear
+        
+        let searchField = self.searchBar.searchTextField
+        if let iconView = searchField.leftView as? UIImageView {
+            iconView.tintColor = UIColor.color(for: .theme)
+            iconView.image = iconView.image?.template
+        }
         self.navigationItem.titleView?.tintColor = UIColor.color(for: .theme)
     }
 }

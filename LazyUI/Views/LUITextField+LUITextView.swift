@@ -105,7 +105,7 @@ open class LUITextField : UITextField, LUIViewThemeProtocol {
         didSet {
             let text = self.placeholder ?? ""
             guard let font = self.font?.withStyle(self.placeholderFontStyleType) else { return }
-            let color = LUIThemeManager.shared.color(for: .intermidiateText)
+            let color = LUIThemeManager.shared.color(for: .intermediateText)
             self.attributedPlaceholder = NSAttributedString(string: text, attributes: [
                 NSAttributedString.Key.foregroundColor: color,
                 NSAttributedString.Key.font : font

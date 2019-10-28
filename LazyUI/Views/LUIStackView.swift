@@ -39,7 +39,8 @@ open class LUIStackView: UIScrollView {
     }
     
     // MARK: - Private
-    private var padding: LUIPaddingType = .none
+    private(set) open var padding: LUIPaddingType = .none
+    private var fittedHeightConstraint: NSLayoutConstraint?
     
     private lazy var stackView: UIStackView = {
         return self.pageStackView()
@@ -75,7 +76,7 @@ open class LUIStackView: UIScrollView {
     }
     
     open func addArrangedSubtitle(_ text: String, identifier: String = "") {
-        let templateLabel = LUILabel(color: .intermidiateText, fontSize: .regular, fontStyle: .regular)
+        let templateLabel = LUILabel(color: .intermediateText, fontSize: .regular, fontStyle: .regular)
         templateLabel.text = text
         
         self.stackView.addArrangedSubview(templateLabel)
@@ -89,7 +90,7 @@ open class LUIStackView: UIScrollView {
     }
     
     open func addArrangedSubview(subtitle: String, contentText: String = "", identifier: String = "") {
-        let templateLabel = LUILabel(color: .intermidiateText, fontSize: .small, fontStyle: .regular)
+        let templateLabel = LUILabel(color: .intermediateText, fontSize: .small, fontStyle: .regular)
         templateLabel.text = subtitle
         
         let titleLabel = LUILabel(color: .darkText, fontSize: .regular, fontStyle: .regular)
@@ -168,7 +169,8 @@ open class LUIStackView: UIScrollView {
     }
     
     open func fitStack() {
-        self.height(to: self.stackView.heightAnchor, constraintOperator: .greaterThan)
+        self.fittedHeightConstraint?.eliminate()
+        self.fittedHeightConstraint = self.height(to: self.stackView.heightAnchor, constraintOperator: .equal)
     }
     
     private func pageStackView() -> UIStackView {

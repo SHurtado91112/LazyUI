@@ -109,6 +109,7 @@ open class LUIButton: UIButton, LUIViewThemeProtocol {
         didSet {
             if let image = self.image {
                 self.setImage(image, for: .normal)
+                self.sizeToFit()
             }
         }
     }
@@ -157,7 +158,7 @@ open class LUIButton: UIButton, LUIViewThemeProtocol {
     public func setButtonStyle(style: LUIButtonStyle) {
         self.tintColor = UIColor.color(for: .theme)
         let tint = self.tintColor ?? .clear
-        let color = self.forAffirmation ? UIColor.color(for: .affirmation) : self.forNegation ? UIColor.color(for: .negation) : style != .disabled ? tint : UIColor.color(for: .intermidiateBackground)
+        let color = self.forAffirmation ? UIColor.color(for: .affirmation) : self.forNegation ? UIColor.color(for: .negation) : style != .disabled ? tint : UIColor.color(for: .intermediateBackground)
         
         switch style {
             case .filled:

@@ -45,10 +45,18 @@ public protocol LUIPanelViewDelegate: LUIViewController {
     func willTransition(to presentationMode: LUIPanelViewController.PresentationMode)
 }
 
+public typealias PresentationModeInfo = (mode: LUIPanelViewController.PresentationMode, height: CGFloat)
+
 open class LUIPanelViewController: LUIViewController {
     
-    open private(set) var presentationModes: [(mode: PresentationMode, height: CGFloat)] = []
-    private var currentMode: PresentationMode = .header {
+    open var enabledPresentationModes: [PresentationMode] = [] {
+        didSet {
+            self.enabledModesInfo = self.presentationModes.filter({ return self.enabledPresentationModes.contains($0.mode) })
+        }
+    }
+    private var enabledModesInfo: [PresentationModeInfo] = []
+    private var presentationModes: [PresentationModeInfo] = []
+    private var currentMode: PresentationModeInfo = (mode: .header, height: 0.0) {
         didSet {
             self.lastMode = oldValue
         }
@@ -57,20 +65,22 @@ open class LUIPanelViewController: LUIViewController {
     private var headerViewController: LUIPanelViewDelegate?
     private var halfwayViewController: LUIPanelViewDelegate?
     private var fullViewController: LUIPanelViewDelegate?
+    private var additionalDelegates: [LUIPanelViewDelegate] = []
     private var containingViewController: UIViewController!
 
-    private var lastMode: PresentationMode = .header
+    private var lastMode: PresentationModeInfo = (mode: .header, height: 0.0)
     private var topConstraint: NSLayoutConstraint?
     private var currentTargetHeight: CGFloat = 0.0
     private var lastTranslation: CGPoint = .zero
+    private var heightConstraintMap: [PresentationMode: NSLayoutConstraint] = [:]
     
     private lazy var contentView = LUIStackView(padding: .regular)
     
     let PANEL_CORNER_RADIUS: CGFloat = 8.0
-    let DRAG_BAR_HEIGHT: CGFloat = 16.0
+    let DRAG_BAR_HEIGHT: CGFloat = 12.0
     private lazy var dragBar: UIView = {
         let barHeight: CGFloat = self.DRAG_BAR_HEIGHT
-        let indicatorHeight: CGFloat = barHeight / 4.0
+        let indicatorHeight: CGFloat = barHeight / 3.0
         let indicatorWidth: CGFloat = 40.0
         let bar = UIView()
         bar.height(to: barHeight)
@@ -78,7 +88,8 @@ open class LUIPanelViewController: LUIViewController {
         let indicator = UIView()
         indicator.backgroundColor = UIColor.color(for: .border)
         bar.addSubview(indicator)
-        bar.center(indicator)
+        bar.centerX(indicator)
+        bar.top(indicator, fromTop: true, padding: 4.0, withSafety: false, constraintOperator: .equal)
         
         indicator.height(to: indicatorHeight)
         indicator.width(to: indicatorWidth, constraintOperator: .equal)
@@ -93,7 +104,8 @@ open class LUIPanelViewController: LUIViewController {
         self.containingViewController = containingViewController
         
         // offset padding for views that aren't full mode
-        let offsetPadding = self.DRAG_BAR_HEIGHT + self.safetyTopPadding + self.safetyBottomPadding + LUIPadding.padding(for: .regular) // regular padding for content view spacing
+        let offsetPadding = self.compactModeHeightOffset
+            
         if let headerVC = headerViewController {
             self.headerViewController = headerVC
             self.presentationModes.append((mode: .header, height: headerVC.preferredHeight + offsetPadding))
@@ -108,6 +120,12 @@ open class LUIPanelViewController: LUIViewController {
             self.fullViewController = fullVC
             self.presentationModes.append((mode: .full, height: self.fullScreenHeight))
         }
+        
+        self.enabledModesInfo = self.presentationModes
+        self.enabledModesInfo.enumerated().forEach({
+            let element = $0.1
+            self.enabledPresentationModes.append(element.mode)
+        })
     }
     
     public required init?(coder: NSCoder) {
@@ -137,7 +155,8 @@ open class LUIPanelViewController: LUIViewController {
         for (mode, _) in self.presentationModes {
             if let viewController = self.viewController(for: mode) {
                 self.addChild(viewController)
-                viewController.view.height(to: viewController.preferredHeight, constraintOperator: .greaterThan)
+                
+                self.updateHeightConstraintMap(viewController.view.height(to: viewController.preferredHeight, constraintOperator: .greaterThan), mode: mode)
                 
                 if mode == .header {
                     self.addView(viewController.view)
@@ -165,7 +184,7 @@ open class LUIPanelViewController: LUIViewController {
         
         self.view.right(self.contentView, fromLeft: false, paddingType: .none, withSafety: false)
         self.view.right(self.dragBar, fromLeft: false, paddingType: .none, withSafety: false)
-//        self.view.bottom(self.contentView, fromTop: false, padding: -padding, withSafety: false, constraintOperator: .equal)
+
         let contentBottomConstraint = self.contentView.bottom(self.view, fromTop: false, padding: -padding, withSafety: false, constraintOperator: .equal)
         contentBottomConstraint.priority = .required
         
@@ -189,6 +208,60 @@ open class LUIPanelViewController: LUIViewController {
         self.setUpGestures()
     }
     
+    public func setMode(_ mode: PresentationMode) {
+        
+        // get mode info
+        if let modeInfo = self.enabledModesInfo.first(where: { $0.mode == mode }) {
+            
+            self.setCurrentMode(modeInfo)
+            self.topConstraint?.constant = self.currentTopOffset
+            self.updateViewPresentation()
+        }
+
+    }
+    
+    public func addDelegate(_ delegate: LUIPanelViewDelegate) {
+        self.additionalDelegates.append(delegate)
+    }
+    
+    public func adjustPreferredHeight(_ height: CGFloat, for mode: PresentationMode) {
+        
+        guard mode != .full else { return }
+        
+        if let viewController = self.viewController(for: mode) {
+
+            for i in 0..<self.presentationModes.count {
+                let modeInfo = self.presentationModes[i]
+                if modeInfo.mode == mode {
+                    
+                    let heightWithOffset = self.compactModeHeightOffset + height
+                    self.presentationModes[i].height = heightWithOffset
+                    break
+                }
+            }
+            
+            // updates any currently enabled presentation modes
+            self.enabledModesInfo = self.presentationModes
+            self.enabledPresentationModes = { self.enabledPresentationModes } ()
+            
+            self.updateHeightConstraintMap(viewController.view.height(to: viewController.preferredHeight, constraintOperator: .equal), mode: mode)
+            
+            
+            if mode == self.currentMode.mode {
+                self.setMode(mode) // update view if current mode
+            }
+        }
+    }
+    
+    private func updateHeightConstraintMap(_ constraint: NSLayoutConstraint, mode: PresentationMode) {
+        // eliminate previous constraint
+        self.heightConstraintMap[mode]?.eliminate()
+
+        // apply new constraint
+        self.heightConstraintMap[mode] = constraint
+        
+    }
+    
     private func setUpGestures() {
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture))
@@ -196,8 +269,30 @@ open class LUIPanelViewController: LUIViewController {
             
     }
     
-    private func nextMode(for velocity: CGPoint) -> PresentationMode {
-        return velocity.y < 0 ? self.currentMode.next() : self.currentMode.prev()
+    private func nextMode(for velocity: CGPoint) -> PresentationModeInfo {
+        if velocity.y < 0  {
+            var nextMode: PresentationMode = self.currentMode.mode
+            repeat {
+                nextMode = nextMode.next()
+            } while(!self.enabledPresentationModes.contains(nextMode) && nextMode != .full)
+            
+            if let nextModeInfo = self.enabledModesInfo.first(where: { $0.mode == nextMode}) {
+                return nextModeInfo
+            } else {
+                return self.currentMode
+            }
+        } else {
+            var prevMode: PresentationMode = self.currentMode.mode
+            repeat {
+                prevMode = prevMode.prev()
+            } while(!self.enabledPresentationModes.contains(prevMode) && prevMode != .header)
+            
+            if let prevModeInfo = self.enabledModesInfo.first(where: { $0.mode == prevMode}) {
+                return prevModeInfo
+            } else {
+                return self.currentMode
+            }
+        }
     }
     
     @objc private func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
@@ -234,13 +329,15 @@ open class LUIPanelViewController: LUIViewController {
     
     // meant to be called once
     public func presentPanel(forMode mode: PresentationMode) {
-        self.setCurrentMode(mode)
-        self.animateIn()
+        if let modeInfo = self.enabledModesInfo.first(where: { $0.mode == mode }) {
+            self.setCurrentMode(modeInfo)
+            self.animateIn()
+        }
     }
     
-    private func setCurrentMode(_ mode: PresentationMode) {
-        self.currentMode = mode
-        self.notifyDelegates(for: mode)
+    private func setCurrentMode(_ modeInfo: PresentationModeInfo) {
+        self.currentMode = modeInfo
+        self.notifyDelegates(for: modeInfo.mode)
     }
     
     private func animateIn() {
@@ -271,14 +368,14 @@ open class LUIPanelViewController: LUIViewController {
         }
         
         if let halfwayView = self.viewController(for: .halfway)?.view {
-            let showMe = self.currentMode != .header
+            let showMe = self.currentMode.mode != .header
             halfwayView.isUserInteractionEnabled = showMe
             halfwayView.alpha = showMe ? 1.0 : 0.0
             halfwayView.isHidden = !showMe
         }
         
         if let fullView = self.viewController(for: .full)?.view {
-            let showMe = self.currentMode == .full
+            let showMe = self.currentMode.mode == .full
             fullView.isUserInteractionEnabled = showMe
             fullView.alpha = showMe ? 1.0 : 0.0
             fullView.isHidden = !showMe
@@ -291,7 +388,7 @@ open class LUIPanelViewController: LUIViewController {
         // all view are updated internally, but can be manipulated externally through LUIPanelViewDelegate method
         for (mode, _) in self.presentationModes {
             let viewForMode = self.viewController(for: mode)?.view
-            self.contentView.isUserInteractionEnabled = self.currentMode != .header
+            self.contentView.isUserInteractionEnabled = self.currentMode.mode != .header
             
             let animationTime = TimeInterval.timeInterval(for: .fast).miliseconds
             switch mode {
@@ -300,8 +397,8 @@ open class LUIPanelViewController: LUIViewController {
                     break
                 case .halfway:
                     
-                    viewForMode?.isUserInteractionEnabled = self.currentMode != .header
-                    if self.currentMode == .header {
+                    viewForMode?.isUserInteractionEnabled = self.currentMode.mode != .header
+                    if self.currentMode.mode == .header {
                         viewForMode?.fadeOut()
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(animationTime)) {
                             viewForMode?.isHidden = true
@@ -315,8 +412,8 @@ open class LUIPanelViewController: LUIViewController {
                     }
                     break
                 case .full:
-                    viewForMode?.isUserInteractionEnabled = self.currentMode == .full
-                    if self.currentMode != .full {
+                    viewForMode?.isUserInteractionEnabled = self.currentMode.mode == .full
+                    if self.currentMode.mode != .full {
                         viewForMode?.fadeOut()
                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(animationTime)) {
                             viewForMode?.isHidden = true
@@ -344,6 +441,9 @@ open class LUIPanelViewController: LUIViewController {
             self.viewController(for: mode)?.willTransition(to: transitionMode)
         }
         
+        for delegate in self.additionalDelegates {
+            delegate.willTransition(to: transitionMode)
+        }
     }
 
     private func viewController(for mode: PresentationMode) -> LUIPanelViewDelegate? {
@@ -371,35 +471,29 @@ open class LUIPanelViewController: LUIViewController {
         return UIScreen.main.bounds.height - self.safetyTopPadding
     }
     
+    private var compactModeHeightOffset: CGFloat {
+        // regular padding for content view spacing
+        return self.DRAG_BAR_HEIGHT + self.safetyTopPadding + self.safetyBottomPadding + LUIPadding.padding(for: .regular)
+    }
+    
     private var currentTopOffset: CGFloat {
-        let currentHeight = self.presentationModes.first { (arg0) -> Bool in
-            let (mode, _) = arg0
-            return mode == self.currentMode
-        }?.height ?? .zero
-        
+        let currentHeight = self.currentMode.height
         return self.fullScreenHeight - currentHeight
     }
     
     private var lastTopOffset: CGFloat {
-        let lastHeight = self.presentationModes.first { (arg0) -> Bool in
-            let (mode, _) = arg0
-            return mode == self.lastMode
-        }?.height ?? .zero
-        
+        let lastHeight = self.lastMode.height
         return self.fullScreenHeight - lastHeight
     }
     
     private func beginHeightUpdate(for velocity: CGPoint) {
         
-        let nextMode = self.nextMode(for: velocity)
-        let nextHeight = self.presentationModes.first { (arg0) -> Bool in
-            let (mode, _) = arg0
-            return mode == nextMode
-        }?.height ?? .zero
+        let nextModeInfo = self.nextMode(for: velocity)
+        let nextHeight = nextModeInfo.height
         
         self.topConstraint?.constant = self.currentTopOffset
         
-        self.setCurrentMode(nextMode)
+        self.setCurrentMode(nextModeInfo)
         self.currentTargetHeight = nextHeight
         
     }

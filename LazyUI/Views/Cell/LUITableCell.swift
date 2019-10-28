@@ -33,7 +33,7 @@ open class LUITableCell: UITableViewCell {
     
     private lazy var _interactionBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.color(for: .intermidiateBackground)
+        view.backgroundColor = UIColor.color(for: .intermediateBackground)
         self.addSubview(view)
         self.fill(view, padding: .none, withSafety: false)
         return view

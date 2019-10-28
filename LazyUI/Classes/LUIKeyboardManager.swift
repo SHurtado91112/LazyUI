@@ -38,11 +38,7 @@ open class LUIKeyboardManager: NSObject {
     
     internal func registerEvents(for viewController: UIViewController) {
         
-        if let popOverParent = viewController.parent as? LUIPopOverViewController {
-            self.rootViewController = popOverParent
-        } else {
-            self.rootViewController = viewController
-        }
+        guard viewController == self.rootViewController else { return }
         guard let rootViewController = self.rootViewController else { return }
         
         let UIKeyboardWillShow = UIResponder.keyboardWillShowNotification
@@ -153,8 +149,9 @@ open class LUIKeyboardManager: NSObject {
     }
     
     // public methods
-    open func setTextFields(_ fields: [UIResponder]) {
+    open func setTextFields(_ fields: [UIResponder], forController rootVC: UIViewController) {
         self.currentTextFields = fields
+        self.rootViewController = rootVC
     }
     
     // selector for keyboard events
@@ -168,6 +165,19 @@ open class LUIKeyboardManager: NSObject {
     }
     
     // selector for text field events
+    @objc open func customTextFieldViewDidBeginEditing(_ textField: UITextField?) {
+        
+        if let textFieldView = textField {
+            
+            if !self.currentTextFields.contains(textFieldView) {
+                self.currentTextFields.append(textFieldView)
+            }
+            
+            self.activeTextField = textFieldView
+            textFieldView.inputAccessoryView = self.inputAccessoryView()
+        }
+    }
+    
     @objc func textFieldViewDidBeginEditing(_ notification: Notification?) {
         
         if let textFieldView = notification?.object as? UIView {
@@ -183,9 +193,18 @@ open class LUIKeyboardManager: NSObject {
             } else if let textView = textFieldView as? UITextView {
                 textView.inputAccessoryView = self.inputAccessoryView()
             }
+            
+            if #available(iOS 13.0, *) {
+                if let searchField = textFieldView as? UISearchTextField {
+                    searchField.inputAccessoryView = self.inputAccessoryView()
+                }
+            }
         }
     }
     
+    @objc open func customTextFieldViewDidEndEditing(_ textField: UITextField?) {
+        self.activeTextField = nil
+    }
     @objc func textFieldViewDidEndEditing(_ notification: Notification?) {
         self.activeTextField = nil
     }

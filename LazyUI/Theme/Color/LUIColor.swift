@@ -17,11 +17,11 @@ public enum LUIColorType: CaseIterable {
     
     case darkBackground
     case lightBackground
-    case intermidiateBackground
+    case intermediateBackground
     
     case darkText
     case lightText
-    case intermidiateText
+    case intermediateText
     
     case affirmation
     case negation
@@ -88,7 +88,7 @@ public struct LUIColor {
                 case .lightBackground:
                     colors.append(self.lightBackground)
                     break
-                case .intermidiateBackground:
+                case .intermediateBackground:
                     colors.append(self.intermediateBackground)
                     break
                 case .darkText:
@@ -97,7 +97,7 @@ public struct LUIColor {
                 case .lightText:
                     colors.append(self.lightText)
                     break
-                case .intermidiateText:
+                case .intermediateText:
                     colors.append(self.intermediateText)
                     break
                 case .affirmation:
@@ -126,13 +126,13 @@ public struct LUIColor {
             return self.darkBackground
         case .lightBackground:
             return self.lightBackground
-        case .intermidiateBackground:
+        case .intermediateBackground:
             return self.intermediateBackground
         case .darkText:
             return self.darkText
         case .lightText:
             return self.lightText
-        case .intermidiateText:
+        case .intermediateText:
             return self.intermediateText
         case .affirmation:
             return self.affirmation
@@ -174,7 +174,7 @@ public struct LUIColor {
                     foundColor = type
                 }
                 break
-            case .intermidiateBackground:
+            case .intermediateBackground:
                 if color.isEqual(self.intermediateBackground) {
                     foundColor = type
                 }
@@ -189,7 +189,7 @@ public struct LUIColor {
                     foundColor = type
                 }
                 break
-            case .intermidiateText:
+            case .intermediateText:
                 if color.isEqual(self.intermediateText) {
                     foundColor = type
                 }
