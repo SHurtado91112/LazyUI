@@ -15,7 +15,7 @@ public enum LUIConstraintOperator {
 }
 
 extension NSLayoutConstraint {
-    func eliminate() {
+    open func eliminate() {
         self.firstItem?.removeConstraint(self)
         self.secondItem?.removeConstraint(self)
     }

@@ -14,8 +14,8 @@ open class LUISearchBar: UISearchBar, LUIViewProtocol {
         
         self.tintColor = UIColor.color(for: .theme)
         self.searchTextField.font = self.searchTextField.font?.substituteFont
-        self.searchBarStyle = .minimal
         
+        self.searchBarStyle = .minimal
     }
     
     open var searchImage: UIImage? {

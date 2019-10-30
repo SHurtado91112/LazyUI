@@ -83,6 +83,7 @@ open class LUIPanelViewController: LUIViewController {
         let indicatorHeight: CGFloat = barHeight / 3.0
         let indicatorWidth: CGFloat = 40.0
         let bar = UIView()
+        bar.setContentHuggingPriority(.required, for: .vertical)
         bar.height(to: barHeight)
         
         let indicator = UIView()
@@ -217,7 +218,7 @@ open class LUIPanelViewController: LUIViewController {
             self.topConstraint?.constant = self.currentTopOffset
             self.updateViewPresentation()
         }
-
+        
     }
     
     public func addDelegate(_ delegate: LUIPanelViewDelegate) {
@@ -265,7 +266,7 @@ open class LUIPanelViewController: LUIViewController {
     private func setUpGestures() {
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture))
-        self.dragBar.addGestureRecognizer(panGesture)
+        self.view.addGestureRecognizer(panGesture)
             
     }
     
@@ -299,6 +300,10 @@ open class LUIPanelViewController: LUIViewController {
         
         guard let panView = recognizer.view else { return }
         let velocity = recognizer.velocity(in: panView)
+        
+        if panView != self.view && panView != self.dragBar {
+            return
+        }
         
         switch recognizer.state {
             case .began:
@@ -335,6 +340,10 @@ open class LUIPanelViewController: LUIViewController {
         }
     }
     
+    public func hidePanel() {
+        self.animateOut()
+    }
+    
     private func setCurrentMode(_ modeInfo: PresentationModeInfo) {
         self.currentMode = modeInfo
         self.notifyDelegates(for: modeInfo.mode)
@@ -360,6 +369,28 @@ open class LUIPanelViewController: LUIViewController {
             panelView.isUserInteractionEnabled = true
         }
     }
+    
+    private func animateOut() {
+        guard let panelView = self.view, let containerView = self.containingViewController.view else { return }
+        
+        // animate panel view to disappear
+        panelView.alpha = 1.0
+        panelView.isHidden = false
+        panelView.isUserInteractionEnabled = false
+        
+        self.topConstraint?.constant = UIScreen.main.bounds.height + LUIPadding.padding(for: .regular)
+        
+        UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), delay: 0.0, options: .curveEaseInOut, animations: {
+            
+            panelView.alpha = 0.0
+            containerView.layoutIfNeeded()
+            
+        }) { (finished) in
+            panelView.isUserInteractionEnabled = true
+            panelView.isHidden = true
+        }
+    }
+    
     
     private func checkForFinalViewUpdates() {
         

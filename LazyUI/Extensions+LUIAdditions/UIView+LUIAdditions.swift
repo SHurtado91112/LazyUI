@@ -388,12 +388,12 @@ extension UIView: LUIConstraints {
         return constraint
     }
     
-    @discardableResult public func square(to size: CGFloat) -> [NSLayoutConstraint] {
+    @discardableResult @objc open func square(to size: CGFloat) -> [NSLayoutConstraint] {
         self.roundCorners(to: 0.0) // undoes any changes to corners
         return [self.width(to: size, constraintOperator: .equal), self.height(to: size, constraintOperator: .equal)]
     }
     
-    @discardableResult public func circle(to size: CGFloat) -> [NSLayoutConstraint] {
+    @discardableResult @objc open func circle(to size: CGFloat) -> [NSLayoutConstraint] {
         let constraints = self.square(to: size)
         self.roundCorners(to: size/2.0)
         return constraints

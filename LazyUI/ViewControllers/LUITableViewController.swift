@@ -16,6 +16,17 @@ public typealias LUISearchTableQuery = (_ item: Any, _ text: String, _ scope: In
 
 open class LUITableViewController: UITableViewController, LUIViewControllerProtocol {
     // MARK: - Public variables
+    open var sectionData: [LUIHeaderCellData] = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+    open var sectionCellData: [[Any]]  = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+    
     open var rowData: [Any] = [] {
         didSet {
             self.tableView.reloadData()
@@ -96,7 +107,6 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
             for row in selectedRows {
                 self.tableView.deselectRow(at: row, animated: true)
             }
-            
         }
     }
     
@@ -118,14 +128,23 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
         self.tableView.register(self.cellType, forCellReuseIdentifier: self.cellIdentifier)
     }
 
+    private var hasSections: Bool {
+        return self.sectionCellData.count > 0
+    }
+    
     // MARK: - Table view data source
-
+    
     override open func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return self.hasSections ? self.sectionCellData.count : 1
     }
 
     override open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.isFiltering ? self.filteredRowData.count : self.rowData.count
+        if self.hasSections {
+            return self.sectionCellData[section].count
+        } else {
+            // search and filtering not available for multiple sections
+            return self.isFiltering ? self.filteredRowData.count : self.rowData.count
+        }
     }
 
     override open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -133,14 +152,41 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
             return LUITableCell()
         }
         
-        let data = self.isFiltering ? self.filteredRowData[indexPath.row] : self.rowData[indexPath.row]
-        if let cell = cell as? LUICellData {
-            cell.formatCell(for: data)
+        if self.hasSections {
+
+            let data = self.sectionCellData[indexPath.section][indexPath.row]
+            if let cell = cell as? LUICellData {
+                cell.formatCell(for: data)
+            } else {
+                fatalError("Cell subclass must conform to LUICellData")
+            }
         } else {
-            fatalError("Cell subclass must conform to LUICellData")
+            let data = self.isFiltering ? self.filteredRowData[indexPath.row] : self.rowData[indexPath.row]
+            if let cell = cell as? LUICellData {
+                cell.formatCell(for: data)
+            } else {
+                fatalError("Cell subclass must conform to LUICellData")
+            }
         }
         
         return cell
+    }
+    
+    open override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = LUITableHeaderView()
+        
+        let data = self.sectionData[section]
+        if let headerView = view as? LUIHeaderCellData {
+            headerView.formatCell(for: data)
+        } else {
+            fatalError("LUITableHeaderView must conform to LUIHeaderCellData protocol")
+        }
+        
+        return view
+    }
+    
+    open override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return self.sectionData[section].headerHeight
     }
     
     override open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
