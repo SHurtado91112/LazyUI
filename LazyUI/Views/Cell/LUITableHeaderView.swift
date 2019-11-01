@@ -8,19 +8,33 @@
 
 import UIKit
 
-public protocol LUIHeaderCellData: LUICellData {
-    var headerHeight: CGFloat { get set }
+public struct LUIHeaderData {
+    public var headerHeight: CGFloat = 0.0
+    public var headerTitle: String?
+    
+    public init(height: CGFloat, title: String) {
+        self.headerHeight = height
+        self.headerTitle = title
+    }
 }
 
-class LUITableHeaderView: LUIView {
+open class LUITableHeaderView: LUIView {
     
-    func setUpView() {
+    required public init() {
+        super.init()
+    }
+    
+    required public init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    public func setUpView() {
         self.configureTableViewHeader()
     }
     
     internal func configureTableViewHeader() {
         
-        if let cell = self as? LUIHeaderCellData {
+        if let cell = self as? LUICellData {
             cell.setUpCell()
         }
         

@@ -21,10 +21,14 @@ internal protocol LUIViewThemeProtocol {
 public typealias LUIView = LUIViewClass & LUIViewProtocol
 
 open class LUIViewClass: UIView, LUIViewThemeProtocol {
-
-    public convenience init() {
-        self.init(frame: .zero)
-        
+    
+    required public init() {
+        super.init(frame: .zero)
+        self.initView()
+    }
+    
+    required public init?(coder: NSCoder) {
+        super.init(coder: coder)
         self.initView()
     }
     

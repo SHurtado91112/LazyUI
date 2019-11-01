@@ -16,7 +16,7 @@ open class LUISlideMenuTableViewController: LUITableViewController, LUISlideMenu
         self.init(cellType: actionCellType, cellIdentifier: cellIdentifier)
     }
     
-    required public init(cellType: LUITableCell.Type, cellIdentifier: String) {
+    required public init(cellType: LUITableCell.Type, cellIdentifier: String, sectionType: LUITableHeaderView.Type? = nil, sectionIdentifier: String? = nil) {
         super.init(cellType: cellType, cellIdentifier: cellIdentifier)
     }
     

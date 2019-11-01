@@ -16,7 +16,7 @@ public typealias LUISearchTableQuery = (_ item: Any, _ text: String, _ scope: In
 
 open class LUITableViewController: UITableViewController, LUIViewControllerProtocol {
     // MARK: - Public variables
-    open var sectionData: [LUIHeaderCellData] = [] {
+    open var sectionData: [LUIHeaderData] = [] {
         didSet {
             self.tableView.reloadData()
         }
@@ -83,10 +83,18 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
     private var cellIdentifier = ""
     private var cellType = LUITableCell.self
     
-    public required init(cellType: LUITableCell.Type, cellIdentifier: String) {
+    private var sectionIdentifier = ""
+    private var sectionType = LUITableHeaderView.self
+    
+    public required init(cellType: LUITableCell.Type, cellIdentifier: String, sectionType: LUITableHeaderView.Type? = nil, sectionIdentifier: String? = nil) {
         super.init(nibName: nil, bundle: nil)
         self.cellIdentifier = cellIdentifier
         self.cellType = cellType
+        
+        if let sectionType = sectionType, let sectionIdentifier = sectionIdentifier {
+            self.sectionIdentifier = sectionIdentifier
+            self.sectionType = sectionType
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -173,20 +181,23 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
     }
     
     open override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = LUITableHeaderView()
+        let view = self.sectionType.init()
         
         let data = self.sectionData[section]
-        if let headerView = view as? LUIHeaderCellData {
+        if let headerView = view as? LUICellData {
             headerView.formatCell(for: data)
         } else {
-            fatalError("LUITableHeaderView must conform to LUIHeaderCellData protocol")
+            fatalError("LUITableHeaderView must conform to LUICellData protocol")
         }
         
         return view
     }
     
     open override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.sectionData[section].headerHeight
+        if self.hasSections {
+            return self.sectionData[section].headerHeight
+        }
+        return 0.0
     }
     
     override open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {

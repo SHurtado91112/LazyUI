@@ -40,7 +40,7 @@ extension LUIPanelViewController {
     
 }
 
-public protocol LUIPanelViewDelegate: LUIViewController {
+public protocol LUIPanelViewDelegate: UIViewController {
     var preferredHeight: CGFloat { get set }
     func willTransition(to presentationMode: LUIPanelViewController.PresentationMode)
 }
