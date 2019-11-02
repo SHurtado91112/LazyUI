@@ -8,20 +8,8 @@
 
 import UIKit
 
-
-open class LUIActionCollectionCell: LUICollectionCell {
-    
-    @objc override internal func cellTapped() {
-        super.cellTapped()
-        
-        if let cell = self as? LUIActionCellData {
-            cell.action?()
-        }
-    }
-    
-}
-
-open class LUICollectionCell: UICollectionViewCell {
+public typealias LUICollectionCell = LUICollectionCellClass & LUICellData
+open class LUICollectionCellClass: UICollectionViewCell {
     
     private lazy var _interactionBackgroundView: UIView = {
         let view = UIView()
@@ -88,6 +76,10 @@ open class LUICollectionCell: UICollectionViewCell {
     
     @objc internal func cellTapped() {
         self.animateCellBackground()
+        
+        if let cell = self as? LUICellData {
+            cell.action?()
+        }
     }
 }
 

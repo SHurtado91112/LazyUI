@@ -16,7 +16,7 @@ public typealias LUISearchTableQuery = (_ item: Any, _ text: String, _ scope: In
 
 open class LUITableViewController: UITableViewController, LUIViewControllerProtocol {
     // MARK: - Public variables
-    open var sectionData: [LUIHeaderData] = [] {
+    open var sectionHeaderData: [LUIHeaderData] = [] {
         didSet {
             self.tableView.reloadData()
         }
@@ -81,12 +81,12 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
     }
     
     private var cellIdentifier = ""
-    private var cellType = LUITableCell.self
+    private var cellType = LUITableCellClass.self
     
     private var sectionIdentifier = ""
-    private var sectionType = LUITableHeaderView.self
+    private var sectionType = LUITableHeaderViewClass.self
     
-    public required init(cellType: LUITableCell.Type, cellIdentifier: String, sectionType: LUITableHeaderView.Type? = nil, sectionIdentifier: String? = nil) {
+    public required init(cellType: LUITableCellClass.Type, cellIdentifier: String, sectionType: LUITableHeaderViewClass.Type? = nil, sectionIdentifier: String? = nil) {
         super.init(nibName: nil, bundle: nil)
         self.cellIdentifier = cellIdentifier
         self.cellType = cellType
@@ -130,7 +130,7 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
         self.definesPresentationContext = true
     }
     
-    open func resetCells(for type: LUITableCell.Type, cellIdentifier: String) {
+    open func resetCells(for type: LUITableCellClass.Type, cellIdentifier: String) {
         self.cellIdentifier = cellIdentifier
         self.cellType = type
         self.tableView.register(self.cellType, forCellReuseIdentifier: self.cellIdentifier)
@@ -157,45 +157,34 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
 
     override open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as? LUITableCell else {
-            return LUITableCell()
+            return LUITableCellClass()
         }
         
+        var data: Any
         if self.hasSections {
-
-            let data = self.sectionCellData[indexPath.section][indexPath.row]
-            if let cell = cell as? LUICellData {
-                cell.formatCell(for: data)
-            } else {
-                fatalError("Cell subclass must conform to LUICellData")
-            }
+            data = self.sectionCellData[indexPath.section][indexPath.row]
         } else {
-            let data = self.isFiltering ? self.filteredRowData[indexPath.row] : self.rowData[indexPath.row]
-            if let cell = cell as? LUICellData {
-                cell.formatCell(for: data)
-            } else {
-                fatalError("Cell subclass must conform to LUICellData")
-            }
+            data = self.isFiltering ? self.filteredRowData[indexPath.row] : self.rowData[indexPath.row]
         }
         
+        cell.formatCell(for: data)
         return cell
     }
     
     open override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = self.sectionType.init()
-        
-        let data = self.sectionData[section]
-        if let headerView = view as? LUICellData {
-            headerView.formatCell(for: data)
-        } else {
-            fatalError("LUITableHeaderView must conform to LUICellData protocol")
+        guard let headerView = self.sectionType.init() as? LUITableHeaderView else {
+            return LUITableHeaderViewClass()
         }
         
-        return view
+        let data = self.sectionHeaderData[section]
+        headerView.formatCell(for: data)
+        
+        return headerView
     }
     
     open override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if self.hasSections {
-            return self.sectionData[section].headerHeight
+            return self.sectionHeaderData[section].headerHeight
         }
         return 0.0
     }

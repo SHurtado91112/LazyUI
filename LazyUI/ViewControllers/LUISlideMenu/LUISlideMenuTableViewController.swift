@@ -12,18 +12,6 @@ open class LUISlideMenuTableViewController: LUITableViewController, LUISlideMenu
     
     public var slideMenuDelegate: LUISlideMenuDelegate?
     
-    required convenience public init(actionCellType: LUIActionTableCell.Type, cellIdentifier: String) {
-        self.init(cellType: actionCellType, cellIdentifier: cellIdentifier)
-    }
-    
-    required public init(cellType: LUITableCell.Type, cellIdentifier: String, sectionType: LUITableHeaderView.Type? = nil, sectionIdentifier: String? = nil) {
-        super.init(cellType: cellType, cellIdentifier: cellIdentifier)
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

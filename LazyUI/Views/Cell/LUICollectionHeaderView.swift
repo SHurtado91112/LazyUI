@@ -8,7 +8,8 @@
 
 import UIKit
 
-class LUICollectionHeaderView: UICollectionReusableView {
+public typealias LUICollectionHeaderView = LUICollectionHeaderViewClass & LUICellData
+open class LUICollectionHeaderViewClass: UICollectionReusableView {
     
     convenience public init() {
         self.init(frame: .zero)
@@ -30,12 +31,20 @@ class LUICollectionHeaderView: UICollectionReusableView {
         self.configureCollectionViewHeader()
     }
     
-    
     internal func configureCollectionViewHeader() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.cellTapped))
+        tapRecognizer.cancelsTouchesInView = false
+        self.addGestureRecognizer(tapRecognizer)
         
         if let cell = self as? LUICellData {
             cell.setUpCell()
         }
     }
     
+    @objc internal func cellTapped() {
+        
+        if let cell = self as? LUICellData {
+            cell.action?()
+        }
+    }
 }

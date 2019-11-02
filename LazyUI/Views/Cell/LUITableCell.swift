@@ -11,25 +11,12 @@ import UIKit
 public protocol LUICellData {
     func setUpCell()
     func formatCell(for data: Any)
-}
-
-public protocol LUIActionCellData: LUICellData {
+    static var identifier: String { get set }
     var action: (()->Void)? { get set }
 }
 
-open class LUIActionTableCell: LUITableCell {
-    
-    @objc override internal func cellTapped() {
-        super.cellTapped()
-        
-        if let cell = self as? LUIActionCellData {
-            cell.action?()
-        }
-    }
-    
-}
-
-open class LUITableCell: UITableViewCell {
+public typealias LUITableCell = LUITableCellClass & LUICellData
+open class LUITableCellClass: UITableViewCell {
     
     private lazy var _interactionBackgroundView: UIView = {
         let view = UIView()
@@ -96,5 +83,9 @@ open class LUITableCell: UITableViewCell {
     
     @objc internal func cellTapped() {
         self.animateCellBackground()
+        
+        if let cell = self as? LUICellData {
+            cell.action?()
+        }
     }
 }

@@ -31,12 +31,12 @@ class LUICollectionViewController: UICollectionViewController, LUIViewController
     private let ESTIMATE_ROW_HEIGHT: CGFloat = 48.0
     
     private var itemIdentifier = ""
-    private var itemType = LUICollectionCell.self
+    private var itemType = LUICollectionCellClass.self
     
     private var sectionIdentifier = ""
-    private var sectionType = LUICollectionHeaderView.self
+    private var sectionType = LUICollectionHeaderViewClass.self
     
-    public required init(itemType: LUICollectionCell.Type, itemIdentifier: String, layout: UICollectionViewLayout, sectionType: LUICollectionHeaderView.Type? = nil, sectionIdentifier: String? = nil) {
+    public required init(itemType: LUICollectionCellClass.Type, itemIdentifier: String, layout: UICollectionViewLayout, sectionType: LUICollectionHeaderViewClass.Type? = nil, sectionIdentifier: String? = nil) {
         super.init(collectionViewLayout: layout)
         self.itemIdentifier = itemIdentifier
         self.itemType = itemType
@@ -78,7 +78,7 @@ class LUICollectionViewController: UICollectionViewController, LUIViewController
         self.definesPresentationContext = true
     }
     
-    open func resetCells(for type: LUICollectionCell.Type, cellIdentifier: String) {
+    open func resetCells(for type: LUICollectionCellClass.Type, cellIdentifier: String) {
         self.itemIdentifier = cellIdentifier
         self.itemType = type
         self.collectionView.register(self.itemType, forCellWithReuseIdentifier: self.itemIdentifier)
@@ -102,15 +102,11 @@ class LUICollectionViewController: UICollectionViewController, LUIViewController
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.itemIdentifier, for: indexPath) as? LUICollectionCell else {
-            return LUICollectionCell()
+            return LUICollectionCellClass()
         }
         
         let data = self.hasSections ? self.sectionItemData[indexPath.section][indexPath.row] : self.itemData[indexPath.row]
-        if let cell = cell as? LUICellData {
-            cell.formatCell(for: data)
-        } else {
-            fatalError("Cell subclass must conform to LUICellData")
-        }
+        cell.formatCell(for: data)
         
         return cell
     }
@@ -124,16 +120,12 @@ class LUICollectionViewController: UICollectionViewController, LUIViewController
               for: indexPath) as? LUICollectionHeaderView
          
             let data = self.sectionData[indexPath.section]
-            if let headerView = headerView as? LUICellData {
-                headerView.formatCell(for: data)
-            } else {
-                fatalError("Header view subclass must conform to LUICellData")
-            }
+            headerView?.formatCell(for: data)
             
-            return headerView ?? LUICollectionHeaderView()
+            return headerView ?? LUICollectionHeaderViewClass()
         }
         
-        return LUICollectionHeaderView()
+        return LUICollectionHeaderViewClass()
     }
     
     // MARK: - Adding Views and Constraints

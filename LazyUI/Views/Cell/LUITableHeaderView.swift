@@ -18,7 +18,8 @@ public struct LUIHeaderData {
     }
 }
 
-open class LUITableHeaderView: LUIView {
+public typealias LUITableHeaderView = LUITableHeaderViewClass & LUICellData
+open class LUITableHeaderViewClass: LUIView {
     
     required public init() {
         super.init()
@@ -33,11 +34,20 @@ open class LUITableHeaderView: LUIView {
     }
     
     internal func configureTableViewHeader() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.cellTapped))
+        tapRecognizer.cancelsTouchesInView = false
+        self.addGestureRecognizer(tapRecognizer)
         
         if let cell = self as? LUICellData {
             cell.setUpCell()
         }
+    }
+    
+    @objc internal func cellTapped() {
         
+        if let cell = self as? LUICellData {
+            cell.action?()
+        }
     }
     
 }
