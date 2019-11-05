@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class LUITextField : UITextField, LUIViewThemeProtocol {
+open class LUITextField : UITextField, LUIViewProtocol, LUIViewThemeProtocol {
     
     // theming protocol
     override open var backgroundColor: UIColor? {
@@ -139,10 +139,16 @@ open class LUITextField : UITextField, LUIViewThemeProtocol {
         
         super.init(frame: .zero)
         self.font = self.font?.withSize(fontSize).withStyle(textFontStyle)
+        
+        self.setUpView()
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    public func setUpView() {
+        self.tintColor = UIColor.color(for: .theme)
     }
     
     override open func textRect(forBounds bounds: CGRect) -> CGRect {
