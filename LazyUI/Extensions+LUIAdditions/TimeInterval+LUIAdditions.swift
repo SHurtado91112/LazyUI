@@ -18,4 +18,14 @@ extension TimeInterval {
     public static func timeInterval(for type: LUIAnimationSpeedType) -> TimeInterval {
         return LUIAnimationSpeedManager.shared.timeInterval(for: type)
     }
+    
+    public static func from(days: Double = 0.0, hours: Double = 0.0, minutes: Double = 0.0, seconds: Double = 0.0) -> TimeInterval {
+        
+        var totalSeconds = seconds
+        totalSeconds = totalSeconds + (minutes * 60.0)
+        totalSeconds = totalSeconds + (hours * 60.0 * 60.0)
+        totalSeconds = totalSeconds + (days * 24.0 * 60.0 * 60.0)
+        
+        return totalSeconds
+    }
 }

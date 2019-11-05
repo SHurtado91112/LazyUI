@@ -332,6 +332,7 @@ open class LUIPanelViewController: LUIViewController {
         self.animateIn()
     }
     
+    open private(set) var isAnimating: Bool = false
     // meant to be called once
     public func presentPanel(forMode mode: PresentationMode) {
         if let modeInfo = self.enabledModesInfo.first(where: { $0.mode == mode }) {
@@ -357,16 +358,20 @@ open class LUIPanelViewController: LUIViewController {
         panelView.isHidden = false
         panelView.isUserInteractionEnabled = false
         
+        let speed = TimeInterval.timeInterval(for: .fast)
+        self.isAnimating = true
+        
         let initialPosition = self.currentTopOffset
         self.topConstraint?.constant = initialPosition
         
-        UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), delay: 0.0, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: speed, delay: 0.0, options: [.curveEaseInOut], animations: {
             
             panelView.alpha = 1.0
             containerView.layoutIfNeeded()
             
         }) { (finished) in
             panelView.isUserInteractionEnabled = true
+            self.isAnimating = false
         }
     }
     
@@ -378,9 +383,12 @@ open class LUIPanelViewController: LUIViewController {
         panelView.isHidden = false
         panelView.isUserInteractionEnabled = false
         
+        let speed = TimeInterval.timeInterval(for: .fast)
+        self.isAnimating = true
+        
         self.topConstraint?.constant = UIScreen.main.bounds.height + LUIPadding.padding(for: .regular)
         
-        UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), delay: 0.0, options: .curveEaseInOut, animations: {
+        UIView.animate(withDuration: speed, delay: 0.0, options: .curveEaseInOut, animations: {
             
             panelView.alpha = 0.0
             containerView.layoutIfNeeded()
@@ -388,6 +396,7 @@ open class LUIPanelViewController: LUIViewController {
         }) { (finished) in
             panelView.isUserInteractionEnabled = true
             panelView.isHidden = true
+            self.isAnimating = false
         }
     }
     
