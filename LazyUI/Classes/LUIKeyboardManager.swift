@@ -82,7 +82,7 @@ open class LUIKeyboardManager: NSObject {
     
     private func resetContentPosition(_ notification: Notification?) {
         
-        guard let rootView = self.rootViewController?.view as? LUIView,
+        guard let rootView = self.rootViewController?.view,
             let rootOrigin = self.rootOrigin else {
             return
         }
@@ -119,7 +119,7 @@ open class LUIKeyboardManager: NSObject {
     private func adjustContentPosition(_ notification: Notification?) {
         
         if let textView = self.activeTextField,
-            let rootView = self.rootViewController?.view as? LUIView,
+            let rootView = self.rootViewController?.view,
             let info = notification?.userInfo,
             let keyboardValue = info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardFrame = keyboardValue.cgRectValue
