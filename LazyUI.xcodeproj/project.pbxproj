@@ -24,12 +24,15 @@
 		CD04305422DAFD4F0018D584 /* LUIPopOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04305322DAFD4F0018D584 /* LUIPopOverViewController.swift */; };
 		CD04308722DC47910018D584 /* LUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04308622DC47910018D584 /* LUITableViewController.swift */; };
 		CD04308922DC48490018D584 /* LUINavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD04308822DC48490018D584 /* LUINavigation.swift */; };
+		CD05840D237368930092DCCE /* LUICarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD05840C237368930092DCCE /* LUICarouselViewController.swift */; };
+		CD05840F237370790092DCCE /* LUICarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD05840E237370790092DCCE /* LUICarouselCell.swift */; };
 		CD0DC3632344FA23002479DA /* LUIPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0DC3622344FA23002479DA /* LUIPageControl.swift */; };
 		CD0E627B231699A9001F4498 /* LUIFontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0E627A231699A9001F4498 /* LUIFontManager.swift */; };
 		CD1923FF236A1F5B00EA3991 /* LUICollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1923FE236A1F5B00EA3991 /* LUICollectionViewController.swift */; };
 		CD192401236A209500EA3991 /* LUICollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD192400236A209500EA3991 /* LUICollectionCell.swift */; };
 		CD192403236A2E9E00EA3991 /* LUICollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD192402236A2E9E00EA3991 /* LUICollectionHeaderView.swift */; };
 		CD192405236A311300EA3991 /* LUITableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD192404236A311300EA3991 /* LUITableHeaderView.swift */; };
+		CD37709A2373805D00AB6375 /* UINavigationBar+LUIAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3770992373805D00AB6375 /* UINavigationBar+LUIAdditions.swift */; };
 		CD37A0DF2360916B00C6E31C /* LUIPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD37A0DE2360916B00C6E31C /* LUIPanelViewController.swift */; };
 		CD3A59F122CEE80B009AD5BC /* LazyUI.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3A59EF22CEE80B009AD5BC /* LazyUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD3A5A3622CFF180009AD5BC /* LUIFontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3A5A3522CFF180009AD5BC /* LUIFontSize.swift */; };
@@ -77,12 +80,15 @@
 		CD04305322DAFD4F0018D584 /* LUIPopOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPopOverViewController.swift; sourceTree = "<group>"; };
 		CD04308622DC47910018D584 /* LUITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUITableViewController.swift; sourceTree = "<group>"; };
 		CD04308822DC48490018D584 /* LUINavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUINavigation.swift; sourceTree = "<group>"; };
+		CD05840C237368930092DCCE /* LUICarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUICarouselViewController.swift; sourceTree = "<group>"; };
+		CD05840E237370790092DCCE /* LUICarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUICarouselCell.swift; sourceTree = "<group>"; };
 		CD0DC3622344FA23002479DA /* LUIPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPageControl.swift; sourceTree = "<group>"; };
 		CD0E627A231699A9001F4498 /* LUIFontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIFontManager.swift; sourceTree = "<group>"; };
 		CD1923FE236A1F5B00EA3991 /* LUICollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUICollectionViewController.swift; sourceTree = "<group>"; };
 		CD192400236A209500EA3991 /* LUICollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUICollectionCell.swift; sourceTree = "<group>"; };
 		CD192402236A2E9E00EA3991 /* LUICollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUICollectionHeaderView.swift; sourceTree = "<group>"; };
 		CD192404236A311300EA3991 /* LUITableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUITableHeaderView.swift; sourceTree = "<group>"; };
+		CD3770992373805D00AB6375 /* UINavigationBar+LUIAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+LUIAdditions.swift"; sourceTree = "<group>"; };
 		CD37A0DE2360916B00C6E31C /* LUIPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIPanelViewController.swift; sourceTree = "<group>"; };
 		CD3A59EC22CEE80B009AD5BC /* LazyUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LazyUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD3A59EF22CEE80B009AD5BC /* LazyUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LazyUI.h; sourceTree = "<group>"; };
@@ -151,9 +157,9 @@
 				CD04305322DAFD4F0018D584 /* LUIPopOverViewController.swift */,
 				CD04308622DC47910018D584 /* LUITableViewController.swift */,
 				CD1923FE236A1F5B00EA3991 /* LUICollectionViewController.swift */,
-				CDD2942522E53F2E00801908 /* LUIPreviewViewController.swift */,
 				CDC95FFC22EFBDAA00CD378E /* LUIPageViewController.swift */,
 				CDA48BA5231440B400CC8B09 /* LUISearchController.swift */,
+				CD05840B2373677F0092DCCE /* Image Preview, Carousel, Gallery */,
 				CD37A0DD2360912D00C6E31C /* LUIPanel */,
 				CDAF68F6235E3DD3003F7C4F /* LUISlideMenu */,
 			);
@@ -183,6 +189,7 @@
 				CDC95FC322E779EE00CD378E /* UIImageView+LUIAdditions.swift */,
 				CDA48BA12312B50400CC8B09 /* LUIPreviewViewController+LUIPannable.swift */,
 				CDA5F85323390071005C915E /* UIAlertController+LUIAdditions.swift */,
+				CD3770992373805D00AB6375 /* UINavigationBar+LUIAdditions.swift */,
 			);
 			path = "Extensions+LUIAdditions";
 			sourceTree = "<group>";
@@ -194,6 +201,15 @@
 				CD04304B22DAF12F0018D584 /* LUIAnimationManager.swift */,
 			);
 			path = Animation;
+			sourceTree = "<group>";
+		};
+		CD05840B2373677F0092DCCE /* Image Preview, Carousel, Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				CDD2942522E53F2E00801908 /* LUIPreviewViewController.swift */,
+				CD05840C237368930092DCCE /* LUICarouselViewController.swift */,
+			);
+			path = "Image Preview, Carousel, Gallery";
 			sourceTree = "<group>";
 		};
 		CD37A0DD2360912D00C6E31C /* LUIPanel */ = {
@@ -299,6 +315,7 @@
 				CD192404236A311300EA3991 /* LUITableHeaderView.swift */,
 				CD192400236A209500EA3991 /* LUICollectionCell.swift */,
 				CD192402236A2E9E00EA3991 /* LUICollectionHeaderView.swift */,
+				CD05840E237370790092DCCE /* LUICarouselCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -403,6 +420,7 @@
 				CD192403236A2E9E00EA3991 /* LUICollectionHeaderView.swift in Sources */,
 				CDA5F85423390071005C915E /* UIAlertController+LUIAdditions.swift in Sources */,
 				CDC9602622FB24F400CD378E /* LUIKeyboardToolBar.swift in Sources */,
+				CD05840D237368930092DCCE /* LUICarouselViewController.swift in Sources */,
 				CDD2942822E5411800801908 /* LUIPreviewView.swift in Sources */,
 				CDC95FFD22EFBDAA00CD378E /* LUIPageViewController.swift in Sources */,
 				CD3A5A3D22D113E6009AD5BC /* LUIColor.swift in Sources */,
@@ -417,6 +435,7 @@
 				CDC95FF422E9EBE000CD378E /* LUIStackView.swift in Sources */,
 				CDD2942222E50BAA00801908 /* Date+LUIAdditions.swift in Sources */,
 				CD04303A22D29D300018D584 /* LUIConstraints.swift in Sources */,
+				CD37709A2373805D00AB6375 /* UINavigationBar+LUIAdditions.swift in Sources */,
 				CD04304A22DA53770018D584 /* LUIAnimationSpeed.swift in Sources */,
 				CD04304722DA4BBF0018D584 /* UIImage+LUIAdditions.swift in Sources */,
 				CDA48BA6231440B400CC8B09 /* LUISearchController.swift in Sources */,
@@ -428,6 +447,7 @@
 				CDE034B523514D78004287E9 /* LUIActivitiyIndicatorView.swift in Sources */,
 				CD3A5A3F22D116EE009AD5BC /* LUIThemeManager.swift in Sources */,
 				CD04303C22D2A0980018D584 /* UIView+LUIAdditions.swift in Sources */,
+				CD05840F237370790092DCCE /* LUICarouselCell.swift in Sources */,
 				CD3A5A3B22D1134D009AD5BC /* UIColor+LUIAdditions.swift in Sources */,
 				CD04308722DC47910018D584 /* LUITableViewController.swift in Sources */,
 				CD3A5A3822CFF840009AD5BC /* UIFont+LUIAdditions.swift in Sources */,

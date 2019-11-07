@@ -125,7 +125,15 @@ open class LUIPreviewManagerViewController: UIPageViewController, LUIViewControl
     
     public var previewContent: [LUIPreviewContent] = [] {
         didSet {
-            self.componentController?.selectedContent = self.previewContent[self.currentPage]
+            
+            if self.currentPage >= self.previewContent.count {
+                self.currentPage = 0
+            }
+            
+            if self.previewContent.count > 0 {
+                self.componentController?.selectedContent = self.previewContent[self.currentPage]
+            }
+            
             self.countLabel.text = "\(self.currentPage+1)/\(self.previewContent.count)"
             self.countLabel.isHidden = self.previewContent.count <= 1
         }
@@ -135,10 +143,18 @@ open class LUIPreviewManagerViewController: UIPageViewController, LUIViewControl
         self.setUpViews()
     }
     
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.color(for: .lightText)
+        self.navigationController?.navigationBar.clearBackground()
+    }
+    
     override open func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
         self.componentController?.scrollView.setZoomScale(1.0, animated: true)
         self.previewDelegate?.dismissedPreview()
+//        self.navigationController?.navigationBar.resetBackground()
+        super.viewWillDisappear(animated)
     }
     
     open func setUpViews() {
@@ -152,7 +168,7 @@ open class LUIPreviewManagerViewController: UIPageViewController, LUIViewControl
         self.view.bottom(self.countLabel, fromTop: false, paddingType: .regular, withSafety: false)
     }
     
-    private func setController() {
+    func setController() {
         if let viewController = self.previewController(self.currentPage) {
             self.componentController = viewController
             self.setViewControllers([viewController], direction: .forward, animated: false, completion: nil)
