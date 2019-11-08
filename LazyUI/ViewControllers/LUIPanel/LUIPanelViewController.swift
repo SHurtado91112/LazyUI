@@ -186,7 +186,7 @@ open class LUIPanelViewController: LUIViewController {
         self.view.right(self.contentView, fromLeft: false, paddingType: .none, withSafety: false)
         self.view.right(self.dragBar, fromLeft: false, paddingType: .none, withSafety: false)
 
-        let contentBottomConstraint = self.view.bottom(self.contentView, fromTop: false, padding: -padding, withSafety: false, constraintOperator: .equal)
+        let contentBottomConstraint = self.contentView.bottom(self.view, fromTop: false, padding: -padding, withSafety: false, constraintOperator: .equal)
         contentBottomConstraint.priority = .required
         
         self.containingViewController.addChild(self)
@@ -196,7 +196,7 @@ open class LUIPanelViewController: LUIViewController {
             containerView.left(panelView, fromLeft: true, paddingType: .none, withSafety: false)
             containerView.right(panelView, fromLeft: false, paddingType: .none, withSafety: false)
             
-            containerView.bottom(panelView, fromTop: false, padding: -padding, withSafety: false, constraintOperator: .equal)
+            containerView.bottom(panelView, fromTop: false, paddingType: .none, withSafety: false, constraintOperator: .equal)
             self.topConstraint = containerView.top(panelView, fromTop: true, paddingType: .none, withSafety: true)
             
             // set panel position below screen
@@ -245,7 +245,7 @@ open class LUIPanelViewController: LUIViewController {
             self.enabledModesInfo = self.presentationModes
             self.enabledPresentationModes = { self.enabledPresentationModes } ()
             
-            self.updateHeightConstraintMap(viewController.view.height(to: viewController.preferredHeight, constraintOperator: .greaterThan), mode: mode)
+            self.updateHeightConstraintMap(viewController.view.height(to: viewController.preferredHeight, constraintOperator: .equal), mode: mode)
             
             
             if mode == self.currentMode.mode {
@@ -502,12 +502,12 @@ open class LUIPanelViewController: LUIViewController {
     }
     
     private var fullScreenHeight: CGFloat {
-        return UIScreen.main.bounds.height - self.safetyTopPadding
+        return UIScreen.main.bounds.height - self.safetyTopPadding //- self.safetyBottomPadding - self.compactModeHeightOffset
     }
     
     private var compactModeHeightOffset: CGFloat {
         // regular padding for content view spacing
-        return self.DRAG_BAR_HEIGHT + self.safetyTopPadding + self.safetyBottomPadding + LUIPadding.padding(for: .regular)
+        return self.DRAG_BAR_HEIGHT  + self.safetyBottomPadding + self.safetyTopPadding + LUIPadding.padding(for: .regular)
     }
     
     private var currentTopOffset: CGFloat {
