@@ -60,6 +60,7 @@
 		CDD4379A22DCCC79003A5A4B /* LUITableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD4379922DCCC79003A5A4B /* LUITableCell.swift */; };
 		CDE034B523514D78004287E9 /* LUIActivitiyIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE034B423514D78004287E9 /* LUIActivitiyIndicatorView.swift */; };
 		CDE034BE2352388F004287E9 /* LUIDraggable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE034BD2352388F004287E9 /* LUIDraggable.swift */; };
+		CDFA688C2375117B00CB7427 /* LUISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFA688B2375117B00CB7427 /* LUISegmentedControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -118,6 +119,7 @@
 		CDD4379922DCCC79003A5A4B /* LUITableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUITableCell.swift; sourceTree = "<group>"; };
 		CDE034B423514D78004287E9 /* LUIActivitiyIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIActivitiyIndicatorView.swift; sourceTree = "<group>"; };
 		CDE034BD2352388F004287E9 /* LUIDraggable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUIDraggable.swift; sourceTree = "<group>"; };
+		CDFA688B2375117B00CB7427 /* LUISegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LUISegmentedControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 				CDA48BA72314414900CC8B09 /* LUISearchBar.swift */,
 				CDE034B423514D78004287E9 /* LUIActivitiyIndicatorView.swift */,
 				CD0DC3622344FA23002479DA /* LUIPageControl.swift */,
+				CDFA688B2375117B00CB7427 /* LUISegmentedControl.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				CDAF68F8235E3E2C003F7C4F /* LUISlideMenuTableViewController.swift in Sources */,
 				CDC95FC422E779EE00CD378E /* UIImageView+LUIAdditions.swift in Sources */,
 				CD04305422DAFD4F0018D584 /* LUIPopOverViewController.swift in Sources */,
+				CDFA688C2375117B00CB7427 /* LUISegmentedControl.swift in Sources */,
 				CD192401236A209500EA3991 /* LUICollectionCell.swift in Sources */,
 				CDD2942422E5135500801908 /* String+LUIAdditions.swift in Sources */,
 				CDE034B523514D78004287E9 /* LUIActivitiyIndicatorView.swift in Sources */,

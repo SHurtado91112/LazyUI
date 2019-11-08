@@ -186,7 +186,7 @@ open class LUIPanelViewController: LUIViewController {
         self.view.right(self.contentView, fromLeft: false, paddingType: .none, withSafety: false)
         self.view.right(self.dragBar, fromLeft: false, paddingType: .none, withSafety: false)
 
-        let contentBottomConstraint = self.contentView.bottom(self.view, fromTop: false, padding: -padding, withSafety: false, constraintOperator: .equal)
+        let contentBottomConstraint = self.view.bottom(self.contentView, fromTop: false, padding: -padding, withSafety: false, constraintOperator: .equal)
         contentBottomConstraint.priority = .required
         
         self.containingViewController.addChild(self)
@@ -245,7 +245,7 @@ open class LUIPanelViewController: LUIViewController {
             self.enabledModesInfo = self.presentationModes
             self.enabledPresentationModes = { self.enabledPresentationModes } ()
             
-            self.updateHeightConstraintMap(viewController.view.height(to: viewController.preferredHeight, constraintOperator: .equal), mode: mode)
+            self.updateHeightConstraintMap(viewController.view.height(to: viewController.preferredHeight, constraintOperator: .greaterThan), mode: mode)
             
             
             if mode == self.currentMode.mode {
@@ -324,12 +324,6 @@ open class LUIPanelViewController: LUIViewController {
         }
         
         self.updateViewPresentation()
-    }
-    
-    override open func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        self.animateIn()
     }
     
     open private(set) var isAnimating: Bool = false

@@ -16,6 +16,7 @@ public protocol LUISlideMenuContainer: LUIViewControllerProtocol {
 public protocol LUISlideMenuDelegate: LUIViewControllerProtocol {
     func closeMenu()
     func openMenu()
+    func enablePanGesture(_ enable: Bool)
 }
 
 open class LUISlideMenuViewController: LUIViewController {
@@ -99,11 +100,13 @@ open class LUISlideMenuViewController: LUIViewController {
         self.setUpGestures()
     }
     
+    private var slideMenuPanGesture: UIPanGestureRecognizer?
     private func setUpGestures() {
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(_:)))
         panGesture.delegate = self
         self.mainContentViewController.view.addGestureRecognizer(panGesture)
+        self.slideMenuPanGesture = panGesture
         
     }
     
@@ -205,6 +208,9 @@ extension LUISlideMenuViewController: LUISlideMenuDelegate {
         self.toggleMenu(false)
     }
     
+    public func enablePanGesture(_ enable: Bool) {
+        self.slideMenuPanGesture?.isEnabled = enable
+    }
 }
 
 extension LUISlideMenuViewController: UIGestureRecognizerDelegate {
