@@ -99,6 +99,58 @@ open class LUIPanelViewController: LUIViewController {
         return bar
     } ()
     
+    private var safetyTopPadding: CGFloat {
+        let window = UIApplication.shared.keyWindow
+        return (window?.safeAreaInsets.top ?? .zero) + self.largePadding
+    }
+    
+    private var safetyBottomPadding: CGFloat {
+        let window = UIApplication.shared.keyWindow
+        return (window?.safeAreaInsets.top ?? .zero)
+    }
+    
+    private var safetyFullScreenHeight: CGFloat {
+        return UIScreen.main.bounds.height - self.safetyTopPadding
+    }
+    private var fullScreenHeight: CGFloat {
+        return UIScreen.main.bounds.height
+    }
+    
+    private var compactModeHeightOffset: CGFloat {
+        // regular padding for content view spacing
+        return self.safetyBottomPadding + self.padding
+    }
+    
+    private var currentTopOffset: CGFloat {
+        let currentHeight = self.currentMode.height
+        
+        if self.currentMode.mode == .full {
+            return self.safetyTopPadding
+        } else {
+            return self.fullScreenHeight - currentHeight
+        }
+    }
+    
+    private var lastTopOffset: CGFloat {
+        
+        let lastHeight = self.lastMode.height
+        
+        if self.lastMode.mode == .full {
+            return self.safetyTopPadding
+        } else {
+            return self.fullScreenHeight - lastHeight
+        }
+        
+    }
+    
+    private var padding: CGFloat {
+        return LUIPadding.padding(for: .regular) + self.DRAG_BAR_HEIGHT
+    }
+    
+    private var largePadding: CGFloat {
+           return LUIPadding.padding(for: .large) + self.DRAG_BAR_HEIGHT
+   }
+    
     public required init(containingViewController: UIViewController, headerViewController: LUIPanelViewDelegate?, halfwayViewController: LUIPanelViewDelegate?, fullViewController: LUIPanelViewDelegate?) {
         super.init(nibName: nil, bundle: nil)
         
@@ -114,12 +166,13 @@ open class LUIPanelViewController: LUIViewController {
         
         if let halfwayVC = halfwayViewController {
             self.halfwayViewController = halfwayVC
-            self.presentationModes.append((mode: .halfway, height: halfwayVC.preferredHeight + offsetPadding))
+            let heightForHeader = self.viewController(for: .header)?.preferredHeight ?? 0.0
+            self.presentationModes.append((mode: .halfway, height: halfwayVC.preferredHeight + heightForHeader + offsetPadding))
         }
         
         if let fullVC = fullViewController {
             self.fullViewController = fullVC
-            self.presentationModes.append((mode: .full, height: self.fullScreenHeight))
+            self.presentationModes.append((mode: .full, height: self.safetyFullScreenHeight))
         }
         
         self.enabledModesInfo = self.presentationModes
@@ -167,7 +220,6 @@ open class LUIPanelViewController: LUIViewController {
             }
         }
 
-        let padding = LUIPadding.padding(for: .regular)
         self.view.top(self.dragBar, fromTop: true, paddingType: .small, withSafety: false)
         
         if let headerController = self.viewController(for: .header) {
@@ -186,8 +238,7 @@ open class LUIPanelViewController: LUIViewController {
         self.view.right(self.contentView, fromLeft: false, paddingType: .none, withSafety: false)
         self.view.right(self.dragBar, fromLeft: false, paddingType: .none, withSafety: false)
 
-        let contentBottomConstraint = self.contentView.bottom(self.view, fromTop: false, padding: -padding, withSafety: false, constraintOperator: .equal)
-        contentBottomConstraint.priority = .required
+        self.contentView.bottom(self.view, fromTop: false, paddingType: .none, withSafety: false, constraintOperator: .equal)
         
         self.containingViewController.addChild(self)
         self.containingViewController.view.addSubview(self.view!)
@@ -197,10 +248,10 @@ open class LUIPanelViewController: LUIViewController {
             containerView.right(panelView, fromLeft: false, paddingType: .none, withSafety: false)
             
             containerView.bottom(panelView, fromTop: false, paddingType: .none, withSafety: false, constraintOperator: .equal)
-            self.topConstraint = containerView.top(panelView, fromTop: true, paddingType: .none, withSafety: true)
+            self.topConstraint = containerView.top(panelView, fromTop: true, paddingType: .none, withSafety: false)
             
             // set panel position below screen
-            self.topConstraint?.constant = UIScreen.main.bounds.height + padding
+            self.topConstraint?.constant = self.fullScreenHeight// + padding
             containerView.layoutIfNeeded()
             
             panelView.isHidden = true
@@ -235,7 +286,14 @@ open class LUIPanelViewController: LUIViewController {
                 let modeInfo = self.presentationModes[i]
                 if modeInfo.mode == mode {
                     
-                    let heightWithOffset = self.compactModeHeightOffset + height
+                    var heightWithOffset: CGFloat = 0.0
+                    heightWithOffset = self.compactModeHeightOffset + height
+                    
+                    if mode == .halfway {
+                        let heightForHeader = self.viewController(for: .header)?.preferredHeight ?? 0.0
+                        heightWithOffset += heightForHeader
+                    }
+                    
                     self.presentationModes[i].height = heightWithOffset
                     break
                 }
@@ -489,35 +547,6 @@ open class LUIPanelViewController: LUIViewController {
             case .full:
                 return self.fullViewController
         }
-    }
-    
-    private var safetyTopPadding: CGFloat {
-        let window = UIApplication.shared.keyWindow
-        return window?.safeAreaInsets.top ?? .zero
-    }
-    
-    private var safetyBottomPadding: CGFloat {
-        let window = UIApplication.shared.keyWindow
-        return window?.safeAreaInsets.bottom ?? 0.0
-    }
-    
-    private var fullScreenHeight: CGFloat {
-        return UIScreen.main.bounds.height - self.safetyTopPadding //- self.safetyBottomPadding - self.compactModeHeightOffset
-    }
-    
-    private var compactModeHeightOffset: CGFloat {
-        // regular padding for content view spacing
-        return self.DRAG_BAR_HEIGHT  + self.safetyBottomPadding + self.safetyTopPadding + LUIPadding.padding(for: .regular)
-    }
-    
-    private var currentTopOffset: CGFloat {
-        let currentHeight = self.currentMode.height
-        return self.fullScreenHeight - currentHeight
-    }
-    
-    private var lastTopOffset: CGFloat {
-        let lastHeight = self.lastMode.height
-        return self.fullScreenHeight - lastHeight
     }
     
     private func beginHeightUpdate(for velocity: CGPoint) {

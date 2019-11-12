@@ -47,7 +47,6 @@ extension LUIPreviewViewController: LUIPannable {
     
     @objc func panGestureAction(_ panGesture: UIPanGestureRecognizer) {
         let translation = panGesture.translation(in: self.view)
-//        let navbar = self.navigation?.navigationBar
         
         if panGesture.state == .began {
             self.originalPosition = self.view.center
@@ -99,6 +98,15 @@ extension LUIPreviewViewController: LUIPannable {
 
 extension LUIPreviewViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        if let panGesture = gestureRecognizer as? UIPanGestureRecognizer, !(panGesture.velocity(in: panGesture.view).y > 0) {
+            return false
+        }
+        
         return self.scrollView.zoomScale == 1.0
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

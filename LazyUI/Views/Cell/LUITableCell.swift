@@ -20,17 +20,17 @@ open class LUITableCellClass: UITableViewCell {
     
     private lazy var _interactionBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.color(for: .intermediateBackground)
+        view.backgroundColor = self.interactionBackgroundColor
         self.addSubview(view)
         self.fill(view, padding: .none, withSafety: false)
         return view
     } ()
     
+    private var interactionBackgroundColor: UIColor = .color(for: .lightBackground)
     private var interactionBackgroundView: UIView {
         get {
             let view = self._interactionBackgroundView
             self.sendSubviewToBack(view)
-            view.alpha = 0.0
             return view
         }
         set {
@@ -60,13 +60,18 @@ open class LUITableCellClass: UITableViewCell {
     private func animateCellBackground() {
         
         UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), animations: {
-            self.interactionBackgroundView.alpha = 1.0
+            self.interactionBackgroundView.backgroundColor = .color(for: .intermediateBackground)
         }) { (finished) in
             UIView.animate(withDuration: TimeInterval.timeInterval(for: .fast), animations: {
-                self.interactionBackgroundView.alpha = 0.0
+                self.interactionBackgroundView.backgroundColor = .color(for: .lightBackground)
             })
         }
         
+    }
+    
+    public func replaceBackgroundForAnimation(_ view: UIView) {
+        self.interactionBackgroundColor = view.backgroundColor ?? .color(for: .lightBackground)
+        self.interactionBackgroundView = view
     }
     
     internal func configureTableViewCell() {

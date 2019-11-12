@@ -36,7 +36,8 @@ class LUIPreviewViewController: LUIViewController {
     // open/public
     public func setUpViews() {
         self.view.backgroundColor = UIColor.color(for: .darkBackground)
-
+        self.edgesForExtendedLayout = []
+        
         self.scrollView.showsHorizontalScrollIndicator = false
         self.scrollView.showsVerticalScrollIndicator = false
         self.scrollView.minimumZoomScale = self.MIN_ZOOM_SCALE
@@ -164,8 +165,8 @@ open class LUIPreviewManagerViewController: UIPageViewController, LUIViewControl
         self.dataSource = self
 
         self.view.addSubview(self.countLabel)
-        self.view.right(self.countLabel, fromLeft: false, paddingType: .regular, withSafety: false)
-        self.view.bottom(self.countLabel, fromTop: false, paddingType: .regular, withSafety: false)
+        self.view.right(self.countLabel, fromLeft: false, paddingType: .regular, withSafety: true)
+        self.view.bottom(self.countLabel, fromTop: false, paddingType: .regular, withSafety: true)
     }
     
     func setController() {
@@ -176,6 +177,10 @@ open class LUIPreviewManagerViewController: UIPageViewController, LUIViewControl
     }
     
     func previewController(_ index: Int) -> LUIPreviewViewController? {
+        if index > self.previewContent.count - 1 {
+            return nil
+        }
+        
         let previewController = LUIPreviewViewController()
         previewController.index = index
         previewController.selectedContent = self.previewContent[index]

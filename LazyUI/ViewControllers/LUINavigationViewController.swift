@@ -12,7 +12,8 @@ open class LUINavigationViewController: UINavigationController, LUIViewControlle
 
     required public init(rootVC: UIViewController, largeTitle: Bool = true) {
         super.init(rootViewController: rootVC)
-        self.navigationBar.prefersLargeTitles = largeTitle
+        self.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = largeTitle ? .always : .never
     }
     
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -30,6 +31,27 @@ open class LUINavigationViewController: UINavigationController, LUIViewControlle
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    open func setLargeTitleMode(_ displayMode: UINavigationItem.LargeTitleDisplayMode, for currentViewController: UIViewController) {
+        switch displayMode {
+            case .automatic:
+                
+                if let index = self.children.firstIndex(of: currentViewController) {
+                    self.setLargeTitleMode(index == 0 ? .always : .never, for: currentViewController)
+                } else {
+                    self.setLargeTitleMode(.always, for: currentViewController)
+                }
+                
+                break
+            case .always, .never:
+                self.navigationItem.largeTitleDisplayMode = displayMode
+                navigationController?.navigationBar.prefersLargeTitles = true
+                break
+            @unknown default:
+                self.setLargeTitleMode(.never, for: currentViewController)
+                break
+        }
     }
     
     open func push(to vc: UIViewController) {
