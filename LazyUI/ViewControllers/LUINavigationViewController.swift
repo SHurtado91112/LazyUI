@@ -45,8 +45,8 @@ open class LUINavigationViewController: UINavigationController, LUIViewControlle
                 
                 break
             case .always, .never:
-                self.navigationItem.largeTitleDisplayMode = displayMode
-                navigationController?.navigationBar.prefersLargeTitles = true
+                currentViewController.navigationItem.largeTitleDisplayMode = displayMode
+                self.navigationBar.prefersLargeTitles = true
                 break
             @unknown default:
                 self.setLargeTitleMode(.never, for: currentViewController)

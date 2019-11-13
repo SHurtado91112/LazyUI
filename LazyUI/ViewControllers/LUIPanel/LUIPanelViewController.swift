@@ -42,7 +42,7 @@ extension LUIPanelViewController {
 
 public protocol LUIPanelViewDelegate: UIViewController {
     var preferredHeight: CGFloat { get set }
-    func willTransition(to presentationMode: LUIPanelViewController.PresentationMode)
+    func willTransition(to presentationMode: LUIPanelViewController.PresentationMode, from panelViewController: LUIPanelViewController)
 }
 
 public typealias PresentationModeInfo = (mode: LUIPanelViewController.PresentationMode, height: CGFloat)
@@ -460,14 +460,14 @@ open class LUIPanelViewController: LUIViewController {
         }
         
         if let halfwayView = self.viewController(for: .halfway)?.view {
-            let showMe = self.currentMode.mode != .header
+            let showMe = self.currentMode.mode != .header && self.enabledPresentationModes.contains(.halfway)
             halfwayView.isUserInteractionEnabled = showMe
             halfwayView.alpha = showMe ? 1.0 : 0.0
             halfwayView.isHidden = !showMe
         }
         
         if let fullView = self.viewController(for: .full)?.view {
-            let showMe = self.currentMode.mode == .full
+            let showMe = self.currentMode.mode == .full && self.enabledPresentationModes.contains(.full)
             fullView.isUserInteractionEnabled = showMe
             fullView.alpha = showMe ? 1.0 : 0.0
             fullView.isHidden = !showMe
@@ -499,7 +499,7 @@ open class LUIPanelViewController: LUIViewController {
                             self.checkForFinalViewUpdates()
                         }
                     } else {
-                        viewForMode?.isHidden = false
+                        viewForMode?.isHidden = !self.enabledPresentationModes.contains(.halfway)
                         viewForMode?.fadeIn()
                     }
                     break
@@ -514,7 +514,7 @@ open class LUIPanelViewController: LUIViewController {
                             self.checkForFinalViewUpdates()
                         }
                     } else {
-                        viewForMode?.isHidden = false
+                        viewForMode?.isHidden = !self.enabledPresentationModes.contains(.full)
                         viewForMode?.fadeIn()
                     }
                     break
@@ -530,11 +530,11 @@ open class LUIPanelViewController: LUIViewController {
     private func notifyDelegates(for transitionMode: PresentationMode) {
         
         for (mode, _) in self.presentationModes {
-            self.viewController(for: mode)?.willTransition(to: transitionMode)
+            self.viewController(for: mode)?.willTransition(to: transitionMode, from: self)
         }
         
         for delegate in self.additionalDelegates {
-            delegate.willTransition(to: transitionMode)
+            delegate.willTransition(to: transitionMode, from: self)
         }
     }
 

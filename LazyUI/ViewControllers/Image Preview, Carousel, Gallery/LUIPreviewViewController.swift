@@ -36,7 +36,6 @@ class LUIPreviewViewController: LUIViewController {
     // open/public
     public func setUpViews() {
         self.view.backgroundColor = UIColor.color(for: .darkBackground)
-        self.edgesForExtendedLayout = []
         
         self.scrollView.showsHorizontalScrollIndicator = false
         self.scrollView.showsVerticalScrollIndicator = false
@@ -147,6 +146,7 @@ open class LUIPreviewManagerViewController: UIPageViewController, LUIViewControl
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.navigation?.setLargeTitleMode(.never, for: self)
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.color(for: .lightText)
         self.navigationController?.navigationBar.clearBackground()
     }
@@ -154,12 +154,13 @@ open class LUIPreviewManagerViewController: UIPageViewController, LUIViewControl
     override open func viewWillDisappear(_ animated: Bool) {
         self.componentController?.scrollView.setZoomScale(1.0, animated: true)
         self.previewDelegate?.dismissedPreview()
-//        self.navigationController?.navigationBar.resetBackground()
+
         super.viewWillDisappear(animated)
     }
     
     open func setUpViews() {
         self.setController()
+        self.edgesForExtendedLayout = [.top]
 
         self.delegate = self
         self.dataSource = self

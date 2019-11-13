@@ -14,14 +14,12 @@ extension UINavigationBar {
         self.backgroundColor = nil
         self.setBackgroundImage(nil, for: .default)
         self.shadowImage = nil
-        self.isTranslucent = false
     }
     
     open func clearBackground() {
         self.backgroundColor = .clear
         self.setBackgroundImage(UIImage(), for: .default)
         self.shadowImage = UIImage()
-        self.isTranslucent = true
     }
     
 }

@@ -64,6 +64,7 @@ open class LUICarouselViewController: LUIViewController {
             self.imagePreviewManager.previewContent = self.photos
             self.pageControl.numberOfPages = self.photos.count
             self.collectionViewController?.itemData = self.photos
+            self.view.isHidden = self.photos.count == 0
         }
     }
     
@@ -125,10 +126,11 @@ open class LUICarouselViewController: LUIViewController {
     }
     
     open func setUpViews() {
-        
+
         self.addView(self.pageControl)
         
         if let collectionViewController = self.collectionViewController {
+            collectionViewController.view.backgroundColor = .color(for: .darkBackground)
             
             self.addChild(collectionViewController)
             self.addView(collectionViewController.view)
