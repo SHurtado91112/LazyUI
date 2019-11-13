@@ -184,13 +184,19 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
     
     open override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if self.hasSections {
-            return self.sectionHeaderData[section].headerHeight
+            let height = self.sectionHeaderData[section].headerHeight
+            let hasCells = self.sectionCellData[section].count > 0
+            return hasCells ? height : .zero
         }
         return 0.0
     }
     
     override open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
+    }
+    
+    open override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.0
     }
     
     open func setUpForSearch(with criteria: LUISearchTableQuery? = nil) {
