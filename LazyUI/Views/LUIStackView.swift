@@ -152,7 +152,7 @@ open class LUIStackView: UIScrollView {
         self.addArrangedSubview(contentView: paddingView, fill: true)
     }
     
-    open func addDivider() -> UIView {
+    @discardableResult open func addDivider() -> UIView {
         let divider = UIView(frame: CGRect(x: 0, y: 0, width: self.stackView.frame.width, height: 1.0))
         divider.backgroundColor = UIColor.color(for: .border)
         self.addArrangedSubview(contentView: divider, fill: true)

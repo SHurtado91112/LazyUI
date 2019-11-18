@@ -147,7 +147,7 @@ open class LUITextField : UITextField, LUIViewProtocol, LUIViewThemeProtocol {
         super.init(coder: aDecoder)
     }
     
-    public func setUpView() {
+    open func setUpView() {
         self.tintColor = UIColor.color(for: .theme)
     }
     
