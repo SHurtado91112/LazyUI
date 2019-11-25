@@ -23,8 +23,13 @@ public class LUIFontManager: NSObject {
 
     public static let shared = LUIFontManager()
     
-    public func setUniversalFont(named fontName: String, for sizes: LUIFontSize? = nil) {
+    public func setUniversalFont(named fontName: String = "", for sizes: LUIFontSize? = nil) {
         self.universalSizes = sizes ?? LUIFontSize()
+        
+        if fontName.isEmpty {
+            self.setFont(UIFont.systemFont(ofSize: self.universalSizes.regular))
+            return
+        }
         
         if let font = UIFont(name: fontName, size: self.universalSizes.regular) {
             self.setFont(font)
