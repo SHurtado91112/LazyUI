@@ -31,6 +31,10 @@ open class LUIViewControllerClass: UIViewController {
         super.viewDidDisappear(animated)
     }
     
+    override open func loadView() {
+        self.view = LUIViewClass()
+    }
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         

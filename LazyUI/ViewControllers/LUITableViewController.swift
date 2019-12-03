@@ -15,6 +15,7 @@ public protocol LUISearchTableDelegate {
 public typealias LUISearchTableQuery = (_ item: Any, _ text: String, _ scope: Int)->Bool
 
 open class LUITableViewController: UITableViewController, LUIViewControllerProtocol {
+    
     // MARK: - Public variables
     open var sectionHeaderData: [LUIHeaderData] = [] {
         didSet {
@@ -116,6 +117,12 @@ open class LUITableViewController: UITableViewController, LUIViewControllerProto
                 self.tableView.deselectRow(at: row, animated: true)
             }
         }
+        
+        self.registerForThemeObserver()
+    }
+    
+    deinit {
+        self.unregisterForThemeObserver()
     }
     
     open func setUpViews() {
@@ -352,3 +359,19 @@ extension LUITableViewController: LUIKeyboardToolBarDelegate {
     }
 }
 
+extension LUITableViewController: LUIThemeProtocol {
+    
+    @objc func themeUpdated() {
+        self.view.backgroundColor = .color(for: .lightBackground)
+        self.tableView.backgroundColor = .color(for: .lightBackground)
+        self.tableView.reloadData()
+    }
+    
+    func registerForThemeObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.themeUpdated), name: LUIThemeUpdateNotification, object: nil)
+    }
+
+    func unregisterForThemeObserver() {
+        NotificationCenter.default.removeObserver(self, name: LUIThemeUpdateNotification, object: nil)
+    }
+}
